@@ -1,0 +1,29 @@
+/// <reference types="multer" />
+/// <reference types="node" />
+import gm, { Dimensions } from 'gm';
+import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
+import { PictureRepresentationsRepository } from '@modules/pictures/repositories/picture-representations.repository';
+import { Picture } from '@modules/pictures/entities/pictures.entity';
+import { User } from '@modules/users/entities/users.entity';
+import { CompressedPicture } from '@modules/upload/types/compressed-picture';
+import { DiscordMessage } from '@modules/upload/types/DiscordMessage';
+import { UploadedPicture } from '@modules/upload/types/uploaded-picture';
+export declare class UploadService {
+    private readonly picturesRepository;
+    private readonly pictureRepresentationsRepository;
+    private readonly httpClient;
+    constructor(picturesRepository: PicturesRepository, pictureRepresentationsRepository: PictureRepresentationsRepository);
+    uploadPicture(file: Express.Multer.File, user: User): Promise<Picture>;
+    generateObjectPath(options: {
+        path?: string;
+        name?: string;
+        ext?: string;
+    }): string;
+    savePicture(ownerId: number, representations: UploadedPicture): Promise<Picture>;
+    uploadFileToDiscord(file: Express.Multer.File): Promise<DiscordMessage>;
+    scale(dimensions: Dimensions, ratio: number, limit?: number): Dimensions;
+    compressImage(picture: Express.Multer.File): Promise<CompressedPicture>;
+    gmToBuffer(data: gm.State): Promise<Buffer>;
+    gmToDimensions(data: gm.State): Promise<Dimensions>;
+    bufferToFileSize(buffer: Buffer): number;
+}
