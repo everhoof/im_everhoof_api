@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import gm, { Dimensions } from 'gm';
 import got, { Got } from 'got';
 import FormData from 'form-data';
-import { createReadStream, readFile, writeFile, createFile } from 'fs-extra';
+import { createReadStream, readFile, writeFile, createFile, unlink } from 'fs-extra';
 import { extname, basename, resolve } from 'path';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
@@ -41,16 +41,18 @@ export class UploadService {
       const message = await this.uploadFileToDiscord(file);
       const attachment = message.attachments[0];
 
-      const filename = file.originalname.replace(/[^a-z0-9_\-+]/, '_');
+      const filename = basename(file.originalname, extname(file.originalname))
+        .replace(/[^a-z0-9_\-+]/, '_')
+        .substr(0, 100);
       const [sPath, mPath] = [
         this.generateObjectPath({
           path: path + '/s',
-          name: basename(filename, extname(file.originalname)).substr(0, 100),
+          name: filename,
           ext: 'jpeg',
         }),
         this.generateObjectPath({
           path: path + '/m',
-          name: basename(filename, extname(file.originalname)).substr(0, 100),
+          name: filename,
           ext: 'jpeg',
         }),
       ];
@@ -60,6 +62,8 @@ export class UploadService {
         writeFile(process.env.UPLOAD_DIR + sPath, s.buffer),
         writeFile(process.env.UPLOAD_DIR + mPath, m.buffer),
       ]);
+
+      await unlink(file.path);
 
       return this.savePicture(user.id, {
         s: { key: sPath, dimensions: s.dimensions, size: s.size },
@@ -155,8 +159,8 @@ export class UploadService {
   }
 
   async compressImage(picture: Express.Multer.File): Promise<CompressedPicture> {
-    const s = gm(picture.buffer).noProfile().setFormat('jpeg').resize(128, 128).quality(100);
-    const m = gm(picture.buffer).noProfile().setFormat('jpeg').resize(512, 512).quality(60);
+    const s = gm(picture.buffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
+    const m = gm(picture.buffer).noProfile().setFormat('jpeg').resize(512, 512).quality(90);
 
     const [sBuffer, mBuffer] = await Promise.all([this.gmToBuffer(s), this.gmToBuffer(m)]);
     const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];

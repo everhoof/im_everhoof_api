@@ -25,7 +25,7 @@ export class UploadController {
   @UseGuards(AuthGuard('bearer'))
   @UseInterceptors(
     FileInterceptor('file', {
-      dest: './upload',
+      dest: './uploads',
       limits: {
         files: 1,
         fileSize: 10 * 1024 * 1024,
