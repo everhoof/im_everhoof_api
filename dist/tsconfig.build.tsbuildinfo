@@ -1542,7 +1542,7 @@
         "affectsGlobalScope": false
       },
       "../scripts/deploy.js": {
-        "version": "be8e77c637329445dbbd2c2e9c8ca28d699200c9ab985dc8e41765f4920ca44b",
+        "version": "ba116ae240eb077dcf03d7732547960c17a99700ce4ba96367f855a74b08e2ef",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": true
       },

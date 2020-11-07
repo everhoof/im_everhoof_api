@@ -4,7 +4,7 @@ ghpages.publish('.', {
         'dist/**/*',
         'resources/**/*',
         'mail/**/*',
-        'ormconfig.ex.prod.js',
+        'ormconfig.prod.js',
         'package.json',
         'yarn.lock',
         '.env.example',
