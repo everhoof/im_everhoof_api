@@ -1,0 +1,74 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Message {
+  id: Int!
+  content: String!
+  username: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  owner: User!
+  pictures: [Picture!]!
+}
+
+type Mutation {
+  signIn(email: String!, password: String!): Token!
+  signUp(email: String!, username: String, password: String!): User!
+  createMessage(content: String!, pictures: [Int!] = []): Message!
+}
+
+type Picture {
+  id: Int!
+  ownerId: Int
+  sId: Int!
+  mId: Int!
+  oId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  owner: User!
+  s: PictureRepresentation!
+  m: PictureRepresentation!
+  o: PictureRepresentation!
+}
+
+type PictureRepresentation {
+  id: Int!
+  height: Float!
+  width: Float!
+  size: Float!
+  path: String!
+  link: String!
+}
+
+type Query {
+  getCurrentUser: User!
+  getHello: String!
+  getPictureById(pictureId: Int!): Picture!
+  getMessages(count: Int = 100, page: Int = 1): [Message!]!
+}
+
+type Token {
+  id: Int!
+  value: String!
+  ownerId: Int!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  usedAt: DateTime
+}
+
+type User {
+  id: Int!
+  email: String!
+  username: String
+  avatarId: String
+  wasOnlineAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  avatar: Picture
+}
