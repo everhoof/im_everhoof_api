@@ -52,16 +52,18 @@ let UploadService = class UploadService {
             const { s, m } = await this.compressImage(file);
             const message = await this.uploadFileToDiscord(file);
             const attachment = message.attachments[0];
-            const filename = file.originalname.replace(/[^a-z0-9_\-+]/, '_');
+            const filename = path_1.basename(file.originalname, path_1.extname(file.originalname))
+                .replace(/[^a-z0-9_\-+]/, '_')
+                .substr(0, 100);
             const [sPath, mPath] = [
                 this.generateObjectPath({
                     path: path + '/s',
-                    name: path_1.basename(filename, path_1.extname(file.originalname)).substr(0, 100),
+                    name: filename,
                     ext: 'jpeg',
                 }),
                 this.generateObjectPath({
                     path: path + '/m',
-                    name: path_1.basename(filename, path_1.extname(file.originalname)).substr(0, 100),
+                    name: filename,
                     ext: 'jpeg',
                 }),
             ];
@@ -70,6 +72,7 @@ let UploadService = class UploadService {
                 fs_extra_1.writeFile(process.env.UPLOAD_DIR + sPath, s.buffer),
                 fs_extra_1.writeFile(process.env.UPLOAD_DIR + mPath, m.buffer),
             ]);
+            await fs_extra_1.unlink(file.path);
             return this.savePicture(user.id, {
                 s: { key: sPath, dimensions: s.dimensions, size: s.size },
                 m: { key: mPath, dimensions: m.dimensions, size: m.size },
@@ -161,8 +164,8 @@ let UploadService = class UploadService {
         return { height, width };
     }
     async compressImage(picture) {
-        const s = gm_1.default(picture.buffer).noProfile().setFormat('jpeg').resize(128, 128).quality(100);
-        const m = gm_1.default(picture.buffer).noProfile().setFormat('jpeg').resize(512, 512).quality(60);
+        const s = gm_1.default(picture.buffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
+        const m = gm_1.default(picture.buffer).noProfile().setFormat('jpeg').resize(512, 512).quality(90);
         const [sBuffer, mBuffer] = await Promise.all([this.gmToBuffer(s), this.gmToBuffer(m)]);
         const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
         const sDimensions = await this.gmToDimensions(gm_1.default(sBuffer));

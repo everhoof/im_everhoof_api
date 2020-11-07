@@ -6921,7 +6921,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/upload/upload.service.ts": {
-        "version": "32146271e3c985f7fe967bda182e7b2dd2bdf4d62c1685e071f7fa5ff19cfd94",
+        "version": "3dd2989a096574d5bea817e2129e1e00563768f5c1c32c91d649a044fb9cdf2c",
         "signature": "5d3402b4318498417fd28a7c6b119e18f257b48580215ebe803d9ec0ff53bd84",
         "affectsGlobalScope": false
       },
@@ -7006,7 +7006,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/upload/upload.controller.ts": {
-        "version": "2ffa377bcfdbccb6ebf66ef53a852752bc4b98a1e483c88f145524b03356897c",
+        "version": "a73bb76dd93e2a92ff47d4f79ccf595f2da62f49e9634ac8ef8a34cc4b3ce273",
         "signature": "e7716bd059f183d7b635769ef253a5ae503ce449a9719df956b372b32a6eb6f3",
         "affectsGlobalScope": false
       },

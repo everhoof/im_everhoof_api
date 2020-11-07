@@ -32,7 +32,7 @@ __decorate([
     common_1.Post('/image'),
     common_1.UseGuards(passport_1.AuthGuard('bearer')),
     common_1.UseInterceptors(platform_express_1.FileInterceptor('file', {
-        dest: './upload',
+        dest: './uploads',
         limits: {
             files: 1,
             fileSize: 10 * 1024 * 1024,
