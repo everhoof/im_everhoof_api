@@ -16,6 +16,7 @@ import { MessagesModule } from '@modules/messages/messages.module';
 import { UploadModule } from '@modules/upload/upload.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DataLoaderInterceptor } from '@intelrug/nestjs-graphql-dataloader';
+import { CommonModule } from '@modules/common/common.module';
 
 @Module({
   imports: [
@@ -24,12 +25,14 @@ import { DataLoaderInterceptor } from '@intelrug/nestjs-graphql-dataloader';
       context: ({ req }) => ({ req }),
       debug: process.env.NODE_ENV !== 'production',
       autoSchemaFile: join(process.cwd(), './graphql/schema.graphql'),
+      installSubscriptionHandlers: true,
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
     AccessControlModule.forRoles(roles),
     ScheduleModule.forRoot(),
+    CommonModule,
     UsersModule,
     AccountsModule,
     RolesModule,

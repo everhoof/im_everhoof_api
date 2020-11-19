@@ -16,5 +16,6 @@ import { RolesRepository } from '@modules/roles/repositories/roles.repository';
     TypeOrmModule.forFeature([TokensRepository, UsersRepository, RolesRepository]),
   ],
   providers: [AccountsService, AccountsResolver, BearerStrategy],
+  exports: [AccountsService, TypeOrmModule.forFeature([TokensRepository])],
 })
 export class AccountsModule {}

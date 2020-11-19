@@ -18,10 +18,10 @@ export class MessagesService {
   ) {}
 
   async createMessage(args: CreateMessageArgs, user: User): Promise<Message> {
-    if (!args.content.trim() && args.pictures.length === 0)
+    if (!args.content?.trim() && args.pictures.length === 0)
       throw new BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
     const message = this.messagesRepository.create({
-      content: args.content.trim(),
+      content: args.content?.trim(),
       ownerId: user.id,
       username: user.username,
     });

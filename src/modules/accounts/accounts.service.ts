@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { pbkdf2Sync, randomBytes } from 'crypto';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { TokensRepository } from '@modules/accounts/repositories/tokens.repository';
 import { UsersRepository } from '@modules/users/repositories/users.repository';
 import { SignInArgs } from '@modules/accounts/args/sign-in.args';
@@ -13,10 +13,13 @@ import {
 import { User } from '@modules/users/entities/users.entity';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 import { RolesRepository } from '@modules/roles/repositories/roles.repository';
+import { Connection } from 'typeorm';
 
 @Injectable()
 export class AccountsService {
   constructor(
+    @InjectConnection()
+    private readonly connection: Connection,
     @InjectRepository(TokensRepository)
     private readonly tokensRepository: TokensRepository,
     @InjectRepository(UsersRepository)
@@ -41,7 +44,18 @@ export class AccountsService {
     const token = await this.tokensRepository.getTokenByValue(value);
     if (!token) throw null;
     token.usedAt = new Date();
-    await this.tokensRepository.save(token);
+    await this.connection.transaction(async (entityManager) => {
+      await entityManager.update(
+        User,
+        {
+          id: token.ownerId,
+        },
+        {
+          wasOnlineAt: new Date(),
+        },
+      );
+      await entityManager.save(Token, token);
+    });
     return token;
   }
 

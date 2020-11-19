@@ -1,12 +1,13 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql';
-import { ArrayMaxSize, IsArray, IsInt, IsString, MaxLength } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
 
 @ArgsType()
 export class CreateMessageArgs {
-  @Field()
+  @Field(() => String, { nullable: true })
   @IsString()
   @MaxLength(2000)
-  content: string;
+  @IsOptional()
+  content?: string;
 
   @Field(() => [Int], { defaultValue: [] })
   @IsArray()

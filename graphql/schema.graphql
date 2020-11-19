@@ -18,9 +18,10 @@ type Message {
 }
 
 type Mutation {
+  updateOnlineStatus: Boolean!
   signIn(email: String!, password: String!): Token!
   signUp(email: String!, username: String, password: String!): User!
-  createMessage(content: String!, pictures: [Int!] = []): Message!
+  createMessage(content: String, pictures: [Int!] = []): Message!
 }
 
 type Picture {
@@ -48,9 +49,15 @@ type PictureRepresentation {
 
 type Query {
   getCurrentUser: User!
+  getOnline: [User!]!
   getHello: String!
   getPictureById(pictureId: Int!): Picture!
   getMessages(count: Int = 100, page: Int = 1): [Message!]!
+}
+
+type Subscription {
+  onlineUpdated: [User!]!
+  messageCreated: Message!
 }
 
 type Token {

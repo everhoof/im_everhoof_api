@@ -27,7 +27,7 @@ export class UploadService {
     this.httpClient = got.extend({
       prefixUrl: `https://discord.com/api/v${process.env.DISCORD_API_VERSION}/`,
       headers: {
-        Authorization: `Bot ${process.env.DISCORD_API_TOKEN}`,
+        Authorization: `${process.env.DISCORD_API_TOKEN}`,
       },
     });
   }
