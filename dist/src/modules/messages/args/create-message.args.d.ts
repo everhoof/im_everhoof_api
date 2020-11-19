@@ -1,4 +1,4 @@
 export declare class CreateMessageArgs {
-    content: string;
+    content?: string;
     pictures: number[];
 }

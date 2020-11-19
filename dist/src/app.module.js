@@ -25,6 +25,7 @@ const messages_module_1 = require("./modules/messages/messages.module");
 const upload_module_1 = require("./modules/upload/upload.module");
 const core_1 = require("@nestjs/core");
 const nestjs_graphql_dataloader_1 = require("@intelrug/nestjs-graphql-dataloader");
+const common_module_1 = require("./modules/common/common.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -35,12 +36,14 @@ AppModule = __decorate([
                 context: ({ req }) => ({ req }),
                 debug: process.env.NODE_ENV !== 'production',
                 autoSchemaFile: path_1.join(process.cwd(), './graphql/schema.graphql'),
+                installSubscriptionHandlers: true,
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 useClass: typeorm_2.TypeOrmConfigService,
             }),
             nest_access_control_1.AccessControlModule.forRoles(app_roles_1.roles),
             schedule_1.ScheduleModule.forRoot(),
+            common_module_1.CommonModule,
             users_module_1.UsersModule,
             accounts_module_1.AccountsModule,
             roles_module_1.RolesModule,

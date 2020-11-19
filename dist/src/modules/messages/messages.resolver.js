@@ -30,8 +30,10 @@ const auth_guard_1 = require("../../common/guards/auth.guard");
 const users_entity_1 = require("../users/entities/users.entity");
 const get_messages_args_1 = require("./args/get-messages.args");
 const users_loader_1 = require("../users/loaders/users.loader");
+const graphql_subscriptions_1 = require("graphql-subscriptions");
 let MessagesResolver = class MessagesResolver {
-    constructor(messagesService) {
+    constructor(pubSub, messagesService) {
+        this.pubSub = pubSub;
         this.messagesService = messagesService;
     }
     async owner(message, usersLoader) {
@@ -43,11 +45,16 @@ let MessagesResolver = class MessagesResolver {
     async pictures(message, picturesLoader) {
         return picturesLoader.loadMany(message.pictureIds);
     }
-    createMessage(args, user) {
-        return this.messagesService.createMessage(args, user);
+    async createMessage(args, user) {
+        const message = await this.messagesService.createMessage(args, user);
+        await this.pubSub.publish('messageCreated', { messageCreated: message });
+        return message;
     }
     getMessages(args) {
         return this.messagesService.getMessages(args);
+    }
+    messageCreated() {
+        return this.pubSub.asyncIterator('messageCreated');
     }
 };
 __decorate([
@@ -83,10 +90,19 @@ __decorate([
     __metadata("design:paramtypes", [get_messages_args_1.GetMessagesArgs]),
     __metadata("design:returntype", Promise)
 ], MessagesResolver.prototype, "getMessages", null);
+__decorate([
+    graphql_1.Subscription(() => messages_entity_1.Message, {
+        name: 'messageCreated',
+    }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], MessagesResolver.prototype, "messageCreated", null);
 MessagesResolver = __decorate([
     common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
     graphql_1.Resolver(() => messages_entity_1.Message),
-    __metadata("design:paramtypes", [messages_service_1.MessagesService])
+    __param(0, common_1.Inject('PUB_SUB')),
+    __metadata("design:paramtypes", [graphql_subscriptions_1.PubSub, messages_service_1.MessagesService])
 ], MessagesResolver);
 exports.MessagesResolver = MessagesResolver;
 //# sourceMappingURL=messages.resolver.js.map

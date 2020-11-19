@@ -24,8 +24,10 @@ const exceptions_1 = require("../../common/exceptions/exceptions");
 const users_entity_1 = require("../users/entities/users.entity");
 const sign_up_args_1 = require("./args/sign-up.args");
 const roles_repository_1 = require("../roles/repositories/roles.repository");
+const typeorm_2 = require("typeorm");
 let AccountsService = class AccountsService {
-    constructor(tokensRepository, usersRepository, rolesRepository) {
+    constructor(connection, tokensRepository, usersRepository, rolesRepository) {
+        this.connection = connection;
         this.tokensRepository = tokensRepository;
         this.usersRepository = usersRepository;
         this.rolesRepository = rolesRepository;
@@ -47,7 +49,14 @@ let AccountsService = class AccountsService {
         if (!token)
             throw null;
         token.usedAt = new Date();
-        await this.tokensRepository.save(token);
+        await this.connection.transaction(async (entityManager) => {
+            await entityManager.update(users_entity_1.User, {
+                id: token.ownerId,
+            }, {
+                wasOnlineAt: new Date(),
+            });
+            await entityManager.save(tokens_entity_1.Token, token);
+        });
         return token;
     }
     async createUser(input) {
@@ -80,10 +89,12 @@ let AccountsService = class AccountsService {
 };
 AccountsService = __decorate([
     common_1.Injectable(),
-    __param(0, typeorm_1.InjectRepository(tokens_repository_1.TokensRepository)),
-    __param(1, typeorm_1.InjectRepository(users_repository_1.UsersRepository)),
-    __param(2, typeorm_1.InjectRepository(roles_repository_1.RolesRepository)),
-    __metadata("design:paramtypes", [tokens_repository_1.TokensRepository,
+    __param(0, typeorm_1.InjectConnection()),
+    __param(1, typeorm_1.InjectRepository(tokens_repository_1.TokensRepository)),
+    __param(2, typeorm_1.InjectRepository(users_repository_1.UsersRepository)),
+    __param(3, typeorm_1.InjectRepository(roles_repository_1.RolesRepository)),
+    __metadata("design:paramtypes", [typeorm_2.Connection,
+        tokens_repository_1.TokensRepository,
         users_repository_1.UsersRepository,
         roles_repository_1.RolesRepository])
 ], AccountsService);

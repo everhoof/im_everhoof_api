@@ -13,11 +13,12 @@ const messages_repository_1 = require("./repositories/messages.repository");
 const messages_service_1 = require("./messages.service");
 const messages_resolver_1 = require("./messages.resolver");
 const pictures_repository_1 = require("../pictures/repositories/pictures.repository");
+const accounts_module_1 = require("../accounts/accounts.module");
 let MessagesModule = class MessagesModule {
 };
 MessagesModule = __decorate([
     common_1.Module({
-        imports: [typeorm_1.TypeOrmModule.forFeature([messages_repository_1.MessagesRepository, pictures_repository_1.PicturesRepository])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([messages_repository_1.MessagesRepository, pictures_repository_1.PicturesRepository]), accounts_module_1.AccountsModule],
         providers: [messages_service_1.MessagesService, messages_resolver_1.MessagesResolver],
     })
 ], MessagesModule);

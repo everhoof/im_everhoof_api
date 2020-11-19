@@ -27,6 +27,7 @@ AccountsModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([tokens_repository_1.TokensRepository, users_repository_1.UsersRepository, roles_repository_1.RolesRepository]),
         ],
         providers: [accounts_service_1.AccountsService, accounts_resolver_1.AccountsResolver, bearer_strategy_1.BearerStrategy],
+        exports: [accounts_service_1.AccountsService, typeorm_1.TypeOrmModule.forFeature([tokens_repository_1.TokensRepository])],
     })
 ], AccountsModule);
 exports.AccountsModule = AccountsModule;

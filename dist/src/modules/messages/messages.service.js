@@ -28,10 +28,11 @@ let MessagesService = class MessagesService {
         this.picturesRepository = picturesRepository;
     }
     async createMessage(args, user) {
-        if (!args.content.trim() && args.pictures.length === 0)
+        var _a, _b;
+        if (!((_a = args.content) === null || _a === void 0 ? void 0 : _a.trim()) && args.pictures.length === 0)
             throw new exceptions_1.BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
         const message = this.messagesRepository.create({
-            content: args.content.trim(),
+            content: (_b = args.content) === null || _b === void 0 ? void 0 : _b.trim(),
             ownerId: user.id,
             username: user.username,
         });

@@ -25,7 +25,13 @@ const pictures_entity_1 = require("../pictures/entities/pictures.entity");
 const pictures_loader_1 = require("../pictures/loaders/pictures.loader");
 const nestjs_graphql_dataloader_1 = require("@intelrug/nestjs-graphql-dataloader");
 const dataloader_1 = __importDefault(require("dataloader"));
+const graphql_subscriptions_1 = require("graphql-subscriptions");
+const users_service_1 = require("./users.service");
 let UsersResolver = class UsersResolver {
+    constructor(pubSub, usersService) {
+        this.pubSub = pubSub;
+        this.usersService = usersService;
+    }
     async avatar(user, picturesLoader) {
         if (user.avatarId) {
             return picturesLoader.load(user.avatarId);
@@ -34,6 +40,16 @@ let UsersResolver = class UsersResolver {
     }
     async getCurrentUser(user) {
         return user;
+    }
+    async getOnline() {
+        return this.usersService.getOnline();
+    }
+    async updateOnlineStatus() {
+        await this.usersService.updateOnlineStatus();
+        return true;
+    }
+    onlineUpdated() {
+        return this.pubSub.asyncIterator('onlineUpdated');
     }
 };
 __decorate([
@@ -53,9 +69,32 @@ __decorate([
     __metadata("design:paramtypes", [users_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], UsersResolver.prototype, "getCurrentUser", null);
+__decorate([
+    graphql_1.Query(() => [users_entity_1.User]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "getOnline", null);
+__decorate([
+    graphql_1.Mutation(() => Boolean),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "updateOnlineStatus", null);
+__decorate([
+    graphql_1.Subscription(() => [users_entity_1.User], {
+        name: 'onlineUpdated',
+    }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], UsersResolver.prototype, "onlineUpdated", null);
 UsersResolver = __decorate([
     common_1.UseFilters(http_exception_filter_1.HttpExceptionFilter),
-    graphql_1.Resolver(() => users_entity_1.User)
+    graphql_1.Resolver(() => users_entity_1.User),
+    __param(0, common_1.Inject('PUB_SUB')),
+    __metadata("design:paramtypes", [graphql_subscriptions_1.PubSub, users_service_1.UsersService])
 ], UsersResolver);
 exports.UsersResolver = UsersResolver;
 //# sourceMappingURL=users.resolver.js.map

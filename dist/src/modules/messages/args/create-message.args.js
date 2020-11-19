@@ -15,9 +15,10 @@ const class_validator_1 = require("class-validator");
 let CreateMessageArgs = class CreateMessageArgs {
 };
 __decorate([
-    graphql_1.Field(),
+    graphql_1.Field(() => String, { nullable: true }),
     class_validator_1.IsString(),
     class_validator_1.MaxLength(2000),
+    class_validator_1.IsOptional(),
     __metadata("design:type", String)
 ], CreateMessageArgs.prototype, "content", void 0);
 __decorate([

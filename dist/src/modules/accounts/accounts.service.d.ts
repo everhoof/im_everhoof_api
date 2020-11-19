@@ -5,11 +5,13 @@ import { Token } from '@modules/accounts/entities/tokens.entity';
 import { User } from '@modules/users/entities/users.entity';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 import { RolesRepository } from '@modules/roles/repositories/roles.repository';
+import { Connection } from 'typeorm';
 export declare class AccountsService {
+    private readonly connection;
     private readonly tokensRepository;
     private readonly usersRepository;
     private readonly rolesRepository;
-    constructor(tokensRepository: TokensRepository, usersRepository: UsersRepository, rolesRepository: RolesRepository);
+    constructor(connection: Connection, tokensRepository: TokensRepository, usersRepository: UsersRepository, rolesRepository: RolesRepository);
     validateUserByEmailAndPassword(args: SignInArgs): Promise<Token>;
     validateUserByToken(value: string): Promise<Token>;
     createUser(input: SignUpArgs): Promise<User>;

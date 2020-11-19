@@ -9,11 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CurrentUser = exports.AuthGuard = exports.GqlAuthGuard = void 0;
+exports.WsAuthenticatedUser = exports.CurrentUser = exports.AuthGuard = exports.WsAuthGuard = exports.GqlAuthGuard = void 0;
 const core_1 = require("@nestjs/core");
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const graphql_1 = require("@nestjs/graphql");
+const accounts_service_1 = require("../../modules/accounts/accounts.service");
 function canActivate(context) {
     const request = this.getRequest(context);
     return !(!request || !request.user);
@@ -37,6 +38,29 @@ GqlAuthGuard = __decorate([
     __metadata("design:paramtypes", [core_1.Reflector])
 ], GqlAuthGuard);
 exports.GqlAuthGuard = GqlAuthGuard;
+let WsAuthGuard = class WsAuthGuard {
+    constructor(accountsService) {
+        this.accountsService = accountsService;
+    }
+    async canActivate(context) {
+        var _a;
+        const client = context.switchToWs().getClient();
+        const cookies = client.handshake.headers.cookie.split('; ');
+        const token = (_a = cookies.find((cookie) => cookie.startsWith('token'))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
+        if (!token)
+            return false;
+        const tokenEntity = await this.accountsService.validateUserByToken(decodeURIComponent(token));
+        if (!tokenEntity)
+            return false;
+        context.switchToWs().getData().user = tokenEntity.owner;
+        return true;
+    }
+};
+WsAuthGuard = __decorate([
+    common_1.Injectable(),
+    __metadata("design:paramtypes", [accounts_service_1.AccountsService])
+], WsAuthGuard);
+exports.WsAuthGuard = WsAuthGuard;
 let AuthGuard = class AuthGuard extends passport_1.AuthGuard('bearer') {
     constructor(reflector) {
         super();
@@ -55,5 +79,8 @@ exports.AuthGuard = AuthGuard;
 exports.CurrentUser = common_1.createParamDecorator((data, context) => {
     const ctx = graphql_1.GqlExecutionContext.create(context);
     return ctx.getContext().req.user;
+});
+exports.WsAuthenticatedUser = common_1.createParamDecorator((data, context) => {
+    return context.switchToWs().getData().user;
 });
 //# sourceMappingURL=auth.guard.js.map

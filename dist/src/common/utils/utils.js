@@ -15,6 +15,9 @@ class Utils {
             .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
     }
+    static arrayDiff(a1, a2) {
+        return a1.filter((i) => !a2.includes(i)).concat(a2.filter((i) => !a1.includes(i)));
+    }
 }
 exports.Utils = Utils;
 //# sourceMappingURL=utils.js.map
