@@ -33,27 +33,22 @@ export class Token {
   @Field(() => Date)
   @CreateDateColumn({
     name: 'created_at',
-    type: 'datetime',
   })
   createdAt: Date;
 
   @Field(() => Date, { nullable: true })
   @Column({
     name: 'expires_at',
-    type: 'datetime',
-    width: 6,
     nullable: true,
   })
-  expiresAt: Nullable<Date>;
+  expiresAt: Date;
 
   @Field(() => Date, { nullable: true })
   @Column({
     name: 'used_at',
-    type: 'datetime',
-    width: 6,
     nullable: true,
   })
-  usedAt: Nullable<Date>;
+  usedAt: Date;
 
   @ManyToOne(() => User, (user) => user.tokens, { onDelete: 'CASCADE' })
   @JoinColumn({

@@ -67,23 +67,19 @@ export class User {
   @Field(() => Date, { nullable: true })
   @Column({
     name: 'was_online_at',
-    type: 'datetime',
-    width: 6,
     nullable: true,
   })
-  wasOnlineAt: Nullable<Date>;
+  wasOnlineAt?: Date;
 
   @Field(() => Date)
   @CreateDateColumn({
     name: 'created_at',
-    type: 'datetime',
   })
   createdAt: Date;
 
   @Field(() => Date)
   @UpdateDateColumn({
     name: 'updated_at',
-    type: 'datetime',
   })
   updatedAt: Date;
 

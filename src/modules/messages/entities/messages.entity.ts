@@ -51,14 +51,12 @@ export class Message {
   @Field(() => Date)
   @CreateDateColumn({
     name: 'created_at',
-    type: 'datetime',
   })
   createdAt: Date;
 
   @Field(() => Date)
   @UpdateDateColumn({
     name: 'updated_at',
-    type: 'datetime',
   })
   updatedAt: Date;
 
