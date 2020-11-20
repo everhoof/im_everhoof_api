@@ -1,30 +1,33 @@
 const host = 'localhost';
-const port = 3306;
+const port = 5432;
 const username = 'everhoof';
 const password = 'everhoof';
-const database = 'everhoof_im';
+const database = 'everhoof';
+const schema = 'im';
 module.exports = [
     {
-        type: 'mariadb',
+        type: 'postgres',
         host,
         port,
         username,
         password,
         database,
-        timezone: '+00:00',
+        schema,
+        timezone: 'Z',
         synchronize: false,
         logging: false,
-        entities: ['**/*.entity.js'],
+        entities: ['dist/**/*.entity.js'],
     },
     {
         name: 'cli',
-        type: 'mariadb',
+        type: 'postgres',
         host,
         port,
         username,
         password,
         database,
-        timezone: '+00:00',
+        schema,
+        timezone: 'Z',
         synchronize: false,
         logging: false,
         entities: ['dist/**/*.entity.js'],
@@ -38,13 +41,14 @@ module.exports = [
     },
     {
         name: 'seed',
-        type: 'mariadb',
+        type: 'postgres',
         host,
         port,
         username,
         password,
         database,
-        timezone: '+00:00',
+        schema,
+        timezone: 'Z',
         synchronize: false,
         logging: false,
         migrationsTableName: 'seeds',

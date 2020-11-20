@@ -73,17 +73,14 @@ __decorate([
     graphql_1.Field(() => Date, { nullable: true }),
     typeorm_1.Column({
         name: 'was_online_at',
-        type: 'datetime',
-        width: 6,
         nullable: true,
     }),
-    __metadata("design:type", Object)
+    __metadata("design:type", Date)
 ], User.prototype, "wasOnlineAt", void 0);
 __decorate([
     graphql_1.Field(() => Date),
     typeorm_1.CreateDateColumn({
         name: 'created_at',
-        type: 'datetime',
     }),
     __metadata("design:type", Date)
 ], User.prototype, "createdAt", void 0);
@@ -91,7 +88,6 @@ __decorate([
     graphql_1.Field(() => Date),
     typeorm_1.UpdateDateColumn({
         name: 'updated_at',
-        type: 'datetime',
     }),
     __metadata("design:type", Date)
 ], User.prototype, "updatedAt", void 0);

@@ -9,7 +9,7 @@ export declare class User {
     avatarId: Nullable<number>;
     salt: string;
     hash: string;
-    wasOnlineAt: Nullable<Date>;
+    wasOnlineAt?: Date;
     createdAt: Date;
     updatedAt: Date;
     tokens: Token[];

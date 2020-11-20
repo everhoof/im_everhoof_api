@@ -47,7 +47,6 @@ __decorate([
     graphql_1.Field(() => Date),
     typeorm_1.CreateDateColumn({
         name: 'created_at',
-        type: 'datetime',
     }),
     __metadata("design:type", Date)
 ], Token.prototype, "createdAt", void 0);
@@ -55,21 +54,17 @@ __decorate([
     graphql_1.Field(() => Date, { nullable: true }),
     typeorm_1.Column({
         name: 'expires_at',
-        type: 'datetime',
-        width: 6,
         nullable: true,
     }),
-    __metadata("design:type", Object)
+    __metadata("design:type", Date)
 ], Token.prototype, "expiresAt", void 0);
 __decorate([
     graphql_1.Field(() => Date, { nullable: true }),
     typeorm_1.Column({
         name: 'used_at',
-        type: 'datetime',
-        width: 6,
         nullable: true,
     }),
-    __metadata("design:type", Object)
+    __metadata("design:type", Date)
 ], Token.prototype, "usedAt", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => users_entity_1.User, (user) => user.tokens, { onDelete: 'CASCADE' }),

@@ -4,7 +4,7 @@ export declare class Token {
     value: string;
     ownerId: number;
     createdAt: Date;
-    expiresAt: Nullable<Date>;
-    usedAt: Nullable<Date>;
+    expiresAt: Date;
+    usedAt: Date;
     owner: User;
 }

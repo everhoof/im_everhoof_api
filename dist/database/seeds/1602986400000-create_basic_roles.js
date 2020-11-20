@@ -3,20 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateBasicRoles1602986400000 = void 0;
 class CreateBasicRoles1602986400000 {
     async up(queryRunner) {
-        await queryRunner.query('INSERT INTO `roles` (`name`) VALUES (?), (?), (?), (?)', [
-            'UNVERIFIED_USER',
-            'USER',
-            'MODERATOR',
-            'ADMIN',
-        ]);
+        const roles = ['UNVERIFIED_USER', 'USER', 'MODERATOR', 'ADMIN'];
+        for (const role of roles) {
+            await queryRunner.query('INSERT INTO "im".roles (name) VALUES ($1)', [role]);
+        }
     }
     async down(queryRunner) {
-        await queryRunner.query('DELETE FROM `roles` WHERE `name` = ? OR `name` = ? OR `name` = ? OR `name` = ?', [
-            'UNVERIFIED_USER',
-            'USER',
-            'MODERATOR',
-            'ADMIN',
-        ]);
+        const roles = ['UNVERIFIED_USER', 'USER', 'MODERATOR', 'ADMIN'];
+        for (const role of roles) {
+            await queryRunner.query('DELETE FROM "im".roles WHERE name = $1', [role]);
+        }
     }
 }
 exports.CreateBasicRoles1602986400000 = CreateBasicRoles1602986400000;

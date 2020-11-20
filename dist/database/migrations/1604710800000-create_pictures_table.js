@@ -46,15 +46,13 @@ class CreatePicturesTable1604710800000 {
                 },
                 {
                     name: 'created_at',
-                    type: 'datetime',
-                    width: 6,
-                    default: 'CURRENT_TIMESTAMP(6)',
+                    type: 'timestamp with time zone',
+                    default: 'now()',
                 },
                 {
                     name: 'updated_at',
-                    type: 'datetime',
-                    width: 6,
-                    default: 'CURRENT_TIMESTAMP(6)',
+                    type: 'timestamp with time zone',
+                    default: 'now()',
                 },
             ],
         }));

@@ -55,7 +55,6 @@ __decorate([
     graphql_1.Field(() => Date),
     typeorm_1.CreateDateColumn({
         name: 'created_at',
-        type: 'datetime',
     }),
     __metadata("design:type", Date)
 ], Message.prototype, "createdAt", void 0);
@@ -63,7 +62,6 @@ __decorate([
     graphql_1.Field(() => Date),
     typeorm_1.UpdateDateColumn({
         name: 'updated_at',
-        type: 'datetime',
     }),
     __metadata("design:type", Date)
 ], Message.prototype, "updatedAt", void 0);

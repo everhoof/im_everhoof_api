@@ -6,6 +6,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -18,6 +19,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -37,6 +39,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -57,6 +60,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -69,6 +73,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -88,6 +93,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -105,6 +111,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -117,6 +124,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -136,6 +144,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -153,6 +162,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -165,6 +175,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -184,6 +195,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -200,6 +212,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -212,6 +225,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -231,6 +245,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -248,6 +263,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -260,6 +276,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -279,6 +296,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -295,6 +313,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -307,6 +326,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -326,6 +346,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -342,6 +363,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -354,6 +376,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -373,6 +396,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -391,6 +415,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -403,6 +428,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -422,6 +448,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -439,6 +466,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -451,6 +479,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -470,6 +499,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -487,6 +517,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -499,6 +530,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -518,6 +550,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -535,6 +568,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -547,6 +581,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -566,6 +601,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -582,6 +618,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -594,6 +631,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -613,6 +651,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -629,6 +668,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -641,6 +681,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -660,6 +701,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -677,6 +719,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -689,6 +732,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -708,6 +752,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -725,6 +770,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -737,6 +783,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -756,6 +803,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -772,6 +820,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -784,6 +833,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -803,6 +853,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -820,6 +871,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -832,6 +884,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -851,6 +904,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -868,6 +922,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -880,6 +935,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -899,6 +955,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -916,6 +973,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -928,6 +986,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -947,6 +1006,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -964,6 +1024,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -976,6 +1037,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -995,6 +1057,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1011,6 +1074,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1023,6 +1087,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1042,6 +1107,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1059,6 +1125,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1071,6 +1138,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1090,6 +1158,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1106,6 +1175,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1118,6 +1188,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1137,6 +1208,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1154,6 +1226,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1166,6 +1239,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1185,6 +1259,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1201,6 +1276,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1213,6 +1289,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1232,6 +1309,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1249,6 +1327,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1261,6 +1340,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1280,6 +1360,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1296,6 +1377,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1308,6 +1390,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1327,6 +1410,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1344,6 +1428,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1356,6 +1441,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1375,6 +1461,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1391,6 +1478,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1403,6 +1491,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1422,6 +1511,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1438,6 +1528,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1450,6 +1541,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1469,6 +1561,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1486,6 +1579,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1498,6 +1592,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1517,6 +1612,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1533,6 +1629,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1545,6 +1642,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1564,6 +1662,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1580,6 +1679,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1592,6 +1692,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1611,6 +1712,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1628,6 +1730,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1640,6 +1743,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1659,6 +1763,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1675,6 +1780,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1687,6 +1793,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1706,6 +1813,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1722,6 +1830,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1734,6 +1843,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1753,6 +1863,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1769,6 +1880,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1781,6 +1893,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1800,6 +1913,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1816,6 +1930,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1828,6 +1943,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1847,6 +1963,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1864,6 +1981,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1876,6 +1994,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1895,6 +2014,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1911,6 +2031,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1923,6 +2044,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1942,6 +2064,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1958,6 +2081,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1970,6 +2094,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -1989,6 +2114,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2005,6 +2131,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2017,6 +2144,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2036,6 +2164,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2052,6 +2181,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2064,6 +2194,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2083,6 +2214,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2099,6 +2231,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2111,6 +2244,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2130,6 +2264,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2147,6 +2282,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2159,6 +2295,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2178,6 +2315,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2194,6 +2332,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2206,6 +2345,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2225,6 +2365,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2242,6 +2383,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2254,6 +2396,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2273,6 +2416,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2289,6 +2433,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2301,6 +2446,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2320,6 +2466,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2336,6 +2483,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2348,6 +2496,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2367,6 +2516,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2383,6 +2533,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2395,6 +2546,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2414,6 +2566,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2430,6 +2583,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2442,6 +2596,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2461,6 +2616,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2478,6 +2634,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2490,6 +2647,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2509,6 +2667,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2525,6 +2684,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2537,6 +2697,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2556,6 +2717,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2572,6 +2734,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2584,6 +2747,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2603,6 +2767,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2619,6 +2784,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2631,6 +2797,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2650,6 +2817,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2666,6 +2834,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2678,6 +2847,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2697,6 +2867,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2713,6 +2884,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2725,6 +2897,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2744,6 +2917,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2761,6 +2935,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2773,6 +2948,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2792,6 +2968,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2808,6 +2985,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2820,6 +2998,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2839,6 +3018,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2856,6 +3036,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2868,6 +3049,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2887,6 +3069,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2903,6 +3086,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2915,6 +3099,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2934,6 +3119,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2950,6 +3136,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2962,6 +3149,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2981,6 +3169,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -2998,6 +3187,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3010,6 +3200,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3029,6 +3220,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3045,6 +3237,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3057,6 +3250,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3076,6 +3270,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3092,6 +3287,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3104,6 +3300,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3123,6 +3320,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3140,6 +3338,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3152,6 +3351,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3171,6 +3371,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3187,6 +3388,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3199,6 +3401,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3218,6 +3421,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3235,6 +3439,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3247,6 +3452,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3266,6 +3472,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3282,6 +3489,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3294,6 +3502,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3313,6 +3522,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3330,6 +3540,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3342,6 +3553,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3361,6 +3573,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3378,6 +3591,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3390,6 +3604,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3409,6 +3624,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3426,6 +3642,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3438,6 +3655,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3457,6 +3675,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3475,6 +3694,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3487,6 +3707,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3506,6 +3727,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3532,6 +3754,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3544,6 +3767,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3563,6 +3787,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3580,6 +3805,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3592,6 +3818,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3611,6 +3838,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3627,6 +3855,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3639,6 +3868,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
@@ -3658,6 +3888,7 @@ declare const _exports: {
         username: string;
         password: string;
         database: string;
+        schema: string;
         timezone: string;
         synchronize: boolean;
         logging: boolean;
