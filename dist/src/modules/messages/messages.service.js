@@ -73,6 +73,7 @@ let MessagesService = class MessagesService {
         };
         const picture = await this.uploadService.uploadPicture(file, user);
         message.pictures = [picture];
+        message.content = '';
         return message;
     }
     async getMessages(args) {
