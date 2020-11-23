@@ -26,6 +26,7 @@ export class Message {
   })
   readonly id: number;
 
+  @Field(() => Number, { nullable: true })
   @Column({
     name: 'owner_id',
     type: 'int',
@@ -34,6 +35,16 @@ export class Message {
     nullable: true,
   })
   ownerId: Nullable<number>;
+
+  @Field(() => String, { nullable: true })
+  @Column({
+    name: 'random_id',
+    type: 'varchar',
+    length: 32,
+    unsigned: true,
+    nullable: true,
+  })
+  randomId: Nullable<string>;
 
   @Field(() => String)
   @Column({

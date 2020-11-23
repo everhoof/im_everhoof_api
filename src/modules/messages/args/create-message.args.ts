@@ -9,6 +9,12 @@ export class CreateMessageArgs {
   @IsOptional()
   content?: string;
 
+  @Field(() => String, { nullable: true })
+  @IsString()
+  @MaxLength(32)
+  @IsOptional()
+  randomId?: string;
+
   @Field(() => [Int], { defaultValue: [] })
   @IsArray()
   @IsInt({ each: true })

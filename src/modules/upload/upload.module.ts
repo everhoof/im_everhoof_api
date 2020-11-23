@@ -9,5 +9,6 @@ import { UploadController } from '@modules/upload/upload.controller';
   imports: [TypeOrmModule.forFeature([PicturesRepository, PictureRepresentationsRepository])],
   providers: [UploadService],
   controllers: [UploadController],
+  exports: [UploadService],
 })
 export class UploadModule {}

@@ -9,6 +9,8 @@ scalar DateTime
 
 type Message {
   id: Int!
+  ownerId: Float
+  randomId: String
   content: String!
   username: String
   createdAt: DateTime!
@@ -21,7 +23,7 @@ type Mutation {
   updateOnlineStatus: Boolean!
   signIn(email: String!, password: String!): Token!
   signUp(email: String!, username: String, password: String!): User!
-  createMessage(content: String, pictures: [Int!] = []): Message!
+  createMessage(content: String, randomId: String, pictures: [Int!] = []): Message!
 }
 
 type Picture {
