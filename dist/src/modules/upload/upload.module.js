@@ -20,6 +20,7 @@ UploadModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([pictures_repository_1.PicturesRepository, picture_representations_repository_1.PictureRepresentationsRepository])],
         providers: [upload_service_1.UploadService],
         controllers: [upload_controller_1.UploadController],
+        exports: [upload_service_1.UploadService],
     })
 ], UploadModule);
 exports.UploadModule = UploadModule;

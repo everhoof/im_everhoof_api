@@ -22,6 +22,13 @@ __decorate([
     __metadata("design:type", String)
 ], CreateMessageArgs.prototype, "content", void 0);
 __decorate([
+    graphql_1.Field(() => String, { nullable: true }),
+    class_validator_1.IsString(),
+    class_validator_1.MaxLength(32),
+    class_validator_1.IsOptional(),
+    __metadata("design:type", String)
+], CreateMessageArgs.prototype, "randomId", void 0);
+__decorate([
     graphql_1.Field(() => [graphql_1.Int], { defaultValue: [] }),
     class_validator_1.IsArray(),
     class_validator_1.IsInt({ each: true }),

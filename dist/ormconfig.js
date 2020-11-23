@@ -3,7 +3,7 @@ const port = 5432;
 const username = 'everhoof_backend';
 const password = 'eruq3ti97bvt589q3w75c3q24';
 const database = 'everhoof';
-const schema = 'im';
+const schema = 'im_dev';
 module.exports = [
     {
         type: 'postgres',

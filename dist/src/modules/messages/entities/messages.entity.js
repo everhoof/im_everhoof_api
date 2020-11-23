@@ -27,6 +27,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Message.prototype, "id", void 0);
 __decorate([
+    graphql_1.Field(() => Number, { nullable: true }),
     typeorm_1.Column({
         name: 'owner_id',
         type: 'int',
@@ -36,6 +37,17 @@ __decorate([
     }),
     __metadata("design:type", Object)
 ], Message.prototype, "ownerId", void 0);
+__decorate([
+    graphql_1.Field(() => String, { nullable: true }),
+    typeorm_1.Column({
+        name: 'random_id',
+        type: 'varchar',
+        length: 32,
+        unsigned: true,
+        nullable: true,
+    }),
+    __metadata("design:type", Object)
+], Message.prototype, "randomId", void 0);
 __decorate([
     graphql_1.Field(() => String),
     typeorm_1.Column({
