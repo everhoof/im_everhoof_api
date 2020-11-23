@@ -31,6 +31,7 @@ const utils_1 = require("../../common/utils/utils");
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const path_1 = require("path");
 const upload_service_1 = require("../upload/upload.service");
+const xss_1 = require("xss");
 let MessagesService = class MessagesService {
     constructor(pubSub, messagesRepository, picturesRepository, uploadService) {
         this.pubSub = pubSub;
@@ -43,7 +44,7 @@ let MessagesService = class MessagesService {
         if (!((_a = args.content) === null || _a === void 0 ? void 0 : _a.trim()) && args.pictures.length === 0)
             throw new exceptions_1.BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
         let message = this.messagesRepository.create({
-            content: (_b = args.content) === null || _b === void 0 ? void 0 : _b.trim(),
+            content: xss_1.escapeHtml(((_b = args.content) === null || _b === void 0 ? void 0 : _b.trim()) || ''),
             ownerId: user.id,
             username: user.username.trim(),
             randomId: (_c = args.randomId) === null || _c === void 0 ? void 0 : _c.trim(),

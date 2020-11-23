@@ -75,7 +75,8 @@
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "typeorm": "^0.2.28",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "xss": "^1.0.8"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.4.1",

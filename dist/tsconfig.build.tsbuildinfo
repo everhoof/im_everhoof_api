@@ -6940,8 +6940,13 @@
         "signature": "5d3402b4318498417fd28a7c6b119e18f257b48580215ebe803d9ec0ff53bd84",
         "affectsGlobalScope": false
       },
+      "../node_modules/xss/typings/xss.d.ts": {
+        "version": "17a1d04fe845c9a07bd6f26ae411ce31a1f098d7129d6109880844d8e2ffa41c",
+        "signature": "17a1d04fe845c9a07bd6f26ae411ce31a1f098d7129d6109880844d8e2ffa41c",
+        "affectsGlobalScope": true
+      },
       "../src/modules/messages/messages.service.ts": {
-        "version": "43b6f4c2574bd169274c4bb9f7845958aa87f02c8076f7ae493882dc0eab376b",
+        "version": "c592d83a0e4d6d590d025a38da56007a18fdf32f2413bbd7253f5d6be6ab2f23",
         "signature": "8932dc95ac08884414cf047fcbbea783d834784af2d601ce093cc3f69395c95f",
         "affectsGlobalScope": false
       },
@@ -13571,6 +13576,7 @@
         "../node_modules/@types/node/path.d.ts",
         "../node_modules/got/dist/source/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
+        "../node_modules/xss/typings/xss.d.ts",
         "../src/common/exceptions/exceptions.ts",
         "../src/common/utils/utils.ts",
         "../src/modules/messages/args/create-message.args.ts",
