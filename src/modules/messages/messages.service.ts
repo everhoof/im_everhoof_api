@@ -13,6 +13,7 @@ import { Utils } from '@common/utils/utils';
 import { PubSub } from 'graphql-subscriptions';
 import { basename } from 'path';
 import { UploadService } from '@modules/upload/upload.service';
+import { escapeHtml } from 'xss';
 
 @Injectable()
 export class MessagesService {
@@ -29,7 +30,7 @@ export class MessagesService {
     if (!args.content?.trim() && args.pictures.length === 0)
       throw new BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
     let message = this.messagesRepository.create({
-      content: args.content?.trim(),
+      content: escapeHtml(args.content?.trim() || ''),
       ownerId: user.id,
       username: user.username.trim(),
       randomId: args.randomId?.trim(),
@@ -59,6 +60,7 @@ export class MessagesService {
     } as Express.Multer.File;
     const picture = await this.uploadService.uploadPicture(file, user);
     message.pictures = [picture];
+    message.content = '';
     return message;
   }
 
