@@ -39,7 +39,7 @@ let UploadService = class UploadService {
         this.httpClient = got_1.default.extend({
             prefixUrl: `https://discord.com/api/v${process.env.DISCORD_API_VERSION}/`,
             headers: {
-                Authorization: `${process.env.DISCORD_API_TOKEN}`,
+                Authorization: `Bot ${process.env.DISCORD_API_TOKEN}`,
             },
         });
     }
@@ -48,7 +48,8 @@ let UploadService = class UploadService {
             throw new exceptions_1.BadRequestException('NO_FILE_PROVIDED');
         const path = utils_1.Utils.getRandomString(24);
         try {
-            file.buffer = await fs_extra_1.readFile(file.path);
+            if (!file.buffer)
+                file.buffer = await fs_extra_1.readFile(file.path);
             const { s, m } = await this.compressImage(file);
             const message = await this.uploadFileToDiscord(file);
             const attachment = message.attachments[0];
