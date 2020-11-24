@@ -6586,7 +6586,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/users/repositories/users.repository.ts": {
-        "version": "a4d02377d1d6dfa8eaa3c05736ebb5146e150999a89ba9be222a9558870f6c4a",
+        "version": "105ec1b2222b959da9c17a7e6d0b1ae730ad8e6fdb59ecb95286d5b1906a88d8",
         "signature": "fbe35e1ca40ce2c45f6cb6fd146d846e5e03dd6c02b7eb368c39c07014c5fc88",
         "affectsGlobalScope": false
       },

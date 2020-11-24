@@ -18,7 +18,7 @@ let UsersRepository = class UsersRepository extends basic_repository_1.BasicRepo
             return Promise.resolve(undefined);
         return this.findOne({
             select: ['id', 'username', 'email', 'salt', 'hash'],
-            where: [{ username: email.toLowerCase() }, { email: email.toLowerCase() }],
+            where: [{ username: typeorm_1.ILike(email.toLowerCase()) }, { email: typeorm_1.ILike(email.toLowerCase()) }],
         });
     }
     getUserByEmailAndUsername(email, username) {
@@ -26,10 +26,10 @@ let UsersRepository = class UsersRepository extends basic_repository_1.BasicRepo
             return Promise.resolve(undefined);
         return this.findOne({
             where: [
-                { username: username ? username : undefined },
+                { username: username ? typeorm_1.ILike(username) : undefined },
                 { email: email },
                 { username: email },
-                { email: username ? username : undefined },
+                { email: username ? typeorm_1.ILike(username) : undefined },
             ],
         });
     }
