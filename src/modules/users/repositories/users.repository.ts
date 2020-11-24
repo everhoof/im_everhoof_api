@@ -1,4 +1,4 @@
-import { EntityRepository } from 'typeorm';
+import { EntityRepository, ILike } from 'typeorm';
 import { User } from '@modules/users/entities/users.entity';
 import { BasicRepository } from '@common/repositories/basic.repository';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
@@ -11,7 +11,7 @@ export class UsersRepository extends BasicRepository<User> {
 
     return this.findOne({
       select: ['id', 'username', 'email', 'salt', 'hash'],
-      where: [{ username: email.toLowerCase() }, { email: email.toLowerCase() }],
+      where: [{ username: ILike(email.toLowerCase()) }, { email: ILike(email.toLowerCase()) }],
     });
   }
 
@@ -20,10 +20,10 @@ export class UsersRepository extends BasicRepository<User> {
 
     return this.findOne({
       where: [
-        { username: username ? username : undefined },
+        { username: username ? ILike(username) : undefined },
         { email: email },
         { username: email },
-        { email: username ? username : undefined },
+        { email: username ? ILike(username) : undefined },
       ],
     });
   }
