@@ -5,8 +5,6 @@ export declare class PicturesLoader extends OrderedNestDataLoader<Picture['id'],
     private readonly picturesRepository;
     constructor(picturesRepository: PicturesRepository);
     protected getOptions: () => {
-        query: (keys: Array<Picture['id']>) => Promise<(Picture & {
-            id: number;
-        })[]>;
+        query: (keys: Array<Picture['id']>) => Promise<Picture[]>;
     };
 }

@@ -5,8 +5,6 @@ export declare class UsersLoader extends OrderedNestDataLoader<User['id'], User>
     private readonly usersRepository;
     constructor(usersRepository: UsersRepository);
     protected getOptions: () => {
-        query: (keys: Array<User['id']>) => Promise<(User & {
-            id: number;
-        })[]>;
+        query: (keys: Array<User['id']>) => Promise<User[]>;
     };
 }

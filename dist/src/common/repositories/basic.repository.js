@@ -16,7 +16,7 @@ class BasicRepository extends typeorm_1.Repository {
         if (!entity)
             throw new exceptions_1.InternalServerErrorException('UNKNOWN');
         entity = await this.save(entity);
-        entity = await this.findOne(entity.id);
+        entity = await this.findOne(entity['id']);
         if (!entity)
             throw new exceptions_1.InternalServerErrorException('UNKNOWN');
         return entity;

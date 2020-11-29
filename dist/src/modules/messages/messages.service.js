@@ -78,7 +78,11 @@ let MessagesService = class MessagesService {
         return message;
     }
     async getMessages(args) {
-        return this.messagesRepository.getList(args);
+        return this.messagesRepository.getList(args, {
+            order: {
+                id: 'DESC',
+            },
+        });
     }
 };
 MessagesService = __decorate([
