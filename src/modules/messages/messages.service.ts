@@ -65,6 +65,10 @@ export class MessagesService {
   }
 
   async getMessages(args: GetMessagesArgs): Promise<Message[]> {
-    return this.messagesRepository.getList(args);
+    return this.messagesRepository.getList(args, {
+      order: {
+        id: 'DESC',
+      },
+    });
   }
 }

@@ -1,9 +1,9 @@
-import { Repository, FindConditions } from 'typeorm';
+import { Repository, FindManyOptions } from 'typeorm';
 import { BadRequestException, InternalServerErrorException } from '@common/exceptions/exceptions';
 import { GetListArgs } from '@common/args/get-list.args';
 
-export class BasicRepository<T> extends Repository<T & { id: number }> {
-  async getList(args: GetListArgs, options?: FindConditions<T>): Promise<T[]> {
+export class BasicRepository<Entity> extends Repository<Entity> {
+  async getList(args: GetListArgs, options?: FindManyOptions<Entity>): Promise<Entity[]> {
     return this.find({
       skip: (args.page - 1) * args.count,
       take: args.count,
@@ -11,15 +11,15 @@ export class BasicRepository<T> extends Repository<T & { id: number }> {
     });
   }
 
-  async saveAndReturn(entity: (T & { id: number }) | undefined): Promise<T & { id: number }> {
+  async saveAndReturn(entity: Entity | undefined): Promise<Entity> {
     if (!entity) throw new InternalServerErrorException('UNKNOWN');
     entity = await this.save(entity);
-    entity = await this.findOne(entity.id);
+    entity = await this.findOne(entity['id'] as number);
     if (!entity) throw new InternalServerErrorException('UNKNOWN');
     return entity;
   }
 
-  async isExist(id: number): Promise<T> {
+  async isExist(id: number): Promise<Entity> {
     if (!id) throw new InternalServerErrorException('UNKNOWN');
     const entity = await this.findOne(id);
     if (!entity) throw new BadRequestException('FORBIDDEN');
