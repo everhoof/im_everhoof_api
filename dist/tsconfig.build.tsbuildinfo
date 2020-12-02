@@ -6936,7 +6936,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/upload/upload.service.ts": {
-        "version": "8a51d903019b96b41f5a99a49adc33f6c6b6a4e56f0b54e26676a9c3076266a6",
+        "version": "8810999b6fdff17be2470ed5631ae110dc8e040b57ac0a032cd450b89160497e",
         "signature": "5d3402b4318498417fd28a7c6b119e18f257b48580215ebe803d9ec0ff53bd84",
         "affectsGlobalScope": false
       },

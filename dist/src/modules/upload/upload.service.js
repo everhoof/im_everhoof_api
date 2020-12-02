@@ -169,8 +169,8 @@ let UploadService = class UploadService {
         const m = gm_1.default(picture.buffer).noProfile().setFormat('jpeg').resize(512, 512).quality(90);
         const [sBuffer, mBuffer] = await Promise.all([this.gmToBuffer(s), this.gmToBuffer(m)]);
         const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
-        const sDimensions = await this.gmToDimensions(gm_1.default(sBuffer));
-        const mDimensions = await this.gmToDimensions(gm_1.default(mBuffer));
+        const sDimensions = await this.gmToDimensions(s);
+        const mDimensions = await this.gmToDimensions(m);
         return {
             s: { buffer: sBuffer, dimensions: sDimensions, size: sSize },
             m: { buffer: mBuffer, dimensions: mDimensions, size: mSize },
