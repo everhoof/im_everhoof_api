@@ -164,8 +164,8 @@ export class UploadService {
 
     const [sBuffer, mBuffer] = await Promise.all([this.gmToBuffer(s), this.gmToBuffer(m)]);
     const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
-    const sDimensions = await this.gmToDimensions(gm(sBuffer));
-    const mDimensions = await this.gmToDimensions(gm(mBuffer));
+    const sDimensions = await this.gmToDimensions(s);
+    const mDimensions = await this.gmToDimensions(m);
 
     return {
       s: { buffer: sBuffer, dimensions: sDimensions, size: sSize },

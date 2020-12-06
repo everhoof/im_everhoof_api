@@ -1,13 +1,21 @@
 import { Reflector } from '@nestjs/core';
-import { CanActivate, createParamDecorator, ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, createParamDecorator, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard as BasicAuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Request } from 'express';
 import { AccountsService } from '@modules/accounts/accounts.service';
 
-function canActivate(context: ExecutionContext): boolean {
+function canActivate(context: ExecutionContext, optional = false): boolean {
   const request = this.getRequest(context);
-  return !(!request || !request.user);
+
+  if (!request || !request.user || request.user === -1) {
+    if (optional) {
+      if (request?.user === -1) throw new UnauthorizedException();
+      return true;
+    }
+    throw new UnauthorizedException();
+  }
+  return true;
 }
 
 @Injectable()
@@ -23,7 +31,27 @@ export class GqlAuthGuard extends BasicAuthGuard('bearer') {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     await super.canActivate(context);
-    return canActivate.call(this, context, this.reflector);
+    return canActivate.call(this, context);
+  }
+}
+
+/**
+ * Throws Unauthorized exception only if token is passed and is invalid
+ */
+@Injectable()
+export class OptionalGqlAuthGuard extends BasicAuthGuard(['bearer-no-exception', 'anonymous']) {
+  constructor(private readonly reflector: Reflector) {
+    super();
+  }
+
+  getRequest(context: ExecutionContext): Request {
+    const ctx = GqlExecutionContext.create(context);
+    return ctx.getContext().req;
+  }
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    await super.canActivate(context);
+    return canActivate.call(this, context, true);
   }
 }
 

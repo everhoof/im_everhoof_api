@@ -10,3 +10,4 @@ export enum AppRoles {
 export const roles: RolesBuilder = new RolesBuilder();
 
 roles.grant(AppRoles.USER);
+roles.grant(AppRoles.ADMIN).readAny('message').deleteAny('message');

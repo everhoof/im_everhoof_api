@@ -18,3 +18,19 @@ export class BearerStrategy extends PassportStrategy(Strategy) {
     return tokenEntity.owner;
   }
 }
+
+@Injectable()
+export class BearerStrategyNoException extends PassportStrategy(Strategy, 'bearer-no-exception') {
+  constructor(private readonly accountsService: AccountsService) {
+    super();
+  }
+
+  async validate(token: string): Promise<User | number> {
+    try {
+      const tokenEntity = await this.accountsService.validateUserByToken(token);
+      return tokenEntity?.owner || -1;
+    } catch (e) {
+      return -1;
+    }
+  }
+}

@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   JoinTable,
   ManyToMany,
@@ -59,6 +60,16 @@ export class Message {
   })
   username: string;
 
+  @Field(() => Number, { nullable: true })
+  @Column({
+    name: 'deleted_by_id',
+    type: 'int',
+    width: 10,
+    unsigned: true,
+    nullable: true,
+  })
+  deletedById: Nullable<number>;
+
   @Field(() => Date)
   @CreateDateColumn({
     name: 'created_at',
@@ -71,6 +82,15 @@ export class Message {
   })
   updatedAt: Date;
 
+  @Index('messages_idx_deleted_at')
+  @Field(() => Date, { nullable: true })
+  @Column({
+    type: 'timestamp with time zone',
+    name: 'deleted_at',
+    nullable: true,
+  })
+  deletedAt: Nullable<Date>;
+
   @RelationId((message: Message) => message.pictures)
   pictureIds: number[];
 
@@ -80,6 +100,13 @@ export class Message {
     referencedColumnName: 'id',
   })
   owner: User;
+
+  @ManyToOne(() => User, ({ messages }) => messages, { onDelete: 'SET NULL' })
+  @JoinColumn({
+    name: 'deleted_by_id',
+    referencedColumnName: 'id',
+  })
+  deletedBy: User;
 
   @ManyToMany(() => Picture, ({ messages }) => messages)
   @JoinTable({

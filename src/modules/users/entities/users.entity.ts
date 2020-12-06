@@ -100,6 +100,7 @@ export class User {
   @OneToMany(() => Picture, ({ owner }) => owner)
   pictures: Picture[];
 
+  @Field(() => [Role])
   @ManyToMany(() => Role, ({ users }) => users)
   @JoinTable({
     name: 'user_roles',
@@ -113,4 +114,9 @@ export class User {
     },
   })
   roles: Role[];
+
+  get roleNames(): string[] {
+    if (!this.roles) return [];
+    return this.roles.map(({ name }) => name);
+  }
 }

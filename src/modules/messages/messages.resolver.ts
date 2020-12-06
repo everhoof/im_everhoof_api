@@ -8,18 +8,21 @@ import DataLoader from 'dataloader';
 import { PicturesLoader } from '@modules/pictures/loaders/pictures.loader';
 import { MessagesService } from '@modules/messages/messages.service';
 import { CreateMessageArgs } from '@modules/messages/args/create-message.args';
-import { CurrentUser, GqlAuthGuard } from '@common/guards/auth.guard';
+import { CurrentUser, GqlAuthGuard, OptionalGqlAuthGuard } from '@common/guards/auth.guard';
 import { User } from '@modules/users/entities/users.entity';
 import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
 import { UsersLoader } from '@modules/users/loaders/users.loader';
 import { PubSub } from 'graphql-subscriptions';
+import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
+import { UseRoles } from 'nest-access-control';
+import { ACGuard } from '@common/guards/access-control.guard';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver(() => Message)
 export class MessagesResolver {
   constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub, private readonly messagesService: MessagesService) {}
 
-  @ResolveField(() => User)
+  @ResolveField(() => User, { nullable: true })
   async owner(
     @Parent() message: Message,
     @Loader(UsersLoader)
@@ -40,6 +43,18 @@ export class MessagesResolver {
     return picturesLoader.loadMany(message.pictureIds);
   }
 
+  @ResolveField(() => User, { nullable: true })
+  async deletedBy(
+    @Parent() message: Message,
+    @Loader(UsersLoader)
+    usersLoader: DataLoader<User['id'], User>,
+  ): Promise<Nullable<User>> {
+    if (message.deletedById) {
+      return usersLoader.load(message.deletedById);
+    }
+    return null;
+  }
+
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async createMessage(@Args() args: CreateMessageArgs, @CurrentUser() user: User): Promise<Message> {
@@ -48,9 +63,23 @@ export class MessagesResolver {
     return message;
   }
 
+  @UseGuards(OptionalGqlAuthGuard, ACGuard)
   @Query(() => [Message])
-  getMessages(@Args() args: GetMessagesArgs): Promise<Message[]> {
-    return this.messagesService.getMessages(args);
+  getMessages(@Args() args: GetMessagesArgs, @CurrentUser() user?: User): Promise<Message[]> {
+    return this.messagesService.getMessages(args, user);
+  }
+
+  @UseGuards(GqlAuthGuard, ACGuard)
+  @UseRoles({
+    resource: 'message',
+    action: 'delete',
+    possession: 'any',
+  })
+  @Mutation(() => Message)
+  async deleteMessage(@Args() args: DeleteMessageArgs, @CurrentUser() user: User): Promise<Message> {
+    const message = await this.messagesService.deleteMessage(args, user);
+    await this.pubSub.publish('messageDeleted', { messageDeleted: message });
+    return message;
   }
 
   @Subscription(() => Message, {
@@ -58,5 +87,12 @@ export class MessagesResolver {
   })
   messageCreated(): AsyncIterator<Message> {
     return this.pubSub.asyncIterator('messageCreated');
+  }
+
+  @Subscription(() => Message, {
+    name: 'messageDeleted',
+  })
+  messageDeleted(): AsyncIterator<Message> {
+    return this.pubSub.asyncIterator('messageDeleted');
   }
 }

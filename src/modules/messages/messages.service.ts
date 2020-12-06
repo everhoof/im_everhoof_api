@@ -14,6 +14,9 @@ import { PubSub } from 'graphql-subscriptions';
 import { basename } from 'path';
 import { UploadService } from '@modules/upload/upload.service';
 import { escapeHtml } from 'xss';
+import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
+import { IsNull } from 'typeorm';
+import { roles } from '../../app.roles';
 
 @Injectable()
 export class MessagesService {
@@ -64,11 +67,18 @@ export class MessagesService {
     return message;
   }
 
-  async getMessages(args: GetMessagesArgs): Promise<Message[]> {
-    return this.messagesRepository.getList(args, {
-      order: {
-        id: 'DESC',
-      },
-    });
+  async getMessages(args: GetMessagesArgs, user?: User): Promise<Message[]> {
+    const canReadAny: boolean = (user && roles.can(user?.roleNames).readAny('message').granted) || false;
+    if (canReadAny) return this.messagesRepository.getList(args, { order: { id: 'DESC' } });
+    return this.messagesRepository.getList(args, { where: { deletedAt: IsNull() }, order: { id: 'DESC' } });
+  }
+
+  async deleteMessage(args: DeleteMessageArgs, user: User): Promise<Message> {
+    if (!args.messageId) throw new BadRequestException('FORBIDDEN');
+    const message = await this.messagesRepository.findOne(args.messageId);
+    if (!message) throw new BadRequestException('FORBIDDEN');
+    message.deletedById = user?.id ?? undefined;
+    message.deletedAt = new Date();
+    return this.messagesRepository.saveAndReturn(message);
   }
 }
