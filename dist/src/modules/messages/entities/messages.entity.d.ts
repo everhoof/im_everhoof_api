@@ -6,9 +6,12 @@ export declare class Message {
     randomId: Nullable<string>;
     content: string;
     username: string;
+    deletedById: Nullable<number>;
     createdAt: Date;
     updatedAt: Date;
+    deletedAt: Nullable<Date>;
     pictureIds: number[];
     owner: User;
+    deletedBy: User;
     pictures: Picture[];
 }

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BearerStrategy = void 0;
+exports.BearerStrategyNoException = exports.BearerStrategy = void 0;
 const passport_http_bearer_1 = require("passport-http-bearer");
 const passport_1 = require("@nestjs/passport");
 const common_1 = require("@nestjs/common");
@@ -33,4 +33,24 @@ BearerStrategy = __decorate([
     __metadata("design:paramtypes", [accounts_service_1.AccountsService])
 ], BearerStrategy);
 exports.BearerStrategy = BearerStrategy;
+let BearerStrategyNoException = class BearerStrategyNoException extends passport_1.PassportStrategy(passport_http_bearer_1.Strategy, 'bearer-no-exception') {
+    constructor(accountsService) {
+        super();
+        this.accountsService = accountsService;
+    }
+    async validate(token) {
+        try {
+            const tokenEntity = await this.accountsService.validateUserByToken(token);
+            return (tokenEntity === null || tokenEntity === void 0 ? void 0 : tokenEntity.owner) || -1;
+        }
+        catch (e) {
+            return -1;
+        }
+    }
+};
+BearerStrategyNoException = __decorate([
+    common_1.Injectable(),
+    __metadata("design:paramtypes", [accounts_service_1.AccountsService])
+], BearerStrategyNoException);
+exports.BearerStrategyNoException = BearerStrategyNoException;
 //# sourceMappingURL=bearer.strategy.js.map

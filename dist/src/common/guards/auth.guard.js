@@ -9,15 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WsAuthenticatedUser = exports.CurrentUser = exports.AuthGuard = exports.WsAuthGuard = exports.GqlAuthGuard = void 0;
+exports.WsAuthenticatedUser = exports.CurrentUser = exports.AuthGuard = exports.WsAuthGuard = exports.OptionalGqlAuthGuard = exports.GqlAuthGuard = void 0;
 const core_1 = require("@nestjs/core");
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const graphql_1 = require("@nestjs/graphql");
 const accounts_service_1 = require("../../modules/accounts/accounts.service");
-function canActivate(context) {
+function canActivate(context, optional = false) {
     const request = this.getRequest(context);
-    return !(!request || !request.user);
+    if (!request || !request.user || request.user === -1) {
+        if (optional) {
+            if ((request === null || request === void 0 ? void 0 : request.user) === -1)
+                throw new common_1.UnauthorizedException();
+            return true;
+        }
+        throw new common_1.UnauthorizedException();
+    }
+    return true;
 }
 let GqlAuthGuard = class GqlAuthGuard extends passport_1.AuthGuard('bearer') {
     constructor(reflector) {
@@ -30,7 +38,7 @@ let GqlAuthGuard = class GqlAuthGuard extends passport_1.AuthGuard('bearer') {
     }
     async canActivate(context) {
         await super.canActivate(context);
-        return canActivate.call(this, context, this.reflector);
+        return canActivate.call(this, context);
     }
 };
 GqlAuthGuard = __decorate([
@@ -38,6 +46,25 @@ GqlAuthGuard = __decorate([
     __metadata("design:paramtypes", [core_1.Reflector])
 ], GqlAuthGuard);
 exports.GqlAuthGuard = GqlAuthGuard;
+let OptionalGqlAuthGuard = class OptionalGqlAuthGuard extends passport_1.AuthGuard(['bearer-no-exception', 'anonymous']) {
+    constructor(reflector) {
+        super();
+        this.reflector = reflector;
+    }
+    getRequest(context) {
+        const ctx = graphql_1.GqlExecutionContext.create(context);
+        return ctx.getContext().req;
+    }
+    async canActivate(context) {
+        await super.canActivate(context);
+        return canActivate.call(this, context, true);
+    }
+};
+OptionalGqlAuthGuard = __decorate([
+    common_1.Injectable(),
+    __metadata("design:paramtypes", [core_1.Reflector])
+], OptionalGqlAuthGuard);
+exports.OptionalGqlAuthGuard = OptionalGqlAuthGuard;
 let WsAuthGuard = class WsAuthGuard {
     constructor(accountsService) {
         this.accountsService = accountsService;

@@ -6,6 +6,7 @@ import { PicturesRepository } from '@modules/pictures/repositories/pictures.repo
 import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
 import { PubSub } from 'graphql-subscriptions';
 import { UploadService } from '@modules/upload/upload.service';
+import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
 export declare class MessagesService {
     private readonly pubSub;
     private readonly messagesRepository;
@@ -14,5 +15,6 @@ export declare class MessagesService {
     constructor(pubSub: PubSub, messagesRepository: MessagesRepository, picturesRepository: PicturesRepository, uploadService: UploadService);
     createMessage(args: CreateMessageArgs, user: User): Promise<Message>;
     private uploadImagesFromMessage;
-    getMessages(args: GetMessagesArgs): Promise<Message[]>;
+    getMessages(args: GetMessagesArgs, user?: User): Promise<Message[]>;
+    deleteMessage(args: DeleteMessageArgs, user: User): Promise<Message>;
 }

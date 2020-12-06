@@ -9,6 +9,13 @@ export declare class GqlAuthGuard extends GqlAuthGuard_base {
     getRequest(context: ExecutionContext): Request;
     canActivate(context: ExecutionContext): Promise<boolean>;
 }
+declare const OptionalGqlAuthGuard_base: import("@nestjs/passport").Type<import("@nestjs/passport").IAuthGuard>;
+export declare class OptionalGqlAuthGuard extends OptionalGqlAuthGuard_base {
+    private readonly reflector;
+    constructor(reflector: Reflector);
+    getRequest(context: ExecutionContext): Request;
+    canActivate(context: ExecutionContext): Promise<boolean>;
+}
 export declare class WsAuthGuard implements CanActivate {
     private accountsService;
     constructor(accountsService: AccountsService);

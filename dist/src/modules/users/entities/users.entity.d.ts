@@ -17,4 +17,5 @@ export declare class User {
     messages: Message[];
     pictures: Picture[];
     roles: Role[];
+    get roleNames(): string[];
 }

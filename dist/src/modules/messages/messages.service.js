@@ -32,6 +32,9 @@ const graphql_subscriptions_1 = require("graphql-subscriptions");
 const path_1 = require("path");
 const upload_service_1 = require("../upload/upload.service");
 const xss_1 = require("xss");
+const delete_message_args_1 = require("./args/delete-message.args");
+const typeorm_2 = require("typeorm");
+const app_roles_1 = require("../../app.roles");
 let MessagesService = class MessagesService {
     constructor(pubSub, messagesRepository, picturesRepository, uploadService) {
         this.pubSub = pubSub;
@@ -77,12 +80,22 @@ let MessagesService = class MessagesService {
         message.content = '';
         return message;
     }
-    async getMessages(args) {
-        return this.messagesRepository.getList(args, {
-            order: {
-                id: 'DESC',
-            },
-        });
+    async getMessages(args, user) {
+        const canReadAny = (user && app_roles_1.roles.can(user === null || user === void 0 ? void 0 : user.roleNames).readAny('message').granted) || false;
+        if (canReadAny)
+            return this.messagesRepository.getList(args, { order: { id: 'DESC' } });
+        return this.messagesRepository.getList(args, { where: { deletedAt: typeorm_2.IsNull() }, order: { id: 'DESC' } });
+    }
+    async deleteMessage(args, user) {
+        var _a;
+        if (!args.messageId)
+            throw new exceptions_1.BadRequestException('FORBIDDEN');
+        const message = await this.messagesRepository.findOne(args.messageId);
+        if (!message)
+            throw new exceptions_1.BadRequestException('FORBIDDEN');
+        message.deletedById = (_a = user === null || user === void 0 ? void 0 : user.id) !== null && _a !== void 0 ? _a : undefined;
+        message.deletedAt = new Date();
+        return this.messagesRepository.saveAndReturn(message);
     }
 };
 MessagesService = __decorate([

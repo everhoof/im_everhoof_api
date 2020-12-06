@@ -7,4 +7,10 @@ export declare class BearerStrategy extends BearerStrategy_base {
     constructor(accountsService: AccountsService);
     validate(token: string): Promise<User>;
 }
+declare const BearerStrategyNoException_base: new (...args: any[]) => Strategy<import("passport-http-bearer").VerifyFunctions>;
+export declare class BearerStrategyNoException extends BearerStrategyNoException_base {
+    private readonly accountsService;
+    constructor(accountsService: AccountsService);
+    validate(token: string): Promise<User | number>;
+}
 export {};

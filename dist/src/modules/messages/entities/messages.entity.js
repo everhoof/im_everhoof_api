@@ -64,6 +64,17 @@ __decorate([
     __metadata("design:type", String)
 ], Message.prototype, "username", void 0);
 __decorate([
+    graphql_1.Field(() => Number, { nullable: true }),
+    typeorm_1.Column({
+        name: 'deleted_by_id',
+        type: 'int',
+        width: 10,
+        unsigned: true,
+        nullable: true,
+    }),
+    __metadata("design:type", Object)
+], Message.prototype, "deletedById", void 0);
+__decorate([
     graphql_1.Field(() => Date),
     typeorm_1.CreateDateColumn({
         name: 'created_at',
@@ -78,6 +89,16 @@ __decorate([
     __metadata("design:type", Date)
 ], Message.prototype, "updatedAt", void 0);
 __decorate([
+    typeorm_1.Index('messages_idx_deleted_at'),
+    graphql_1.Field(() => Date, { nullable: true }),
+    typeorm_1.Column({
+        type: 'timestamp with time zone',
+        name: 'deleted_at',
+        nullable: true,
+    }),
+    __metadata("design:type", Object)
+], Message.prototype, "deletedAt", void 0);
+__decorate([
     typeorm_1.RelationId((message) => message.pictures),
     __metadata("design:type", Array)
 ], Message.prototype, "pictureIds", void 0);
@@ -89,6 +110,14 @@ __decorate([
     }),
     __metadata("design:type", users_entity_1.User)
 ], Message.prototype, "owner", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => users_entity_1.User, ({ messages }) => messages, { onDelete: 'SET NULL' }),
+    typeorm_1.JoinColumn({
+        name: 'deleted_by_id',
+        referencedColumnName: 'id',
+    }),
+    __metadata("design:type", users_entity_1.User)
+], Message.prototype, "deletedBy", void 0);
 __decorate([
     typeorm_1.ManyToMany(() => pictures_entity_1.Picture, ({ messages }) => messages),
     typeorm_1.JoinTable({

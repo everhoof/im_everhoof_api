@@ -11,4 +11,5 @@ var AppRoles;
 })(AppRoles = exports.AppRoles || (exports.AppRoles = {}));
 exports.roles = new nest_access_control_1.RolesBuilder();
 exports.roles.grant(AppRoles.USER);
+exports.roles.grant(AppRoles.ADMIN).readAny('message').deleteAny('message');
 //# sourceMappingURL=app.roles.js.map

@@ -1541,8 +1541,13 @@
         "signature": "5124844de638091d11a8580ab06093ae5d515e89d513aa5ef1f44910acb08b03",
         "affectsGlobalScope": false
       },
+      "../database/migrations/1607203587481-add_deleted_fields_to_messages_table.ts": {
+        "version": "46ef90496bd6ca70bd862f58c6dbe864e3ed0618be036b17140bbfaab4025cbf",
+        "signature": "3c9da4f831f1cb2c29af158173f739f7d1154fe9794852fec22bbab5f93f3aa3",
+        "affectsGlobalScope": false
+      },
       "../database/seeds/1602986400000-create_basic_roles.ts": {
-        "version": "d2fcd484da663bf45da2fac9cb7556954c64711de8fa609c06fcac8ddfb94b4e",
+        "version": "8564c0d5f3637d020278670079f33e570a2e320d3d1aad39c55defa171b6549c",
         "signature": "a96dbb0ec7c5efdb7d62c8b9a3b08c18f1010d4305c39614f79014709b0f77d5",
         "affectsGlobalScope": false
       },
@@ -5866,7 +5871,7 @@
         "affectsGlobalScope": false
       },
       "../src/app.roles.ts": {
-        "version": "8da21494879067f16417779c1ade87b5179eea68486b61a68617b52eaaa824e2",
+        "version": "cf659b47a25bbd35c7d116f9f897c6143ee0e13b58027c02373f1916984ba9c4",
         "signature": "dbaf625a549ca6bbed94b1b4304804af7f6139fd11ca7eadd6cc21f6e74be37d",
         "affectsGlobalScope": false
       },
@@ -5941,13 +5946,13 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/entities/messages.entity.ts": {
-        "version": "44b5a2add368fb686d940155136ee1a8072ab542f7ff2cfa03cf228c3a5ace5c",
-        "signature": "124e891d3ba93911bfb5c755e5bac126cb21a673c491b1c35e27f1c92491d8ec",
+        "version": "4d90d8f4a1ff76ccb1ab68de8443aed05b1fae176ec950707caa3c2cb33e6c11",
+        "signature": "2ca296655cb8d3409be091954829034b5762a2ed0fefc04fbb17fef2b6dcb9ef",
         "affectsGlobalScope": false
       },
       "../src/modules/users/entities/users.entity.ts": {
-        "version": "9bec7dbf65b32da48ef505f22a2476b76134e19e05f121b4e7d6fc43fc76c5af",
-        "signature": "a6aeca5e8450671516dc5f3a4efb040b138f0f8d5c6607d2ffd2bc199911ab93",
+        "version": "b5763dadb9202b8d63f8c2222aad058be0f7077ce69bababbfada48f6ccbd0c4",
+        "signature": "c2f9a3490800553584eebb4dfed96fb48c0e405bd1e00b53a050e07f288e83c4",
         "affectsGlobalScope": false
       },
       "../src/common/exceptions/exceptions.ts": {
@@ -6706,8 +6711,8 @@
         "affectsGlobalScope": false
       },
       "../src/common/guards/auth.guard.ts": {
-        "version": "a70cba5992207c00576191e6874175dd897e643c7b50e7ae5b687b3f4d8bff46",
-        "signature": "ef61ad75a0cd403b808a86f4eee671831520860931215bcd867a80b22694d21c",
+        "version": "e84b4f2028c623df5f9393570cd8222fedc4135e2829cadb91ad667d5093de4f",
+        "signature": "4ee7627b65c249463f2fb007ad51605e31009641e5dc78cab280e3c752776c86",
         "affectsGlobalScope": false
       },
       "../node_modules/dataloader/index.d.ts": {
@@ -6751,8 +6756,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/strategies/bearer.strategy.ts": {
-        "version": "83be7e3a90e7e9bb1d77da7d2d0c63aa0d92b209bc1438490b9754ee3abc5f3b",
-        "signature": "12000d967dc4fb482d42bc56d7b8f2bb15cbecbcef9503e44df95853ab56cd13",
+        "version": "2f8b432dd81296d0da08711de2bce378470e06339623b3e66700ebcf828bf0a8",
+        "signature": "8672f0890ad54cc547f6beaba232e2333fb2153ddc04b326f377a5721cd00f29",
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.resolver.ts": {
@@ -6760,8 +6765,18 @@
         "signature": "4c288384575b25cd3d5bd486e6b7795bc420d28582711314c1d76348b46f7147",
         "affectsGlobalScope": false
       },
+      "../node_modules/@types/passport-anonymous/index.d.ts": {
+        "version": "dfd838dff42908ad7bf264b8029da1ee9768516a533d7881bcb264dc01b41ee5",
+        "signature": "dfd838dff42908ad7bf264b8029da1ee9768516a533d7881bcb264dc01b41ee5",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/strategies/anonymous.strategy.ts": {
+        "version": "2f8f4c9a08258ebad9326fc889026fbfb316163afea988a930bf69fb6942b37e",
+        "signature": "dcc2bdead1a354e770c61796f09acafcede72221fe6f1cf1b34dfd0b862af764",
+        "affectsGlobalScope": false
+      },
       "../src/modules/accounts/accounts.module.ts": {
-        "version": "cdc2c26daea1332de311c12d5d9e65e2842bbbae6d4dc38bf54ddf1d176bd59d",
+        "version": "3277d8e89c968435a4a252994fb000befd814a96aeb8a3d9370dbf902b9af624",
         "signature": "98de1f66ea71edcebabff749b010a6768051978ec049d0cbabf5407b3781134e",
         "affectsGlobalScope": false
       },
@@ -6945,14 +6960,24 @@
         "signature": "17a1d04fe845c9a07bd6f26ae411ce31a1f098d7129d6109880844d8e2ffa41c",
         "affectsGlobalScope": true
       },
+      "../src/modules/messages/args/delete-message.args.ts": {
+        "version": "e6eb2c3a80269c19549c74935ec47e07685c01d328a4f121f86c311e62114629",
+        "signature": "9e875d38b06280db9d69d0d7fa57fdcbdef3df844f0d2f9673aa88ae5c6cc22e",
+        "affectsGlobalScope": false
+      },
       "../src/modules/messages/messages.service.ts": {
-        "version": "f633ec7b581447483cb91e3a441e8d1b50a57b8221c4d91b4d4380b4a8b7d4bd",
-        "signature": "8932dc95ac08884414cf047fcbbea783d834784af2d601ce093cc3f69395c95f",
+        "version": "0cfb07152afe3a106ea5d5d6e0b891e362ca341e14fe3964838b675969a9904a",
+        "signature": "980eafa14073658992b86cfbc0ad8c7779cc75a503e36ebf4593e429264d3e77",
+        "affectsGlobalScope": false
+      },
+      "../src/common/guards/access-control.guard.ts": {
+        "version": "9bf983640794a4bf605c2288040f8a3ad62fa38dccbf5ca28462f00e896444cc",
+        "signature": "038598490cfe8f34414d382fe1f3b55dc6aa3f22f2e661f4c1bfeb2623d4f9a6",
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.resolver.ts": {
-        "version": "e99d94b21ec951338713b1f2049227351e59a68c87dc6d120457d1e90d01c5bb",
-        "signature": "18924dd2aa3feceed9d10d1d2a4ef04510255b91b4c7d74a8c440979dd706787",
+        "version": "79332029e300ca3ffdd46979abd03132d8f253b0bdc1833684ed5e3fd8ee88c1",
+        "signature": "426fee91bd6f30d83fef026a6299bea80c78ce524004e6ef981567378e70e309",
         "affectsGlobalScope": false
       },
       "../node_modules/@nestjs/platform-express/interfaces/serve-static-options.interface.d.ts": {
@@ -7068,11 +7093,6 @@
       "../src/main.ts": {
         "version": "44415f0f9bcbe04b79c691bc48f6e55999f532ef40d80a7129d7b82a6c62b4d4",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "../src/common/guards/access-control.guard.ts": {
-        "version": "9bf983640794a4bf605c2288040f8a3ad62fa38dccbf5ca28462f00e896444cc",
-        "signature": "038598490cfe8f34414d382fe1f3b55dc6aa3f22f2e661f4c1bfeb2623d4f9a6",
         "affectsGlobalScope": false
       },
       "../src/modules/upload/types/upload-object.ts": {
@@ -7504,6 +7524,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1606116039145-add_random-id_to_messages.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1607203587481-add_deleted_fields_to_messages_table.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -10147,6 +10170,9 @@
       ],
       "../node_modules/@types/node/zlib.d.ts": [
         "../node_modules/@types/node/stream.d.ts"
+      ],
+      "../node_modules/@types/passport-anonymous/index.d.ts": [
+        "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-http-bearer/index.d.ts": [
         "../node_modules/@types/express/index.d.ts",
@@ -13471,6 +13497,7 @@
         "../src/modules/accounts/accounts.resolver.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/repositories/tokens.repository.ts",
+        "../src/modules/accounts/strategies/anonymous.strategy.ts",
         "../src/modules/accounts/strategies/bearer.strategy.ts",
         "../src/modules/roles/repositories/roles.repository.ts",
         "../src/modules/users/repositories/users.repository.ts",
@@ -13517,6 +13544,11 @@
         "../node_modules/typeorm/index.d.ts",
         "../src/modules/accounts/entities/tokens.entity.ts"
       ],
+      "../src/modules/accounts/strategies/anonymous.strategy.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/passport/index.d.ts",
+        "../node_modules/@types/passport-anonymous/index.d.ts"
+      ],
       "../src/modules/accounts/strategies/bearer.strategy.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/passport/index.d.ts",
@@ -13529,6 +13561,10 @@
         "../node_modules/graphql-subscriptions/dist/index.d.ts"
       ],
       "../src/modules/messages/args/create-message.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/class-validator/types/index.d.ts"
+      ],
+      "../src/modules/messages/args/delete-message.args.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/class-validator/types/index.d.ts"
       ],
@@ -13558,9 +13594,12 @@
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/dataloader/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
+        "../node_modules/nest-access-control/index.d.ts",
         "../src/common/filters/http-exception.filter.ts",
+        "../src/common/guards/access-control.guard.ts",
         "../src/common/guards/auth.guard.ts",
         "../src/modules/messages/args/create-message.args.ts",
+        "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/messages/messages.service.ts",
@@ -13576,10 +13615,13 @@
         "../node_modules/@types/node/path.d.ts",
         "../node_modules/got/dist/source/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
+        "../node_modules/typeorm/index.d.ts",
         "../node_modules/xss/typings/xss.d.ts",
+        "../src/app.roles.ts",
         "../src/common/exceptions/exceptions.ts",
         "../src/common/utils/utils.ts",
         "../src/modules/messages/args/create-message.args.ts",
+        "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/messages/repositories/messages.repository.ts",
@@ -13813,6 +13855,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1606116039145-add_random-id_to_messages.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1607203587481-add_deleted_fields_to_messages_table.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -16453,6 +16498,9 @@
       ],
       "../node_modules/@types/node/zlib.d.ts": [
         "../node_modules/@types/node/stream.d.ts"
+      ],
+      "../node_modules/@types/passport-anonymous/index.d.ts": [
+        "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-http-bearer/index.d.ts": [
         "../node_modules/@types/express/index.d.ts",
@@ -19752,6 +19800,9 @@
         "../node_modules/typeorm/index.d.ts",
         "../src/modules/accounts/entities/tokens.entity.ts"
       ],
+      "../src/modules/accounts/strategies/anonymous.strategy.ts": [
+        "../node_modules/@types/passport-anonymous/index.d.ts"
+      ],
       "../src/modules/accounts/strategies/bearer.strategy.ts": [
         "../node_modules/@types/passport-http-bearer/index.d.ts",
         "../src/modules/accounts/accounts.service.ts",
@@ -19765,6 +19816,7 @@
         "../node_modules/dataloader/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../src/modules/messages/args/create-message.args.ts",
+        "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/messages/messages.service.ts",
@@ -19774,6 +19826,7 @@
       "../src/modules/messages/messages.service.ts": [
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../src/modules/messages/args/create-message.args.ts",
+        "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/messages/repositories/messages.repository.ts",
