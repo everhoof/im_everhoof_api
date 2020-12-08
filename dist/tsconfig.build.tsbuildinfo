@@ -5871,7 +5871,7 @@
         "affectsGlobalScope": false
       },
       "../src/app.roles.ts": {
-        "version": "cf659b47a25bbd35c7d116f9f897c6143ee0e13b58027c02373f1916984ba9c4",
+        "version": "b232f967a6dc00be93697e19a2f74faf002df0e02dbae1fe044e7d2daf69ed90",
         "signature": "dbaf625a549ca6bbed94b1b4304804af7f6139fd11ca7eadd6cc21f6e74be37d",
         "affectsGlobalScope": false
       },
@@ -6966,7 +6966,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.service.ts": {
-        "version": "0cfb07152afe3a106ea5d5d6e0b891e362ca341e14fe3964838b675969a9904a",
+        "version": "8977a3620c93af93d860613fefec7cfb92f9ff9a9dbfed880f3b98452b6482ed",
         "signature": "980eafa14073658992b86cfbc0ad8c7779cc75a503e36ebf4593e429264d3e77",
         "affectsGlobalScope": false
       },
@@ -6976,7 +6976,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.resolver.ts": {
-        "version": "79332029e300ca3ffdd46979abd03132d8f253b0bdc1833684ed5e3fd8ee88c1",
+        "version": "8582c1454d9670ccdbf85b0427bfb052c0307245cd4ac0b961b372f83b4d30f4",
         "signature": "426fee91bd6f30d83fef026a6299bea80c78ce524004e6ef981567378e70e309",
         "affectsGlobalScope": false
       },
@@ -13594,7 +13594,6 @@
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/dataloader/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
-        "../node_modules/nest-access-control/index.d.ts",
         "../src/common/filters/http-exception.filter.ts",
         "../src/common/guards/access-control.guard.ts",
         "../src/common/guards/auth.guard.ts",

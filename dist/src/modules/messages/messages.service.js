@@ -88,10 +88,14 @@ let MessagesService = class MessagesService {
     }
     async deleteMessage(args, user) {
         var _a;
-        if (!args.messageId)
+        const canDeleteAny = app_roles_1.roles.can(user.roleNames).deleteAny('message').granted;
+        const canDeleteOwn = app_roles_1.roles.can(user.roleNames).deleteOwn('message').granted;
+        if (!args.messageId || (!canDeleteOwn && !canDeleteAny))
             throw new exceptions_1.BadRequestException('FORBIDDEN');
         const message = await this.messagesRepository.findOne(args.messageId);
         if (!message)
+            throw new exceptions_1.BadRequestException('FORBIDDEN');
+        if (!canDeleteAny && canDeleteOwn && message.ownerId !== user.id)
             throw new exceptions_1.BadRequestException('FORBIDDEN');
         message.deletedById = (_a = user === null || user === void 0 ? void 0 : user.id) !== null && _a !== void 0 ? _a : undefined;
         message.deletedAt = new Date();

@@ -32,7 +32,6 @@ const get_messages_args_1 = require("./args/get-messages.args");
 const users_loader_1 = require("../users/loaders/users.loader");
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const delete_message_args_1 = require("./args/delete-message.args");
-const nest_access_control_1 = require("nest-access-control");
 const access_control_guard_1 = require("../../common/guards/access-control.guard");
 let MessagesResolver = class MessagesResolver {
     constructor(pubSub, messagesService) {
@@ -118,12 +117,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], MessagesResolver.prototype, "getMessages", null);
 __decorate([
-    common_1.UseGuards(auth_guard_1.GqlAuthGuard, access_control_guard_1.ACGuard),
-    nest_access_control_1.UseRoles({
-        resource: 'message',
-        action: 'delete',
-        possession: 'any',
-    }),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
     graphql_1.Mutation(() => messages_entity_1.Message),
     __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
     __metadata("design:type", Function),
