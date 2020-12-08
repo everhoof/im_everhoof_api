@@ -74,11 +74,18 @@ export class MessagesService {
   }
 
   async deleteMessage(args: DeleteMessageArgs, user: User): Promise<Message> {
-    if (!args.messageId) throw new BadRequestException('FORBIDDEN');
+    const canDeleteAny: boolean = roles.can(user.roleNames).deleteAny('message').granted;
+    const canDeleteOwn: boolean = roles.can(user.roleNames).deleteOwn('message').granted;
+    if (!args.messageId || (!canDeleteOwn && !canDeleteAny)) throw new BadRequestException('FORBIDDEN');
+
     const message = await this.messagesRepository.findOne(args.messageId);
+
     if (!message) throw new BadRequestException('FORBIDDEN');
+    if (!canDeleteAny && canDeleteOwn && message.ownerId !== user.id) throw new BadRequestException('FORBIDDEN');
+
     message.deletedById = user?.id ?? undefined;
     message.deletedAt = new Date();
+
     return this.messagesRepository.saveAndReturn(message);
   }
 }

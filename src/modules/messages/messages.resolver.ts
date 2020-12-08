@@ -14,7 +14,6 @@ import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
 import { UsersLoader } from '@modules/users/loaders/users.loader';
 import { PubSub } from 'graphql-subscriptions';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
-import { UseRoles } from 'nest-access-control';
 import { ACGuard } from '@common/guards/access-control.guard';
 
 @UseFilters(GraphqlExceptionFilter)
@@ -69,12 +68,7 @@ export class MessagesResolver {
     return this.messagesService.getMessages(args, user);
   }
 
-  @UseGuards(GqlAuthGuard, ACGuard)
-  @UseRoles({
-    resource: 'message',
-    action: 'delete',
-    possession: 'any',
-  })
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async deleteMessage(@Args() args: DeleteMessageArgs, @CurrentUser() user: User): Promise<Message> {
     const message = await this.messagesService.deleteMessage(args, user);

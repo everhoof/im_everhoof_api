@@ -9,5 +9,7 @@ export enum AppRoles {
 
 export const roles: RolesBuilder = new RolesBuilder();
 
-roles.grant(AppRoles.USER);
-roles.grant(AppRoles.ADMIN).readAny('message').deleteAny('message');
+roles.grant(AppRoles.UNVERIFIED_USER).read('message').deleteOwn('message');
+roles.grant(AppRoles.USER).extend(AppRoles.UNVERIFIED_USER);
+roles.grant(AppRoles.MODERATOR).extend(AppRoles.USER).readAny('message').deleteAny('message');
+roles.grant(AppRoles.ADMIN).extend(AppRoles.MODERATOR);
