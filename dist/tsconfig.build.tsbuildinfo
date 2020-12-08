@@ -6786,8 +6786,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/roles/roles.resolver.ts": {
-        "version": "6710fa20b98f4cad674a188be3a83df366a336cce02eb7cc251e3beee7a75c52",
-        "signature": "b5c3aef5a6246d92cbdabaee7ff79d2df670f004e783fca3fe2dee37fee563a3",
+        "version": "b2d95970e7f8ccfa1988871693f79d6617fac748855a1e7b494df18394ca86ab",
+        "signature": "30766b1d6cdf020364efd51902d6ee54a314b100928b6b8f65ae094d134b15e8",
         "affectsGlobalScope": false
       },
       "../src/modules/roles/roles.module.ts": {
@@ -13725,6 +13725,7 @@
       "../src/modules/roles/roles.resolver.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/graphql/index.d.ts",
+        "../src/app.roles.ts",
         "../src/common/filters/http-exception.filter.ts"
       ],
       "../src/modules/roles/roles.service.ts": [
