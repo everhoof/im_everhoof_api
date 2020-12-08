@@ -56,6 +56,7 @@ type PictureRepresentation {
 type Query {
   getCurrentUser: User!
   getOnline: [User!]!
+  getGrants: String!
   getHello: String!
   getPictureById(pictureId: Int!): Picture!
   getMessages(count: Int = 100, page: Int = 1): [Message!]!
