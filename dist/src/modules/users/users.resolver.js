@@ -27,6 +27,7 @@ const nestjs_graphql_dataloader_1 = require("@intelrug/nestjs-graphql-dataloader
 const dataloader_1 = __importDefault(require("dataloader"));
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const users_service_1 = require("./users.service");
+const get_user_by_id_args_1 = require("./args/get-user-by-id.args");
 let UsersResolver = class UsersResolver {
     constructor(pubSub, usersService) {
         this.pubSub = pubSub;
@@ -40,6 +41,9 @@ let UsersResolver = class UsersResolver {
     }
     async getCurrentUser(user) {
         return user;
+    }
+    async getUserById(args) {
+        return this.usersService.getUserById(args);
     }
     async getOnline() {
         return this.usersService.getOnline();
@@ -70,6 +74,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersResolver.prototype, "getCurrentUser", null);
 __decorate([
+    graphql_1.Query(() => users_entity_1.User),
+    __param(0, graphql_1.Args()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [get_user_by_id_args_1.GetUserByIdArgs]),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "getUserById", null);
+__decorate([
     graphql_1.Query(() => [users_entity_1.User]),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -91,7 +102,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], UsersResolver.prototype, "onlineUpdated", null);
 UsersResolver = __decorate([
-    common_1.UseFilters(http_exception_filter_1.HttpExceptionFilter),
+    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
     graphql_1.Resolver(() => users_entity_1.User),
     __param(0, common_1.Inject('PUB_SUB')),
     __metadata("design:paramtypes", [graphql_subscriptions_1.PubSub, users_service_1.UsersService])

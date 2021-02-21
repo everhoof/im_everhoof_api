@@ -22,11 +22,19 @@ const luxon_1 = require("luxon");
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const users_entity_1 = require("./entities/users.entity");
 const utils_1 = require("../../common/utils/utils");
+const exceptions_1 = require("../../common/exceptions/exceptions");
+const get_user_by_id_args_1 = require("./args/get-user-by-id.args");
 let UsersService = class UsersService {
     constructor(pubSub, usersRepository) {
         this.pubSub = pubSub;
         this.usersRepository = usersRepository;
         this.onlineUsersIds = [];
+    }
+    async getUserById(args) {
+        const user = await this.usersRepository.findOne(args.id);
+        if (!user)
+            throw new exceptions_1.BadRequestException('USER_DOES_NOT_EXIST_WITH_ID', args.id.toString());
+        return user;
     }
     async updateOnline() {
         const users = await this.usersRepository.find({
