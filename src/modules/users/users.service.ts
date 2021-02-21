@@ -7,6 +7,8 @@ import { DateTime } from 'luxon';
 import { PubSub } from 'graphql-subscriptions';
 import { User } from '@modules/users/entities/users.entity';
 import { Utils } from '@common/utils/utils';
+import { BadRequestException } from '@common/exceptions/exceptions';
+import { GetUserByIdArgs } from '@modules/users/args/get-user-by-id.args';
 
 @Injectable()
 export class UsersService {
@@ -18,6 +20,12 @@ export class UsersService {
   ) {}
 
   public onlineUsersIds: number[] = [];
+
+  async getUserById(args: GetUserByIdArgs): Promise<User> {
+    const user = await this.usersRepository.findOne(args.id);
+    if (!user) throw new BadRequestException('USER_DOES_NOT_EXIST_WITH_ID', args.id.toString());
+    return user;
+  }
 
   @Cron(CronExpression.EVERY_30_SECONDS)
   async updateOnline(): Promise<void> {

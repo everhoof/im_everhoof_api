@@ -1,6 +1,6 @@
-import { Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, UseFilters, UseGuards } from '@nestjs/common';
-import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
+import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
 import { User } from '@modules/users/entities/users.entity';
 import { CurrentUser, GqlAuthGuard } from '@common/guards/auth.guard';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
@@ -9,8 +9,9 @@ import { Loader } from '@intelrug/nestjs-graphql-dataloader';
 import DataLoader from 'dataloader';
 import { PubSub } from 'graphql-subscriptions';
 import { UsersService } from '@modules/users/users.service';
+import { GetUserByIdArgs } from '@modules/users/args/get-user-by-id.args';
 
-@UseFilters(HttpExceptionFilter)
+@UseFilters(GraphqlExceptionFilter)
 @Resolver(() => User)
 export class UsersResolver {
   constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub, private readonly usersService: UsersService) {}
@@ -31,6 +32,11 @@ export class UsersResolver {
   @UseGuards(GqlAuthGuard)
   async getCurrentUser(@CurrentUser() user: User): Promise<User> {
     return user;
+  }
+
+  @Query(() => User)
+  async getUserById(@Args() args: GetUserByIdArgs): Promise<User> {
+    return this.usersService.getUserById(args);
   }
 
   @Query(() => [User])

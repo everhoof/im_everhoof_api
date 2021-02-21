@@ -55,6 +55,7 @@ type PictureRepresentation {
 
 type Query {
   getCurrentUser: User!
+  getUserById(id: Int!): User!
   getOnline: [User!]!
   getGrants: String!
   getHello: String!
