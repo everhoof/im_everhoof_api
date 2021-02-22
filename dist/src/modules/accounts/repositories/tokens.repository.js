@@ -34,6 +34,9 @@ let TokensRepository = class TokensRepository extends typeorm_1.Repository {
         const accessToken = await this.findOne({ where: { value: newToken } });
         return accessToken ? this.createTokenString() : newToken;
     }
+    async expireUserTokens(ownerId) {
+        await this.delete({ ownerId });
+    }
 };
 TokensRepository = __decorate([
     typeorm_1.EntityRepository(tokens_entity_1.Token)

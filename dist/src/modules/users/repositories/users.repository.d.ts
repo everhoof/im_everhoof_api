@@ -8,5 +8,4 @@ export declare class UsersRepository extends BasicRepository<User> {
         salt: string;
         hash: string;
     }): Promise<User>;
-    userExists(userId: number): Promise<User>;
 }

@@ -19,6 +19,14 @@ const exceptions = {
         en: 'User with id %id% does not exist',
         ru: 'Пользователь с id %id% не существует',
     },
+    USER_ALREADY_PUNISHED: {
+        en: 'User already punished',
+        ru: 'Пользователь уже наказан',
+    },
+    USER_IS_NOT_PUNISHED: {
+        en: 'User is not punished',
+        ru: 'Пользователь ещё не наказан',
+    },
     USERNAME_OCCUPIED: {
         en: 'This username is already occupied',
         ru: 'Это имя пользователя уже занято',

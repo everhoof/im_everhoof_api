@@ -2,6 +2,7 @@ import { Token } from '@modules/accounts/entities/tokens.entity';
 import { Role } from '@modules/roles/entities/roles.entity';
 import { Message } from '@modules/messages/entities/messages.entity';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
+import { Punishment } from '@modules/users/entities/punishments.entity';
 export declare class User {
     readonly id: number;
     email: string;
@@ -16,6 +17,9 @@ export declare class User {
     avatar: Nullable<Picture>;
     messages: Message[];
     pictures: Picture[];
+    punishments: Punishment[];
+    executedPunishments: Punishment[];
+    canceledPunishments: Punishment[];
     roles: Role[];
     get roleNames(): string[];
 }

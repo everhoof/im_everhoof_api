@@ -1541,6 +1541,11 @@
         "signature": "77e0a8f4a889f7090c7fc61d2f4b5492702fc6e3c99443da06ca31f9225c52cd",
         "affectsGlobalScope": false
       },
+      "../database/migrations/1607697680648-create_punishments_table.ts": {
+        "version": "f9352da41297a0cc2aa0c214b2e7294760d1178dc1a02d665f4b0beed805da1a",
+        "signature": "582d5fd4d8294e76b3477a16113aa418ef977255cc164f3a74aea97b6e11fcbe",
+        "affectsGlobalScope": false
+      },
       "../database/seeds/1602986400000-create_basic_roles.ts": {
         "version": "8564c0d5f3637d020278670079f33e570a2e320d3d1aad39c55defa171b6549c",
         "signature": "f57c5162f010e0b8d13a8718c0725e3a83df0bb69b961966888378d0531ad7f9",
@@ -5866,7 +5871,7 @@
         "affectsGlobalScope": false
       },
       "../src/app.roles.ts": {
-        "version": "b232f967a6dc00be93697e19a2f74faf002df0e02dbae1fe044e7d2daf69ed90",
+        "version": "c66eba000947a990bc2980bd0e471567c128f91ff88c97ccab66d04e56867d5b",
         "signature": "72298b6d368906fd9386066ccd2cd2898b12c5802f9756fb70318ebebec63d07",
         "affectsGlobalScope": false
       },
@@ -5943,16 +5948,6 @@
       "../src/modules/messages/entities/messages.entity.ts": {
         "version": "4d90d8f4a1ff76ccb1ab68de8443aed05b1fae176ec950707caa3c2cb33e6c11",
         "signature": "a1a99d2459aaf8d5f08dd0a04106566f55f914bd04de99535fcc7865b05aaf48",
-        "affectsGlobalScope": false
-      },
-      "../src/modules/users/entities/users.entity.ts": {
-        "version": "b5763dadb9202b8d63f8c2222aad058be0f7077ce69bababbfada48f6ccbd0c4",
-        "signature": "c0ac4cab4821a7acb6ea0db0a07a9c0b8c54bc96fae17257fd6aa8873ca38b78",
-        "affectsGlobalScope": false
-      },
-      "../src/common/exceptions/exceptions.ts": {
-        "version": "a37a64b40157c9258328daba375fb3a709de8ffa762554f4567d80f4a9cd22e9",
-        "signature": "81f04e5c4252e17da26d1f9d2c17e3b7c79d7639f596b77fedbf629366acd53f",
         "affectsGlobalScope": false
       },
       "../node_modules/class-validator/types/validation/ValidationError.d.ts": {
@@ -6570,6 +6565,26 @@
         "signature": "1d5f30cbd06ffa2aab22346b087e140f069851c17b91189be8d1e168d53f9f93",
         "affectsGlobalScope": false
       },
+      "../src/modules/users/args/punishment.args.ts": {
+        "version": "672cbe97360ecc597ab8e13366d9010161f55d1846c6bf0bdffb939903e80754",
+        "signature": "c5e365eaa03d4568dc06c6ffea24af0c370b017b295a6aefaadd075ff142397d",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/users/entities/punishments.entity.ts": {
+        "version": "341e7db539f937448b30cec093d9f8893970b76df1c8fcb1f275e8ba672e0653",
+        "signature": "2d2069b172145248bf0c8b161ee72c9a69c57a304840cc686121e6e1b0b01902",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/users/entities/users.entity.ts": {
+        "version": "f2f5f09f75400b5d9bc365798db32b7eca60ac65a2df45ad8b8ea4333503b26f",
+        "signature": "0b518c225d5af51ecae0fc291996049029bf62f8979fac170a13ac47c154d6c5",
+        "affectsGlobalScope": false
+      },
+      "../src/common/exceptions/exceptions.ts": {
+        "version": "4305485dc4407e35b157940f863169fb9e6222b3424d5d33cf79eb795cc4eb85",
+        "signature": "ed640a04ee03e2128bbf68dbc68c767fee6b2b8c912718dc0de46a8ff57a5791",
+        "affectsGlobalScope": false
+      },
       "../src/common/args/get-list.args.ts": {
         "version": "86fa9ed01eec873bbb59ec48efd66eaa7d9657bd72115e25778cf854f94bf0f2",
         "signature": "a78443f774561f6d6b6a64c72d68e1b3353b62b3ab40c301ce4e9fd2a743d940",
@@ -6586,8 +6601,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/users/repositories/users.repository.ts": {
-        "version": "105ec1b2222b959da9c17a7e6d0b1ae730ad8e6fdb59ecb95286d5b1906a88d8",
-        "signature": "a2b56815d10937d1f6c69ffd0c1e1417dbb87e7fc74ac3df9d6c693ae79795cc",
+        "version": "8899ccc8e9ec1031161cf41e67441bb9466d4f5921342491a3491a6ce2b6c97d",
+        "signature": "e39755c3e7d508ac8ac4e2f9c1276e871b46c0601806a00e4e7a85a570914257",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/luxon/index.d.ts": {
@@ -6620,14 +6635,29 @@
         "signature": "4ce6679f0ed47db7f2ce4f8158893a000bdedeeb90076f219c4f693e08aef274",
         "affectsGlobalScope": false
       },
+      "../src/modules/users/repositories/punishments.repository.ts": {
+        "version": "b6d3c7aeecddd2d040e7e6857db7cf50c712cddba9d22882dc33e716eaca4e8d",
+        "signature": "db04bee980ea76b283b9f177a019c0f0bbd78935ccdf007b916bb65931a3f7cf",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/users/args/unpunishment.args.ts": {
+        "version": "604fbcf8297cf15aecc602c8c5910be51a9934620cf4f73b7ff23523c99b3abb",
+        "signature": "dcb33c61f4731c233da5784654a238b1a62a9fe6e1884c42995cba257f2e18dc",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/repositories/tokens.repository.ts": {
+        "version": "5dc5300dde436088ad437ca5812203b2345d7111405daf4dc3243d0cf4694d9e",
+        "signature": "557946b6d049c4c7058512d1c934adbf8388e4719637d6436eef86d62c451277",
+        "affectsGlobalScope": false
+      },
       "../src/modules/users/args/get-user-by-id.args.ts": {
         "version": "9a377e53c1a5bcb65a4b386779c28a35894ea341e91c767d712450915361b4c7",
         "signature": "7e25ca47fa1c84337aec61a9ae88ff55b909b5461bb5006caa9ae788f3186777",
         "affectsGlobalScope": false
       },
       "../src/modules/users/users.service.ts": {
-        "version": "25f63cbfd22f03c76ce576ab7bd2ffcf525e4cd50d4a9d27bda9ccd5f86ac448",
-        "signature": "916f0898e328b571c5d53e8481e62d40e301361fe2f3564bd436030b2d103307",
+        "version": "b4e2747d1036f2352bc0a383ef59de63cfd46718c32fd65e9a4069a987d53c3d",
+        "signature": "f1c29ba374422be0e36fe5affd60579a580b015f87bb03ed861a3ca3c6364e09",
         "affectsGlobalScope": false
       },
       "../src/common/filters/http-exception.filter.ts": {
@@ -6690,11 +6720,6 @@
         "signature": "8f1241f5d9f0d3d72117768b3c974e462840fbd85026fb66685078945404cf2f",
         "affectsGlobalScope": false
       },
-      "../src/modules/accounts/repositories/tokens.repository.ts": {
-        "version": "3730eb8a61dc64188fdb2cc39c8d3ba4232b58e6607f688015798756290ecdc5",
-        "signature": "1196a204a8185bcc5e64db95a70da4c9b72ba6ca19aad22c1b19bbcf2b12c159",
-        "affectsGlobalScope": false
-      },
       "../src/modules/accounts/args/sign-in.args.ts": {
         "version": "8b4f0e6f99d345d1961259db6f3a093ed6e3752a17657cb09b9be2b100d9cc2e",
         "signature": "9ab17a52871984cd3a7dd87f700fa650e306153a36fa5a174518ffb1e68fc504",
@@ -6736,8 +6761,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/users/users.resolver.ts": {
-        "version": "28c4f93ceb2d10c6a346be9bbb881826ca1799d6b4c6e9f891af08ee443eb964",
-        "signature": "fe572ddc7e790bf881b75d48d3b490ccff769ae4dc6880ce9fb58b8be2bf2971",
+        "version": "b170e2084873a24f9e3c58daa2a194d3e5532c8505b4c7ddd3cdd190a05a3e12",
+        "signature": "5cb431f261146fa35fbc40e4115a7d01588aad49662741a766c7ea3789be1f88",
         "affectsGlobalScope": false
       },
       "../src/modules/users/loaders/users.loader.ts": {
@@ -6746,7 +6771,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/users/users.module.ts": {
-        "version": "887926d02fb16dde666432cecc2f59fd93dae206d0e8211c62fe81832943c7ff",
+        "version": "d0f43f0801cde439108d9c14f6ed49080a5398e1f3520874a67beef42c5fb8de",
         "signature": "aa1725e38b5a0b4009f6a74f296f173e7926c119a60454dbd2e523861735df69",
         "affectsGlobalScope": false
       },
@@ -7527,6 +7552,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1607203587481-add_deleted_fields_to_messages_table.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1607697680648-create_punishments_table.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -13778,13 +13806,28 @@
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/class-validator/types/index.d.ts"
       ],
+      "../src/modules/users/args/punishment.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/class-validator/types/index.d.ts"
+      ],
+      "../src/modules/users/args/unpunishment.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/class-validator/types/index.d.ts"
+      ],
+      "../src/modules/users/entities/punishments.entity.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/typeorm/index.d.ts",
+        "../src/modules/users/args/punishment.args.ts",
+        "../src/modules/users/entities/users.entity.ts"
+      ],
       "../src/modules/users/entities/users.entity.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
         "../src/modules/accounts/entities/tokens.entity.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/pictures/entities/pictures.entity.ts",
-        "../src/modules/roles/entities/roles.entity.ts"
+        "../src/modules/roles/entities/roles.entity.ts",
+        "../src/modules/users/entities/punishments.entity.ts"
       ],
       "../src/modules/users/loaders/users.loader.ts": [
         "../node_modules/@intelrug/nestjs-graphql-dataloader/dist/types/index.d.ts",
@@ -13793,9 +13836,13 @@
         "../src/modules/users/entities/users.entity.ts",
         "../src/modules/users/repositories/users.repository.ts"
       ],
+      "../src/modules/users/repositories/punishments.repository.ts": [
+        "../node_modules/typeorm/index.d.ts",
+        "../src/common/repositories/basic.repository.ts",
+        "../src/modules/users/entities/punishments.entity.ts"
+      ],
       "../src/modules/users/repositories/users.repository.ts": [
         "../node_modules/typeorm/index.d.ts",
-        "../src/common/exceptions/exceptions.ts",
         "../src/common/repositories/basic.repository.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
         "../src/modules/users/entities/users.entity.ts"
@@ -13803,7 +13850,9 @@
       "../src/modules/users/users.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/typeorm/index.d.ts",
+        "../src/modules/accounts/repositories/tokens.repository.ts",
         "../src/modules/users/loaders/users.loader.ts",
+        "../src/modules/users/repositories/punishments.repository.ts",
         "../src/modules/users/repositories/users.repository.ts",
         "../src/modules/users/users.resolver.ts",
         "../src/modules/users/users.service.ts"
@@ -13814,11 +13863,15 @@
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/dataloader/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
+        "../node_modules/nest-access-control/index.d.ts",
         "../src/common/filters/http-exception.filter.ts",
         "../src/common/guards/auth.guard.ts",
         "../src/modules/pictures/entities/pictures.entity.ts",
         "../src/modules/pictures/loaders/pictures.loader.ts",
         "../src/modules/users/args/get-user-by-id.args.ts",
+        "../src/modules/users/args/punishment.args.ts",
+        "../src/modules/users/args/unpunishment.args.ts",
+        "../src/modules/users/entities/punishments.entity.ts",
         "../src/modules/users/entities/users.entity.ts",
         "../src/modules/users/users.service.ts"
       ],
@@ -13831,8 +13884,13 @@
         "../node_modules/typeorm/index.d.ts",
         "../src/common/exceptions/exceptions.ts",
         "../src/common/utils/utils.ts",
+        "../src/modules/accounts/repositories/tokens.repository.ts",
         "../src/modules/users/args/get-user-by-id.args.ts",
+        "../src/modules/users/args/punishment.args.ts",
+        "../src/modules/users/args/unpunishment.args.ts",
+        "../src/modules/users/entities/punishments.entity.ts",
         "../src/modules/users/entities/users.entity.ts",
+        "../src/modules/users/repositories/punishments.repository.ts",
         "../src/modules/users/repositories/users.repository.ts"
       ]
     },
@@ -13865,6 +13923,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1607203587481-add_deleted_fields_to_messages_table.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1607697680648-create_punishments_table.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -19914,16 +19975,25 @@
         "../src/modules/upload/types/uploaded-picture.ts",
         "../src/modules/users/entities/users.entity.ts"
       ],
+      "../src/modules/users/entities/punishments.entity.ts": [
+        "../src/modules/users/args/punishment.args.ts",
+        "../src/modules/users/entities/users.entity.ts"
+      ],
       "../src/modules/users/entities/users.entity.ts": [
         "../src/modules/accounts/entities/tokens.entity.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/pictures/entities/pictures.entity.ts",
-        "../src/modules/roles/entities/roles.entity.ts"
+        "../src/modules/roles/entities/roles.entity.ts",
+        "../src/modules/users/entities/punishments.entity.ts"
       ],
       "../src/modules/users/loaders/users.loader.ts": [
         "../node_modules/@intelrug/nestjs-graphql-dataloader/dist/types/index.d.ts",
         "../src/modules/users/entities/users.entity.ts",
         "../src/modules/users/repositories/users.repository.ts"
+      ],
+      "../src/modules/users/repositories/punishments.repository.ts": [
+        "../src/common/repositories/basic.repository.ts",
+        "../src/modules/users/entities/punishments.entity.ts"
       ],
       "../src/modules/users/repositories/users.repository.ts": [
         "../src/common/repositories/basic.repository.ts",
@@ -19935,13 +20005,21 @@
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../src/modules/pictures/entities/pictures.entity.ts",
         "../src/modules/users/args/get-user-by-id.args.ts",
+        "../src/modules/users/args/punishment.args.ts",
+        "../src/modules/users/args/unpunishment.args.ts",
+        "../src/modules/users/entities/punishments.entity.ts",
         "../src/modules/users/entities/users.entity.ts",
         "../src/modules/users/users.service.ts"
       ],
       "../src/modules/users/users.service.ts": [
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
+        "../src/modules/accounts/repositories/tokens.repository.ts",
         "../src/modules/users/args/get-user-by-id.args.ts",
+        "../src/modules/users/args/punishment.args.ts",
+        "../src/modules/users/args/unpunishment.args.ts",
+        "../src/modules/users/entities/punishments.entity.ts",
         "../src/modules/users/entities/users.entity.ts",
+        "../src/modules/users/repositories/punishments.repository.ts",
         "../src/modules/users/repositories/users.repository.ts"
       ]
     },

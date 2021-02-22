@@ -16,6 +16,7 @@ const tokens_entity_1 = require("../../accounts/entities/tokens.entity");
 const roles_entity_1 = require("../../roles/entities/roles.entity");
 const messages_entity_1 = require("../../messages/entities/messages.entity");
 const pictures_entity_1 = require("../../pictures/entities/pictures.entity");
+const punishments_entity_1 = require("./punishments.entity");
 let User = class User {
     get roleNames() {
         if (!this.roles)
@@ -118,8 +119,20 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "pictures", void 0);
 __decorate([
+    typeorm_1.OneToMany(() => punishments_entity_1.Punishment, ({ target }) => target),
+    __metadata("design:type", Array)
+], User.prototype, "punishments", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => punishments_entity_1.Punishment, ({ executor }) => executor),
+    __metadata("design:type", Array)
+], User.prototype, "executedPunishments", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => punishments_entity_1.Punishment, ({ canceledBy }) => canceledBy),
+    __metadata("design:type", Array)
+], User.prototype, "canceledPunishments", void 0);
+__decorate([
     graphql_1.Field(() => [roles_entity_1.Role]),
-    typeorm_1.ManyToMany(() => roles_entity_1.Role, ({ users }) => users),
+    typeorm_1.ManyToMany(() => roles_entity_1.Role, ({ users }) => users, { eager: true }),
     typeorm_1.JoinTable({
         name: 'user_roles',
         joinColumn: {

@@ -27,6 +27,10 @@ const nestjs_graphql_dataloader_1 = require("@intelrug/nestjs-graphql-dataloader
 const dataloader_1 = __importDefault(require("dataloader"));
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const users_service_1 = require("./users.service");
+const nest_access_control_1 = require("nest-access-control");
+const punishment_args_1 = require("./args/punishment.args");
+const unpunishment_args_1 = require("./args/unpunishment.args");
+const punishments_entity_1 = require("./entities/punishments.entity");
 const get_user_by_id_args_1 = require("./args/get-user-by-id.args");
 let UsersResolver = class UsersResolver {
     constructor(pubSub, usersService) {
@@ -51,6 +55,12 @@ let UsersResolver = class UsersResolver {
     async updateOnlineStatus() {
         await this.usersService.updateOnlineStatus();
         return true;
+    }
+    punish(args, executor) {
+        return this.usersService.punish(args, executor);
+    }
+    unpunish(args, executor) {
+        return this.usersService.unpunish(args, executor);
     }
     onlineUpdated() {
         return this.pubSub.asyncIterator('onlineUpdated');
@@ -93,6 +103,30 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UsersResolver.prototype, "updateOnlineStatus", null);
+__decorate([
+    graphql_1.Mutation(() => users_entity_1.User),
+    nest_access_control_1.UseRoles({
+        resource: 'mute',
+        action: 'update',
+    }),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [punishment_args_1.PunishmentArgs, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "punish", null);
+__decorate([
+    graphql_1.Mutation(() => users_entity_1.User),
+    nest_access_control_1.UseRoles({
+        resource: 'mute',
+        action: 'update',
+    }),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [unpunishment_args_1.UnpunishmentArgs, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "unpunish", null);
 __decorate([
     graphql_1.Subscription(() => [users_entity_1.User], {
         name: 'onlineUpdated',

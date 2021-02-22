@@ -11,7 +11,6 @@ const typeorm_1 = require("typeorm");
 const users_entity_1 = require("../entities/users.entity");
 const basic_repository_1 = require("../../../common/repositories/basic.repository");
 const sign_up_args_1 = require("../../accounts/args/sign-up.args");
-const exceptions_1 = require("../../../common/exceptions/exceptions");
 let UsersRepository = class UsersRepository extends basic_repository_1.BasicRepository {
     getUserByEmailOrUsername(email) {
         if (!email)
@@ -41,13 +40,6 @@ let UsersRepository = class UsersRepository extends basic_repository_1.BasicRepo
             hash: input.hash,
         });
         return this.saveAndReturn(user);
-    }
-    async userExists(userId) {
-        const user = await this.findOne(userId);
-        if (user)
-            return user;
-        else
-            throw new exceptions_1.BadRequestException('USER_DOES_NOT_EXIST_WITH_ID', userId.toString());
     }
 };
 UsersRepository = __decorate([
