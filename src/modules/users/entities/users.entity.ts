@@ -15,6 +15,7 @@ import { Token } from '@modules/accounts/entities/tokens.entity';
 import { Role } from '@modules/roles/entities/roles.entity';
 import { Message } from '@modules/messages/entities/messages.entity';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
+import { Punishment } from '@modules/users/entities/punishments.entity';
 
 @ObjectType()
 @Entity('users')
@@ -99,6 +100,15 @@ export class User {
 
   @OneToMany(() => Picture, ({ owner }) => owner)
   pictures: Picture[];
+
+  @OneToMany(() => Punishment, ({ target }) => target)
+  punishments: Punishment[];
+
+  @OneToMany(() => Punishment, ({ executor }) => executor)
+  executedPunishments: Punishment[];
+
+  @OneToMany(() => Punishment, ({ canceledBy }) => canceledBy)
+  canceledPunishments: Punishment[];
 
   @Field(() => [Role])
   @ManyToMany(() => Role, ({ users }) => users)

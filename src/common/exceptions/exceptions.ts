@@ -7,6 +7,8 @@ export type ExceptionKey =
   | 'FORBIDDEN'
   | 'USER_DOES_NOT_EXIST'
   | 'USER_DOES_NOT_EXIST_WITH_ID'
+  | 'USER_ALREADY_PUNISHED'
+  | 'USER_IS_NOT_PUNISHED'
   | 'USERNAME_OCCUPIED'
   | 'EMAIL_OCCUPIED'
   | 'WRONG_CREDENTIALS'
@@ -33,6 +35,14 @@ const exceptions: Exception = {
   USER_DOES_NOT_EXIST_WITH_ID: {
     en: 'User with id %id% does not exist',
     ru: 'Пользователь с id %id% не существует',
+  },
+  USER_ALREADY_PUNISHED: {
+    en: 'User already punished',
+    ru: 'Пользователь уже наказан',
+  },
+  USER_IS_NOT_PUNISHED: {
+    en: 'User is not punished',
+    ru: 'Пользователь ещё не наказан',
   },
   USERNAME_OCCUPIED: {
     en: 'This username is already occupied',

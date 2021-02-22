@@ -28,4 +28,8 @@ export class TokensRepository extends Repository<Token> {
     const accessToken = await this.findOne({ where: { value: newToken } });
     return accessToken ? this.createTokenString() : newToken;
   }
+
+  public async expireUserTokens(ownerId: number): Promise<void> {
+    await this.delete({ ownerId });
+  }
 }

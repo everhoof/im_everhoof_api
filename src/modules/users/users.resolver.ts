@@ -9,6 +9,10 @@ import { Loader } from '@intelrug/nestjs-graphql-dataloader';
 import DataLoader from 'dataloader';
 import { PubSub } from 'graphql-subscriptions';
 import { UsersService } from '@modules/users/users.service';
+import { UseRoles } from 'nest-access-control';
+import { PunishmentArgs } from '@modules/users/args/punishment.args';
+import { UnpunishmentArgs } from '@modules/users/args/unpunishment.args';
+import { Punishment } from '@modules/users/entities/punishments.entity';
 import { GetUserByIdArgs } from '@modules/users/args/get-user-by-id.args';
 
 @UseFilters(GraphqlExceptionFilter)
@@ -49,6 +53,26 @@ export class UsersResolver {
   async updateOnlineStatus(): Promise<boolean> {
     await this.usersService.updateOnlineStatus();
     return true;
+  }
+
+  @Mutation(() => User)
+  @UseRoles({
+    resource: 'mute',
+    action: 'update',
+  })
+  @UseGuards(GqlAuthGuard)
+  punish(@Args() args: PunishmentArgs, @CurrentUser() executor: User): Promise<Punishment> {
+    return this.usersService.punish(args, executor);
+  }
+
+  @Mutation(() => User)
+  @UseRoles({
+    resource: 'mute',
+    action: 'update',
+  })
+  @UseGuards(GqlAuthGuard)
+  unpunish(@Args() args: UnpunishmentArgs, @CurrentUser() executor: User): Promise<Punishment> {
+    return this.usersService.unpunish(args, executor);
   }
 
   @Subscription(() => [User], {

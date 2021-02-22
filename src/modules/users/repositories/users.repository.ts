@@ -2,7 +2,6 @@ import { EntityRepository, ILike } from 'typeorm';
 import { User } from '@modules/users/entities/users.entity';
 import { BasicRepository } from '@common/repositories/basic.repository';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
-import { BadRequestException } from '@common/exceptions/exceptions';
 
 @EntityRepository(User)
 export class UsersRepository extends BasicRepository<User> {
@@ -36,11 +35,5 @@ export class UsersRepository extends BasicRepository<User> {
       hash: input.hash,
     });
     return this.saveAndReturn(user);
-  }
-
-  async userExists(userId: number): Promise<User> {
-    const user = await this.findOne(userId);
-    if (user) return user;
-    else throw new BadRequestException('USER_DOES_NOT_EXIST_WITH_ID', userId.toString());
   }
 }
