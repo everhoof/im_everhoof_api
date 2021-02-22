@@ -111,7 +111,7 @@ export class User {
   canceledPunishments: Punishment[];
 
   @Field(() => [Role])
-  @ManyToMany(() => Role, ({ users }) => users)
+  @ManyToMany(() => Role, ({ users }) => users, { eager: true })
   @JoinTable({
     name: 'user_roles',
     joinColumn: {
