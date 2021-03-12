@@ -67,12 +67,13 @@ let UsersService = class UsersService {
         let punishment = await this.punishmentsRepository.getLastPunishment(args.userId);
         if (punishment)
             throw new exceptions_1.BadRequestException('USER_ALREADY_PUNISHED');
+        const date = args.duration ? luxon_1.DateTime.local().plus({ seconds: args.duration }) : undefined;
         punishment = this.punishmentsRepository.create({
             targetId: args.userId,
             executorId: executor.id,
             type: args.type,
             reason: args.reason,
-            cancelAt: args.cancelAt ? luxon_1.DateTime.fromISO(args.cancelAt).toJSDate() : undefined,
+            cancelAt: date === null || date === void 0 ? void 0 : date.toJSDate(),
         });
         return this.punishmentsRepository.saveAndReturn(punishment);
     }

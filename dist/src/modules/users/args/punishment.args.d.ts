@@ -6,5 +6,5 @@ export declare class PunishmentArgs {
     userId: number;
     type: PunishmentTypes;
     reason: string;
-    cancelAt?: string;
+    duration?: number;
 }

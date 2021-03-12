@@ -26,7 +26,7 @@ __decorate([
     __metadata("design:type", Number)
 ], PunishmentArgs.prototype, "userId", void 0);
 __decorate([
-    graphql_1.Field(() => Date),
+    graphql_1.Field(() => PunishmentTypes),
     class_validator_1.IsEnum(PunishmentTypes),
     __metadata("design:type", String)
 ], PunishmentArgs.prototype, "type", void 0);
@@ -37,10 +37,11 @@ __decorate([
     __metadata("design:type", String)
 ], PunishmentArgs.prototype, "reason", void 0);
 __decorate([
-    graphql_1.Field(() => String, { nullable: true }),
-    class_validator_1.IsISO8601(),
-    __metadata("design:type", String)
-], PunishmentArgs.prototype, "cancelAt", void 0);
+    graphql_1.Field(() => Number, { nullable: true }),
+    class_validator_1.IsInt(),
+    class_validator_1.Min(1),
+    __metadata("design:type", Number)
+], PunishmentArgs.prototype, "duration", void 0);
 PunishmentArgs = __decorate([
     graphql_1.ArgsType()
 ], PunishmentArgs);
