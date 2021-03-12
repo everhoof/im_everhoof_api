@@ -65,12 +65,14 @@ export class UsersService {
     await this.usersRepository.isExist(args.userId);
     let punishment = await this.punishmentsRepository.getLastPunishment(args.userId);
     if (punishment) throw new BadRequestException('USER_ALREADY_PUNISHED');
+    const date = args.duration ? DateTime.local().plus({ seconds: args.duration }) : undefined;
+
     punishment = this.punishmentsRepository.create({
       targetId: args.userId,
       executorId: executor.id,
       type: args.type,
       reason: args.reason,
-      cancelAt: args.cancelAt ? DateTime.fromISO(args.cancelAt).toJSDate() : undefined,
+      cancelAt: date?.toJSDate(),
     });
     return this.punishmentsRepository.saveAndReturn(punishment);
   }

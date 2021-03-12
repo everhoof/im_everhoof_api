@@ -24,7 +24,7 @@ type Message {
 
 type Mutation {
   updateOnlineStatus: Boolean!
-  punish(userId: Int!, type: DateTime!, reason: String!, cancelAt: String): User!
+  punish(userId: Int!, type: PunishmentTypes!, reason: String!, duration: Float): User!
   unpunish(userId: Int!): User!
   signIn(email: String!, password: String!): Token!
   signUp(email: String!, username: String, password: String!): User!
@@ -53,6 +53,11 @@ type PictureRepresentation {
   size: Float!
   path: String!
   link: String!
+}
+
+enum PunishmentTypes {
+  ban
+  mute
 }
 
 type Query {
