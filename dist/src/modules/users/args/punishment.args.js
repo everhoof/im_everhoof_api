@@ -37,7 +37,7 @@ __decorate([
     __metadata("design:type", String)
 ], PunishmentArgs.prototype, "reason", void 0);
 __decorate([
-    graphql_1.Field(() => Number, { nullable: true }),
+    graphql_1.Field(() => graphql_1.Int, { nullable: true }),
     class_validator_1.IsInt(),
     class_validator_1.Min(1),
     __metadata("design:type", Number)
