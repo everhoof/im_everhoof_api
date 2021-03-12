@@ -24,7 +24,7 @@ type Message {
 
 type Mutation {
   updateOnlineStatus: Boolean!
-  punish(userId: Int!, type: PunishmentTypes!, reason: String!, duration: Float): User!
+  punish(userId: Int!, type: PunishmentTypes!, reason: String!, duration: Int): User!
   unpunish(userId: Int!): User!
   signIn(email: String!, password: String!): Token!
   signUp(email: String!, username: String, password: String!): User!

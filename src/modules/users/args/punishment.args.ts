@@ -22,7 +22,7 @@ export class PunishmentArgs {
   @MaxLength(200)
   reason: string;
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => Int, { nullable: true })
   @IsInt()
   @Min(1)
   duration?: number;
