@@ -47,6 +47,14 @@ export class Message {
   })
   randomId: Nullable<string>;
 
+  @Field(() => Boolean)
+  @Column({
+    name: 'system',
+    type: 'boolean',
+    default: false,
+  })
+  system: boolean;
+
   @Field(() => String)
   @Column({
     type: 'text',

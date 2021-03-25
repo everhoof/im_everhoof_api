@@ -6,9 +6,14 @@ import { MessagesResolver } from '@modules/messages/messages.resolver';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 import { AccountsModule } from '@modules/accounts/accounts.module';
 import { UploadModule } from '@modules/upload/upload.module';
+import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MessagesRepository, PicturesRepository]), AccountsModule, UploadModule],
+  imports: [
+    TypeOrmModule.forFeature([MessagesRepository, PicturesRepository, PunishmentsRepository]),
+    AccountsModule,
+    UploadModule,
+  ],
   providers: [MessagesService, MessagesResolver],
 })
 export class MessagesModule {}

@@ -13,7 +13,9 @@ export type ExceptionKey =
   | 'EMAIL_OCCUPIED'
   | 'WRONG_CREDENTIALS'
   | 'NO_FILE_PROVIDED'
-  | 'CANNOT_CREATE_EMPTY_MESSAGE';
+  | 'CANNOT_CREATE_EMPTY_MESSAGE'
+  | 'YOU_ARE_MUTED'
+  | 'YOU_ARE_BANNED';
 
 type Exception = {
   [key in ExceptionKey]: { [key in ExceptionMessage]: string };
@@ -63,6 +65,14 @@ const exceptions: Exception = {
   CANNOT_CREATE_EMPTY_MESSAGE: {
     en: 'Cannot create empty message',
     ru: 'Невозможно создать пустое сообщение',
+  },
+  YOU_ARE_MUTED: {
+    en: 'You are muted',
+    ru: 'Вы заглушены',
+  },
+  YOU_ARE_BANNED: {
+    en: 'You are muted',
+    ru: 'Вы забанены',
   },
 };
 

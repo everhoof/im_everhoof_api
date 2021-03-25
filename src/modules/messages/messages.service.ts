@@ -17,6 +17,8 @@ import { escapeHtml } from 'xss';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
 import { IsNull } from 'typeorm';
 import { roles } from '../../app.roles';
+import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
+import { PunishmentTypes } from '@modules/users/args/punishment.args';
 
 @Injectable()
 export class MessagesService {
@@ -26,12 +28,25 @@ export class MessagesService {
     private readonly messagesRepository: MessagesRepository,
     @InjectRepository(PicturesRepository)
     private readonly picturesRepository: PicturesRepository,
+    @InjectRepository(PunishmentsRepository)
+    private readonly punishmentsRepository: PunishmentsRepository,
     private readonly uploadService: UploadService,
   ) {}
+
+  async throwOnPunished(targetId: number): Promise<void> {
+    const punishment = await this.punishmentsRepository.findOne({
+      where: { targetId },
+    });
+    if (!punishment) return;
+
+    if (punishment.type === PunishmentTypes.mute) throw new BadRequestException('YOU_ARE_MUTED');
+    if (punishment.type === PunishmentTypes.ban) throw new BadRequestException('YOU_ARE_BANNED');
+  }
 
   async createMessage(args: CreateMessageArgs, user: User): Promise<Message> {
     if (!args.content?.trim() && args.pictures.length === 0)
       throw new BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
+    await this.throwOnPunished(user.id);
     let message = this.messagesRepository.create({
       content: escapeHtml(args.content?.trim() || ''),
       ownerId: user.id,
