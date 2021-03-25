@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from '@modules/users/users.module';
@@ -12,7 +12,7 @@ import { AnonymousStrategy } from '@modules/accounts/strategies/anonymous.strate
 
 @Module({
   imports: [
-    UsersModule,
+    forwardRef(() => UsersModule),
     PassportModule,
     TypeOrmModule.forFeature([TokensRepository, UsersRepository, RolesRepository]),
   ],

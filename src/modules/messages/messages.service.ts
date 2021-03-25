@@ -6,7 +6,7 @@ import { Message } from '@modules/messages/entities/messages.entity';
 import { User } from '@modules/users/entities/users.entity';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
-import { BadRequestException } from '@common/exceptions/exceptions';
+import { BadRequestException, InternalServerErrorException } from '@common/exceptions/exceptions';
 import got from 'got';
 import { writeFile } from 'fs-extra';
 import { Utils } from '@common/utils/utils';
@@ -55,6 +55,15 @@ export class MessagesService {
     });
     message.pictures = args.pictures.map((id) => this.picturesRepository.create({ id }));
     message = await this.uploadImagesFromMessage(message, user);
+    return this.messagesRepository.save(message);
+  }
+
+  async createSystemMessage(content: string): Promise<Message> {
+    if (!content.trim()) throw new InternalServerErrorException('CANNOT_CREATE_EMPTY_MESSAGE');
+    const message = this.messagesRepository.create({
+      content: escapeHtml(content.trim()),
+      system: true,
+    });
     return this.messagesRepository.save(message);
   }
 

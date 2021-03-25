@@ -15,5 +15,6 @@ import { PunishmentsRepository } from '@modules/users/repositories/punishments.r
     UploadModule,
   ],
   providers: [MessagesService, MessagesResolver],
+  exports: [MessagesService],
 })
 export class MessagesModule {}

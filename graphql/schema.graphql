@@ -27,10 +27,10 @@ type Mutation {
   updateOnlineStatus: Boolean!
   punish(userId: Int!, type: PunishmentTypes!, reason: String!, duration: Int): User!
   unpunish(userId: Int!): User!
-  signIn(email: String!, password: String!): Token!
-  signUp(email: String!, username: String, password: String!): User!
   createMessage(content: String, randomId: String, pictures: [Int!] = []): Message!
   deleteMessage(messageId: Int!): Message!
+  signIn(email: String!, password: String!): Token!
+  signUp(email: String!, username: String, password: String!): User!
 }
 
 type Picture {
@@ -65,10 +65,10 @@ type Query {
   getCurrentUser: User!
   getUserById(id: Int!): User!
   getOnline: [User!]!
+  getMessages(count: Int = 100, page: Int = 1): [Message!]!
   getGrants: String!
   getHello: String!
   getPictureById(pictureId: Int!): Picture!
-  getMessages(count: Int = 100, page: Int = 1): [Message!]!
 }
 
 type Role {

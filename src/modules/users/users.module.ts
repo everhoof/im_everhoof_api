@@ -6,9 +6,10 @@ import { UsersResolver } from '@modules/users/users.resolver';
 import { UsersLoader } from '@modules/users/loaders/users.loader';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 import { TokensRepository } from '@modules/accounts/repositories/tokens.repository';
+import { MessagesModule } from '@modules/messages/messages.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UsersRepository, TokensRepository, PunishmentsRepository])],
+  imports: [TypeOrmModule.forFeature([UsersRepository, TokensRepository, PunishmentsRepository]), MessagesModule],
   providers: [UsersService, UsersResolver, UsersLoader],
 })
 export class UsersModule {}
