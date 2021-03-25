@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersRepository } from '@modules/users/repositories/users.repository';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { MoreThan } from 'typeorm';
+import { IsNull, LessThanOrEqual, MoreThan } from 'typeorm';
 import { DateTime } from 'luxon';
 import { PubSub } from 'graphql-subscriptions';
 import { User } from '@modules/users/entities/users.entity';
@@ -55,6 +55,21 @@ export class UsersService {
     }
   }
 
+  @Cron(CronExpression.EVERY_MINUTE)
+  async unpunishUsers(): Promise<void> {
+    const punishments = await this.punishmentsRepository.find({
+      where: {
+        cancelAt: LessThanOrEqual(DateTime.utc().toSQL()),
+        canceledAt: IsNull(),
+      },
+    });
+
+    const jobs = punishments.map(async (punishment) => {
+      await this.unpunish({ userId: punishment.targetId });
+    });
+    await Promise.allSettled(jobs);
+  }
+
   async getOnline(): Promise<User[]> {
     return this.usersRepository.findByIds(this.onlineUsersIds);
   }
@@ -89,12 +104,12 @@ export class UsersService {
     return punishment;
   }
 
-  async unpunish(args: UnpunishmentArgs, executor: User): Promise<Punishment> {
+  async unpunish(args: UnpunishmentArgs, executor?: User): Promise<Punishment> {
     const user = await this.usersRepository.isExist(args.userId);
     let punishment = await this.punishmentsRepository.getLastPunishment(args.userId);
     if (!punishment) throw new BadRequestException('USER_IS_NOT_PUNISHED');
     punishment.canceledAt = new Date();
-    punishment.canceledById = executor.id;
+    if (executor) punishment.canceledById = executor.id;
     // await this.tokensRepository.expireUserTokens(args.userId);
 
     const content = `${user.username} was ${punishment.type === PunishmentTypes.mute ? 'unmuted' : 'unbanned'}`;
