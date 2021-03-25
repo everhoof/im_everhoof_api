@@ -1,5 +1,5 @@
 import { ArgsType, Field, Int, registerEnumType } from '@nestjs/graphql';
-import { IsEnum, IsInt, IsString, MaxLength, Min } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, MaxLength, Min } from 'class-validator';
 
 export enum PunishmentTypes {
   ban = 'ban',
@@ -25,5 +25,6 @@ export class PunishmentArgs {
   @Field(() => Int, { nullable: true })
   @IsInt()
   @Min(1)
+  @IsOptional()
   duration?: number;
 }
