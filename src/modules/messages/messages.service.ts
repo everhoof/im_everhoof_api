@@ -60,11 +60,13 @@ export class MessagesService {
 
   async createSystemMessage(content: string): Promise<Message> {
     if (!content.trim()) throw new InternalServerErrorException('CANNOT_CREATE_EMPTY_MESSAGE');
-    const message = this.messagesRepository.create({
+    let message = this.messagesRepository.create({
       content: escapeHtml(content.trim()),
       system: true,
     });
-    return this.messagesRepository.save(message);
+    message = await this.messagesRepository.saveAndReturn(message);
+    await this.pubSub.publish('messageCreated', { messageCreated: message });
+    return message;
   }
 
   private async uploadImagesFromMessage(message: Message, user: User): Promise<Message> {

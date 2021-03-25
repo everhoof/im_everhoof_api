@@ -78,11 +78,14 @@ export class UsersService {
     });
 
     const content = args.duration
-      ? `${user.username} was ${args.type === PunishmentTypes.mute ? 'muted' : 'banned'} for ${args.duration} minutes`
-      : `${user.username} was ${args.type === PunishmentTypes.mute ? 'muted' : 'banned'} forever`;
-    const message = await this.messagesService.createSystemMessage(content);
+      ? `${user.username} was ${args.type === PunishmentTypes.mute ? 'muted' : 'banned'} for ${
+          args.duration
+        } minutes with reason: ${args.reason}`
+      : `${user.username} was ${args.type === PunishmentTypes.mute ? 'muted' : 'banned'} forever with reason: ${
+          args.reason
+        }`;
+    await this.messagesService.createSystemMessage(content);
     punishment = await this.punishmentsRepository.saveAndReturn(punishment);
-    await this.pubSub.publish('messageCreated', { messageCreated: message });
     return punishment;
   }
 
@@ -92,12 +95,11 @@ export class UsersService {
     if (!punishment) throw new BadRequestException('USER_IS_NOT_PUNISHED');
     punishment.canceledAt = new Date();
     punishment.canceledById = executor.id;
-    await this.tokensRepository.expireUserTokens(args.userId);
+    // await this.tokensRepository.expireUserTokens(args.userId);
 
     const content = `${user.username} was ${punishment.type === PunishmentTypes.mute ? 'unmuted' : 'unbanned'}`;
-    const message = await this.messagesService.createSystemMessage(content);
+    await this.messagesService.createSystemMessage(content);
     punishment = await this.punishmentsRepository.saveAndReturn(punishment);
-    await this.pubSub.publish('messageCreated', { messageCreated: message });
     return punishment;
   }
 }
