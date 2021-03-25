@@ -40,6 +40,7 @@ __decorate([
     graphql_1.Field(() => graphql_1.Int, { nullable: true }),
     class_validator_1.IsInt(),
     class_validator_1.Min(1),
+    class_validator_1.IsOptional(),
     __metadata("design:type", Number)
 ], PunishmentArgs.prototype, "duration", void 0);
 PunishmentArgs = __decorate([

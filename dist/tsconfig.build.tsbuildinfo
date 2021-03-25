@@ -6566,7 +6566,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/users/args/punishment.args.ts": {
-        "version": "a88e1e6794f35d60e4ea71ccaf0b1462b21d6ab9d8ec6a1eca748a7fc99652d9",
+        "version": "87e355266ea440330d2fdf24fa1c13ce4bc55178cd3ecd0ef7e2410ae3667815",
         "signature": "00819eb7ee61b1de9ccab1e430c03c394a87c040c500e7bfd5b3c66761a71892",
         "affectsGlobalScope": false
       },
