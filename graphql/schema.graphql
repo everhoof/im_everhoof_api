@@ -11,6 +11,7 @@ type Message {
   id: Int!
   ownerId: Float
   randomId: String
+  system: Boolean!
   content: String!
   username: String
   deletedById: Float
