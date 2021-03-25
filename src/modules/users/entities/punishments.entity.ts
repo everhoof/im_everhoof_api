@@ -17,7 +17,7 @@ export class Punishment {
 
   @Field(() => Int)
   @Column({
-    name: 'user_id',
+    name: 'target_id',
     type: 'int',
     width: 10,
     unsigned: true,
