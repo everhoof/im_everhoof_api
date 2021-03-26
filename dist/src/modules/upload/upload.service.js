@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var UploadService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UploadService = void 0;
 const common_1 = require("@nestjs/common");
@@ -32,10 +33,13 @@ const compressed_picture_1 = require("./types/compressed-picture");
 const DiscordMessage_1 = require("./types/DiscordMessage");
 const uploaded_picture_1 = require("./types/uploaded-picture");
 const utils_1 = require("../../common/utils/utils");
-let UploadService = class UploadService {
+const file_type_1 = require("file-type");
+const image_size_1 = require("image-size");
+let UploadService = UploadService_1 = class UploadService {
     constructor(picturesRepository, pictureRepresentationsRepository) {
         this.picturesRepository = picturesRepository;
         this.pictureRepresentationsRepository = pictureRepresentationsRepository;
+        this.logger = new common_1.Logger(UploadService_1.name, true);
         this.httpClient = got_1.default.extend({
             prefixUrl: `https://discord.com/api/v${process.env.DISCORD_API_VERSION}/`,
             headers: {
@@ -43,16 +47,35 @@ let UploadService = class UploadService {
             },
         });
     }
-    async uploadPicture(file, user) {
+    async uploadPicture(file, user, source) {
+        if (UploadService_1.queue.length > 16) {
+            throw new exceptions_1.ServiceUnavailableException('SERVER_IS_OVERLOADED');
+        }
         if (!file)
             throw new exceptions_1.BadRequestException('NO_FILE_PROVIDED');
         const path = utils_1.Utils.getRandomString(24);
+        const fileType = await file_type_1.fromBuffer(file.buffer);
+        if (!fileType?.ext.match(/(jpg|jpeg|png)/)) {
+            throw new exceptions_1.UnsupportedMediaTypeException('UNSUPPORTED_MEDIA_TYPE');
+        }
+        const gmInstance = gm_1.default(file.buffer);
+        const dimensions = await this.gmToDimensions(gmInstance);
+        if (dimensions.height < 10 || dimensions.width < 10) {
+            throw new exceptions_1.BadRequestException('IMAGE_CORRUPTED');
+        }
+        if (dimensions.height > 11000 || dimensions.width > 11000) {
+            throw new exceptions_1.BadRequestException('IMAGE_DIMENSIONS_TOO_LARGE');
+        }
+        const id = file.originalname + '_' + Date.now() + '_' + user.id;
+        UploadService_1.queue.push(id);
+        await utils_1.Utils.conditionalWait(() => !!UploadService_1.queue.length && UploadService_1.queue[0] === id);
         try {
-            if (!file.buffer)
-                file.buffer = await fs_extra_1.readFile(file.path);
-            const { s, m } = await this.compressImage(file);
-            const message = await this.uploadFileToDiscord(file);
-            const attachment = message.attachments[0];
+            let attachment;
+            if (!source) {
+                const message = await this.uploadFileToDiscord(file);
+                attachment = message.attachments[0];
+            }
+            const { s, m } = await this.compressImage(gmInstance);
             const filename = path_1.basename(file.originalname, path_1.extname(file.originalname))
                 .replace(/[^a-z0-9_\-+]/, '_')
                 .substr(0, 100);
@@ -68,26 +91,43 @@ let UploadService = class UploadService {
                     ext: 'jpeg',
                 }),
             ];
-            await Promise.all([fs_extra_1.createFile(process.env.UPLOAD_DIR + sPath), fs_extra_1.createFile(process.env.UPLOAD_DIR + mPath)]);
+            await Promise.all([
+                fs_extra_1.createFile(process.env.UPLOAD_DIR + sPath),
+                fs_extra_1.createFile(process.env.UPLOAD_DIR + mPath),
+            ]);
             await Promise.all([
                 fs_extra_1.writeFile(process.env.UPLOAD_DIR + sPath, s.buffer),
                 fs_extra_1.writeFile(process.env.UPLOAD_DIR + mPath, m.buffer),
             ]);
-            await fs_extra_1.unlink(file.path);
-            return this.savePicture(user.id, {
-                s: { key: sPath, dimensions: s.dimensions, size: s.size },
-                m: { key: mPath, dimensions: m.dimensions, size: m.size },
-                o: {
+            let o;
+            if (source) {
+                o = {
+                    key: source,
+                    dimensions: image_size_1.imageSize(file.buffer),
+                    size: this.bufferToFileSize(file.buffer),
+                };
+            }
+            else {
+                o = {
                     key: attachment.proxy_url,
                     dimensions: {
                         height: attachment.height,
                         width: attachment.width,
                     },
                     size: attachment.size,
-                },
+                };
+            }
+            const picture = await this.savePicture(user.id, {
+                s: { key: sPath, dimensions: s.dimensions, size: s.size },
+                m: { key: mPath, dimensions: m.dimensions, size: m.size },
+                o: o,
             });
+            UploadService_1.queue.shift();
+            return picture;
         }
         catch (e) {
+            this.logger.debug(e);
+            UploadService_1.queue.shift();
             throw new exceptions_1.InternalServerErrorException('UNKNOWN');
         }
     }
@@ -122,7 +162,7 @@ let UploadService = class UploadService {
     async uploadFileToDiscord(file) {
         try {
             const form = new form_data_1.default();
-            form.append('file', fs_extra_1.createReadStream(path_1.resolve(file.path)), file.originalname);
+            form.append('file', file.buffer, file.originalname);
             const message = await this.httpClient
                 .post(`channels/${process.env.DISCORD_UPLOAD_CHANNEL_ID}/messages`, {
                 body: form,
@@ -133,6 +173,7 @@ let UploadService = class UploadService {
             return message;
         }
         catch (e) {
+            this.logger.debug(e);
             throw new exceptions_1.InternalServerErrorException('UNKNOWN');
         }
     }
@@ -164,10 +205,11 @@ let UploadService = class UploadService {
         }
         return { height, width };
     }
-    async compressImage(picture) {
-        const s = gm_1.default(picture.buffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
-        const m = gm_1.default(picture.buffer).noProfile().setFormat('jpeg').resize(512, 512).quality(90);
-        const [sBuffer, mBuffer] = await Promise.all([this.gmToBuffer(s), this.gmToBuffer(m)]);
+    async compressImage(gmInstance) {
+        const m = gmInstance.noProfile().setFormat('jpeg').resize(512, 512).quality(90).limit('memory', '512M');
+        const mBuffer = await this.gmToBuffer(m);
+        const s = gm_1.default(mBuffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
+        const sBuffer = await this.gmToBuffer(s);
         const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
         const sDimensions = await this.gmToDimensions(s);
         const mDimensions = await this.gmToDimensions(m);
@@ -208,7 +250,8 @@ let UploadService = class UploadService {
         return buffer.byteLength;
     }
 };
-UploadService = __decorate([
+UploadService.queue = [];
+UploadService = UploadService_1 = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(pictures_repository_1.PicturesRepository)),
     __param(1, typeorm_1.InjectRepository(picture_representations_repository_1.PictureRepresentationsRepository)),

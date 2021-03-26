@@ -26,7 +26,6 @@ const pictures_repository_1 = require("../pictures/repositories/pictures.reposit
 const get_messages_args_1 = require("./args/get-messages.args");
 const exceptions_1 = require("../../common/exceptions/exceptions");
 const got_1 = __importDefault(require("got"));
-const fs_extra_1 = require("fs-extra");
 const utils_1 = require("../../common/utils/utils");
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const path_1 = require("path");
@@ -90,15 +89,12 @@ let MessagesService = class MessagesService {
             return message;
         const buffer = await got_1.default(message.content).buffer();
         const filename = utils_1.Utils.getRandomString(32);
-        const path = './uploads/' + filename;
-        await fs_extra_1.writeFile(path, buffer);
         const file = {
-            path,
             buffer,
             originalname: path_1.basename(message.content),
             filename,
         };
-        const picture = await this.uploadService.uploadPicture(file, user);
+        const picture = await this.uploadService.uploadPicture(file, user, message.content);
         message.pictures = [picture];
         message.content = '';
         return message;

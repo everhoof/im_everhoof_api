@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InternalServerErrorException = exports.BadRequestException = exports.UnauthorizedException = exports.CustomHttpException = void 0;
+exports.ServiceUnavailableException = exports.UnsupportedMediaTypeException = exports.InternalServerErrorException = exports.BadRequestException = exports.UnauthorizedException = exports.CustomHttpException = void 0;
 const common_1 = require("@nestjs/common");
 const exceptions = {
     UNKNOWN: {
@@ -55,6 +55,22 @@ const exceptions = {
         en: 'You are muted',
         ru: 'Вы забанены',
     },
+    IMAGE_CORRUPTED: {
+        en: 'Image corrupted',
+        ru: 'Изображение повреждено',
+    },
+    IMAGE_DIMENSIONS_TOO_LARGE: {
+        en: 'Image dimensions too large',
+        ru: 'Разрешение изображения слишком большое',
+    },
+    UNSUPPORTED_MEDIA_TYPE: {
+        en: 'Unsupported Media Type',
+        ru: 'Неподдерживаемый тип медиа',
+    },
+    SERVER_IS_OVERLOADED: {
+        en: 'Service is overloaded',
+        ru: 'Сервер перегружен',
+    },
 };
 function createExceptionMessage(exception, lang = 'en', args = []) {
     if (exceptions[exception] && exceptions[exception][lang]) {
@@ -97,4 +113,16 @@ class InternalServerErrorException extends CustomHttpException {
     }
 }
 exports.InternalServerErrorException = InternalServerErrorException;
+class UnsupportedMediaTypeException extends CustomHttpException {
+    constructor(exception, ...args) {
+        super(common_1.HttpStatus.UNSUPPORTED_MEDIA_TYPE, exception, args);
+    }
+}
+exports.UnsupportedMediaTypeException = UnsupportedMediaTypeException;
+class ServiceUnavailableException extends CustomHttpException {
+    constructor(exception, ...args) {
+        super(common_1.HttpStatus.SERVICE_UNAVAILABLE, exception, args);
+    }
+}
+exports.ServiceUnavailableException = ServiceUnavailableException;
 //# sourceMappingURL=exceptions.js.map

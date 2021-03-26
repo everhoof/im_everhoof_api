@@ -18,6 +18,16 @@ class Utils {
     static arrayDiff(a1, a2) {
         return a1.filter((i) => !a2.includes(i)).concat(a2.filter((i) => !a1.includes(i)));
     }
+    static conditionalWait(condition) {
+        return new Promise((resolve) => {
+            const interval = setInterval(() => {
+                if (condition()) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 100);
+        });
+    }
 }
 exports.Utils = Utils;
 //# sourceMappingURL=utils.js.map

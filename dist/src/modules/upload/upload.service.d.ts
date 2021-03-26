@@ -12,8 +12,10 @@ export declare class UploadService {
     private readonly picturesRepository;
     private readonly pictureRepresentationsRepository;
     private readonly httpClient;
+    private static queue;
+    private readonly logger;
     constructor(picturesRepository: PicturesRepository, pictureRepresentationsRepository: PictureRepresentationsRepository);
-    uploadPicture(file: Express.Multer.File, user: User): Promise<Picture>;
+    uploadPicture(file: Express.Multer.File, user: User, source?: string): Promise<Picture>;
     generateObjectPath(options: {
         path?: string;
         name?: string;
@@ -22,7 +24,7 @@ export declare class UploadService {
     savePicture(ownerId: number, representations: UploadedPicture): Promise<Picture>;
     uploadFileToDiscord(file: Express.Multer.File): Promise<DiscordMessage>;
     scale(dimensions: Dimensions, ratio: number, limit?: number): Dimensions;
-    compressImage(picture: Express.Multer.File): Promise<CompressedPicture>;
+    compressImage(gmInstance: gm.State): Promise<CompressedPicture>;
     gmToBuffer(data: gm.State): Promise<Buffer>;
     gmToDimensions(data: gm.State): Promise<Dimensions>;
     bufferToFileSize(buffer: Buffer): number;
