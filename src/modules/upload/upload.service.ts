@@ -212,7 +212,7 @@ export class UploadService {
   }
 
   async compressImage(gmInstance: gm.State): Promise<CompressedPicture> {
-    const m = gmInstance.noProfile().setFormat('jpeg').resize(512, 512).quality(90).limit('memory', '512M');
+    const m = gmInstance.noProfile().setFormat('jpeg').resize(512, 512).quality(90).limit('memory', '900M');
     const mBuffer = await this.gmToBuffer(m);
 
     const s = gm(mBuffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
