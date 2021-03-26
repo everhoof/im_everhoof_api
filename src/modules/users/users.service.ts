@@ -93,6 +93,8 @@ export class UsersService {
         avatarId: picture.id,
       },
     );
+    const message = `${executor.username} uploaded a new avatar`;
+    await this.messagesService.createSystemMessage(message);
     return this.usersRepository.isExist(executor.id);
   }
 
