@@ -24,6 +24,14 @@ import { imageSize } from 'image-size';
 
 @Injectable()
 export class UploadService {
+  private static QUEUE_LIMIT = parseInt(process.env.UPLOAD_QUEUE_LIMIT || '16', 10) || 16;
+  private static MIN_HEIGHT = parseInt(process.env.UPLOAD_MIN_HEIGHT || '10', 10) || 10;
+  private static MIN_WIDTH = parseInt(process.env.UPLOAD_MIN_WIDTH || '10', 10) || 10;
+  private static MAX_HEIGHT = parseInt(process.env.UPLOAD_MAX_HEIGHT || '9000', 10) || 9000;
+  private static MAX_WIDTH = parseInt(process.env.UPLOAD_MAX_WIDTH || '9000', 10) || 9000;
+  private static GM_MEMORY_LIMIT = process.env.GM_MEMORY_LIMIT || '900M';
+  private static GM_THREADS_LIMIT = process.env.GM_THREADS_LIMIT || '1';
+
   private readonly httpClient: Got;
   private static queue: string[] = [];
   private readonly logger = new Logger(UploadService.name, true);
@@ -42,7 +50,7 @@ export class UploadService {
   }
 
   async uploadPicture(file: Express.Multer.File, user: User, source?: string): Promise<Picture> {
-    if (UploadService.queue.length > 16) {
+    if (UploadService.queue.length > UploadService.QUEUE_LIMIT) {
       throw new ServiceUnavailableException('SERVER_IS_OVERLOADED');
     }
 
@@ -56,10 +64,10 @@ export class UploadService {
 
     const gmInstance = gm(file.buffer);
     const dimensions = await this.gmToDimensions(gmInstance);
-    if (dimensions.height < 10 || dimensions.width < 10) {
+    if (dimensions.height < UploadService.MIN_HEIGHT || dimensions.width < UploadService.MIN_WIDTH) {
       throw new BadRequestException('IMAGE_CORRUPTED');
     }
-    if (dimensions.height > 11000 || dimensions.width > 11000) {
+    if (dimensions.height > UploadService.MAX_HEIGHT || dimensions.width > UploadService.MAX_WIDTH) {
       throw new BadRequestException('IMAGE_DIMENSIONS_TOO_LARGE');
     }
 
@@ -217,8 +225,8 @@ export class UploadService {
       .setFormat('jpeg')
       .resize(512, 512)
       .quality(90)
-      .limit('memory', '900M')
-      .limit('threads', '1');
+      .limit('memory', UploadService.GM_MEMORY_LIMIT)
+      .limit('threads', UploadService.GM_THREADS_LIMIT);
     const mBuffer = await this.gmToBuffer(m);
 
     const s = gm(mBuffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
