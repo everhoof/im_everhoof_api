@@ -206,7 +206,13 @@ let UploadService = UploadService_1 = class UploadService {
         return { height, width };
     }
     async compressImage(gmInstance) {
-        const m = gmInstance.noProfile().setFormat('jpeg').resize(512, 512).quality(90).limit('memory', '900M');
+        const m = gmInstance
+            .noProfile()
+            .setFormat('jpeg')
+            .resize(512, 512)
+            .quality(90)
+            .limit('memory', '900M')
+            .limit('threads', '1');
         const mBuffer = await this.gmToBuffer(m);
         const s = gm_1.default(mBuffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
         const sBuffer = await this.gmToBuffer(s);
