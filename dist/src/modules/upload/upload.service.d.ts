@@ -11,6 +11,13 @@ import { UploadedPicture } from '@modules/upload/types/uploaded-picture';
 export declare class UploadService {
     private readonly picturesRepository;
     private readonly pictureRepresentationsRepository;
+    private static QUEUE_LIMIT;
+    private static MIN_HEIGHT;
+    private static MIN_WIDTH;
+    private static MAX_HEIGHT;
+    private static MAX_WIDTH;
+    private static GM_MEMORY_LIMIT;
+    private static GM_THREADS_LIMIT;
     private readonly httpClient;
     private static queue;
     private readonly logger;

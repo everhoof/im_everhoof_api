@@ -48,7 +48,7 @@ let UploadService = UploadService_1 = class UploadService {
         });
     }
     async uploadPicture(file, user, source) {
-        if (UploadService_1.queue.length > 16) {
+        if (UploadService_1.queue.length > UploadService_1.QUEUE_LIMIT) {
             throw new exceptions_1.ServiceUnavailableException('SERVER_IS_OVERLOADED');
         }
         if (!file)
@@ -60,10 +60,10 @@ let UploadService = UploadService_1 = class UploadService {
         }
         const gmInstance = gm_1.default(file.buffer);
         const dimensions = await this.gmToDimensions(gmInstance);
-        if (dimensions.height < 10 || dimensions.width < 10) {
+        if (dimensions.height < UploadService_1.MIN_HEIGHT || dimensions.width < UploadService_1.MIN_WIDTH) {
             throw new exceptions_1.BadRequestException('IMAGE_CORRUPTED');
         }
-        if (dimensions.height > 11000 || dimensions.width > 11000) {
+        if (dimensions.height > UploadService_1.MAX_HEIGHT || dimensions.width > UploadService_1.MAX_WIDTH) {
             throw new exceptions_1.BadRequestException('IMAGE_DIMENSIONS_TOO_LARGE');
         }
         const id = file.originalname + '_' + Date.now() + '_' + user.id;
@@ -211,8 +211,8 @@ let UploadService = UploadService_1 = class UploadService {
             .setFormat('jpeg')
             .resize(512, 512)
             .quality(90)
-            .limit('memory', '900M')
-            .limit('threads', '1');
+            .limit('memory', UploadService_1.GM_MEMORY_LIMIT)
+            .limit('threads', UploadService_1.GM_THREADS_LIMIT);
         const mBuffer = await this.gmToBuffer(m);
         const s = gm_1.default(mBuffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
         const sBuffer = await this.gmToBuffer(s);
@@ -254,6 +254,13 @@ let UploadService = UploadService_1 = class UploadService {
         return buffer.byteLength;
     }
 };
+UploadService.QUEUE_LIMIT = parseInt(process.env.UPLOAD_QUEUE_LIMIT || '16', 10) || 16;
+UploadService.MIN_HEIGHT = parseInt(process.env.UPLOAD_MIN_HEIGHT || '10', 10) || 10;
+UploadService.MIN_WIDTH = parseInt(process.env.UPLOAD_MIN_WIDTH || '10', 10) || 10;
+UploadService.MAX_HEIGHT = parseInt(process.env.UPLOAD_MAX_HEIGHT || '9000', 10) || 9000;
+UploadService.MAX_WIDTH = parseInt(process.env.UPLOAD_MAX_WIDTH || '9000', 10) || 9000;
+UploadService.GM_MEMORY_LIMIT = process.env.GM_MEMORY_LIMIT || '900M';
+UploadService.GM_THREADS_LIMIT = process.env.GM_THREADS_LIMIT || '1';
 UploadService.queue = [];
 UploadService = UploadService_1 = __decorate([
     common_1.Injectable(),
