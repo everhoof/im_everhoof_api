@@ -34,9 +34,7 @@ export class MessagesService {
   ) {}
 
   async throwOnPunished(targetId: number): Promise<void> {
-    const punishment = await this.punishmentsRepository.findOne({
-      where: { targetId },
-    });
+    const punishment = await this.punishmentsRepository.getLastPunishment(targetId);
     if (!punishment) return;
 
     if (punishment.type === PunishmentTypes.mute) throw new BadRequestException('YOU_ARE_MUTED');
