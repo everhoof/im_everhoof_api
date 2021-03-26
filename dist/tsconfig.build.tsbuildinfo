@@ -6811,8 +6811,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/upload/types/compressed-picture.ts": {
-        "version": "8431cc749435a6f1eb9c6979f03804dd2e3dfc88d1990701420ec35d3ea86806",
-        "signature": "21bc0e4149ae047f17e3684d27333b24a4ec9ad4c2d28111f42c428fdade685a",
+        "version": "afd8a89cff59e6937a529c0d5777429cee676660f62424d852d6cd090fd4143e",
+        "signature": "879872b898e4d7f6cf408072655e1aaba21b4d3f030ebf2cd2fcb7afd19242c2",
         "affectsGlobalScope": false
       },
       "../src/modules/upload/types/DiscordMessage.ts": {
@@ -6891,7 +6891,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/upload/upload.service.ts": {
-        "version": "96778ad7510950bf6fdf229e0d382d8aa6d5d37fc2b111a03cce474f51aa95d8",
+        "version": "809efb85f3db604b8889e55ff73f4d05d4898d7a2648f4fe1dbd6855548768c9",
         "signature": "36954ee79cabab8aa710242edf94933e72cafc4b9f4839f713a6c6a529e11335",
         "affectsGlobalScope": false
       },
@@ -20227,9 +20227,6 @@
       ],
       "../src/modules/roles/roles.service.ts": [
         "../src/modules/roles/repositories/roles.repository.ts"
-      ],
-      "../src/modules/upload/types/compressed-picture.ts": [
-        "../node_modules/@types/gm/index.d.ts"
       ],
       "../src/modules/upload/types/uploaded-picture.ts": [
         "../node_modules/@types/gm/index.d.ts"

@@ -118,8 +118,8 @@ let UploadService = UploadService_1 = class UploadService {
                 };
             }
             const picture = await this.savePicture(user.id, {
-                s: { key: sPath, dimensions: s.dimensions, size: s.size },
-                m: { key: mPath, dimensions: m.dimensions, size: m.size },
+                s: { key: sPath, dimensions: image_size_1.imageSize(s.buffer), size: s.size },
+                m: { key: mPath, dimensions: image_size_1.imageSize(m.buffer), size: m.size },
                 o: o,
             });
             UploadService_1.queue.shift();
@@ -211,11 +211,9 @@ let UploadService = UploadService_1 = class UploadService {
         const s = gm_1.default(mBuffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
         const sBuffer = await this.gmToBuffer(s);
         const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
-        const sDimensions = await this.gmToDimensions(s);
-        const mDimensions = await this.gmToDimensions(m);
         return {
-            s: { buffer: sBuffer, dimensions: sDimensions, size: sSize },
-            m: { buffer: mBuffer, dimensions: mDimensions, size: mSize },
+            s: { buffer: sBuffer, size: sSize },
+            m: { buffer: mBuffer, size: mSize },
         };
     }
     gmToBuffer(data) {
