@@ -25,6 +25,7 @@ type Message {
 
 type Mutation {
   updateOnlineStatus: Boolean!
+  updateAvatar(pictureId: Int!): User!
   punish(userId: Int!, type: PunishmentTypes!, reason: String!, duration: Int): User!
   unpunish(userId: Int!): User!
   createMessage(content: String, randomId: String, pictures: [Int!] = []): Message!

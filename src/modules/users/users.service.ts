@@ -15,6 +15,8 @@ import { BadRequestException } from '@common/exceptions/exceptions';
 import { TokensRepository } from '@modules/accounts/repositories/tokens.repository';
 import { GetUserByIdArgs } from '@modules/users/args/get-user-by-id.args';
 import { MessagesService } from '@modules/messages/messages.service';
+import { UpdateAvatarArgs } from '@modules/users/args/update-avatar.args';
+import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 
 @Injectable()
 export class UsersService {
@@ -27,6 +29,8 @@ export class UsersService {
     private readonly tokensRepository: TokensRepository,
     @InjectRepository(PunishmentsRepository)
     private readonly punishmentsRepository: PunishmentsRepository,
+    @InjectRepository(PicturesRepository)
+    private readonly picturesRepository: PicturesRepository,
     private readonly messagesService: MessagesService,
   ) {}
 
@@ -76,6 +80,20 @@ export class UsersService {
 
   async updateOnlineStatus(): Promise<void> {
     await this.updateOnline();
+  }
+
+  async updateAvatar(args: UpdateAvatarArgs, executor: User): Promise<User> {
+    const picture = await this.picturesRepository.isExist(args.pictureId);
+    if (picture.ownerId && picture.ownerId !== executor.id) throw new BadRequestException('FORBIDDEN');
+    await this.usersRepository.update(
+      {
+        id: executor.id,
+      },
+      {
+        avatarId: picture.id,
+      },
+    );
+    return this.usersRepository.isExist(executor.id);
   }
 
   async punish(args: PunishmentArgs, executor: User): Promise<Punishment> {

@@ -14,6 +14,7 @@ import { PunishmentArgs } from '@modules/users/args/punishment.args';
 import { UnpunishmentArgs } from '@modules/users/args/unpunishment.args';
 import { Punishment } from '@modules/users/entities/punishments.entity';
 import { GetUserByIdArgs } from '@modules/users/args/get-user-by-id.args';
+import { UpdateAvatarArgs } from '@modules/users/args/update-avatar.args';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver(() => User)
@@ -53,6 +54,12 @@ export class UsersResolver {
   async updateOnlineStatus(): Promise<boolean> {
     await this.usersService.updateOnlineStatus();
     return true;
+  }
+
+  @Mutation(() => User)
+  @UseGuards(GqlAuthGuard)
+  updateAvatar(@Args() args: UpdateAvatarArgs, @CurrentUser() executor: User): Promise<User> {
+    return this.usersService.updateAvatar(args, executor);
   }
 
   @Mutation(() => User)
