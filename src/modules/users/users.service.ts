@@ -93,9 +93,14 @@ export class UsersService {
         avatarId: picture.id,
       },
     );
-    const message = `${executor.username} uploaded a new avatar`;
-    await this.messagesService.createSystemMessage(message);
-    return this.usersRepository.isExist(executor.id);
+
+    const user = await this.usersRepository.isExist(executor.id);
+    const message = `${user.username} uploaded a new avatar`;
+    await Promise.all([
+      this.messagesService.createSystemMessage(message),
+      this.pubSub.publish('userUpdated', { userUpdated: user }),
+    ]);
+    return user;
   }
 
   async punish(args: PunishmentArgs, executor: User): Promise<Punishment> {

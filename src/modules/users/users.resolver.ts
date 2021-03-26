@@ -88,4 +88,11 @@ export class UsersResolver {
   onlineUpdated(): AsyncIterator<User[]> {
     return this.pubSub.asyncIterator('onlineUpdated');
   }
+
+  @Subscription(() => User, {
+    name: 'userUpdated',
+  })
+  userUpdated(): AsyncIterator<User> {
+    return this.pubSub.asyncIterator('userUpdated');
+  }
 }
