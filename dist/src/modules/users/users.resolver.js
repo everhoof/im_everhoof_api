@@ -32,6 +32,7 @@ const punishment_args_1 = require("./args/punishment.args");
 const unpunishment_args_1 = require("./args/unpunishment.args");
 const punishments_entity_1 = require("./entities/punishments.entity");
 const get_user_by_id_args_1 = require("./args/get-user-by-id.args");
+const update_avatar_args_1 = require("./args/update-avatar.args");
 let UsersResolver = class UsersResolver {
     constructor(pubSub, usersService) {
         this.pubSub = pubSub;
@@ -56,6 +57,9 @@ let UsersResolver = class UsersResolver {
         await this.usersService.updateOnlineStatus();
         return true;
     }
+    updateAvatar(args, executor) {
+        return this.usersService.updateAvatar(args, executor);
+    }
     punish(args, executor) {
         return this.usersService.punish(args, executor);
     }
@@ -64,6 +68,9 @@ let UsersResolver = class UsersResolver {
     }
     onlineUpdated() {
         return this.pubSub.asyncIterator('onlineUpdated');
+    }
+    userUpdated() {
+        return this.pubSub.asyncIterator('userUpdated');
     }
 };
 __decorate([
@@ -105,6 +112,14 @@ __decorate([
 ], UsersResolver.prototype, "updateOnlineStatus", null);
 __decorate([
     graphql_1.Mutation(() => users_entity_1.User),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_avatar_args_1.UpdateAvatarArgs, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "updateAvatar", null);
+__decorate([
+    graphql_1.Mutation(() => users_entity_1.User),
     nest_access_control_1.UseRoles({
         resource: 'mute',
         action: 'update',
@@ -135,6 +150,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Object)
 ], UsersResolver.prototype, "onlineUpdated", null);
+__decorate([
+    graphql_1.Subscription(() => users_entity_1.User, {
+        name: 'userUpdated',
+    }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], UsersResolver.prototype, "userUpdated", null);
 UsersResolver = __decorate([
     common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
     graphql_1.Resolver(() => users_entity_1.User),

@@ -1017,7 +1017,158 @@ declare const _exports: {
             migrationsDir: string;
         };
     }, fromIndex?: number | undefined): number;
-    every(callbackfn: (value: {
+    every<S extends {
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        entities: string[];
+    } | {
+        name: string;
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        entities: string[];
+        migrations: string[];
+        subscribers: string[];
+        cli: {
+            entitiesDir: string;
+            migrationsDir: string;
+            subscribersDir: string;
+        };
+    } | {
+        name: string;
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        migrationsTableName: string;
+        entities: string[];
+        migrations: string[];
+        cli: {
+            migrationsDir: string;
+        };
+    }>(predicate: (value: {
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        entities: string[];
+    } | {
+        name: string;
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        entities: string[];
+        migrations: string[];
+        subscribers: string[];
+        cli: {
+            entitiesDir: string;
+            migrationsDir: string;
+            subscribersDir: string;
+        };
+    } | {
+        name: string;
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        migrationsTableName: string;
+        entities: string[];
+        migrations: string[];
+        cli: {
+            migrationsDir: string;
+        };
+    }, index: number, array: ({
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        entities: string[];
+    } | {
+        name: string;
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        entities: string[];
+        migrations: string[];
+        subscribers: string[];
+        cli: {
+            entitiesDir: string;
+            migrationsDir: string;
+            subscribersDir: string;
+        };
+    } | {
+        name: string;
+        type: string;
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        database: string;
+        schema: string;
+        timezone: string;
+        synchronize: boolean;
+        logging: boolean;
+        migrationsTableName: string;
+        entities: string[];
+        migrations: string[];
+        cli: {
+            migrationsDir: string;
+        };
+    })[]) => value is S, thisArg?: any): this is S[];
+    every(predicate: (value: {
         type: string;
         host: string;
         port: number;
@@ -1118,7 +1269,7 @@ declare const _exports: {
             migrationsDir: string;
         };
     })[]) => unknown, thisArg?: any): boolean;
-    some(callbackfn: (value: {
+    some(predicate: (value: {
         type: string;
         host: string;
         port: number;
@@ -1421,7 +1572,7 @@ declare const _exports: {
             migrationsDir: string;
         };
     })[]) => U, thisArg?: any): U[];
-    filter<S extends {
+    filter<S_1 extends {
         type: string;
         host: string;
         port: number;
@@ -1471,7 +1622,7 @@ declare const _exports: {
         cli: {
             migrationsDir: string;
         };
-    }>(callbackfn: (value: {
+    }>(predicate: (value: {
         type: string;
         host: string;
         port: number;
@@ -1571,8 +1722,8 @@ declare const _exports: {
         cli: {
             migrationsDir: string;
         };
-    })[]) => value is S, thisArg?: any): S[];
-    filter(callbackfn: (value: {
+    })[]) => value is S_1, thisArg?: any): S_1[];
+    filter(predicate: (value: {
         type: string;
         host: string;
         port: number;
@@ -3029,7 +3180,7 @@ declare const _exports: {
             migrationsDir: string;
         };
     })[]) => U_2, initialValue: U_2): U_2;
-    find<S_1 extends {
+    find<S_2 extends {
         type: string;
         host: string;
         port: number;
@@ -3179,7 +3330,7 @@ declare const _exports: {
         cli: {
             migrationsDir: string;
         };
-    })[]) => value is S_1, thisArg?: any): S_1 | undefined;
+    })[]) => value is S_2, thisArg?: any): S_2 | undefined;
     find(predicate: (value: {
         type: string;
         host: string;

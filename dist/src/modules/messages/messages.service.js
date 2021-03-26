@@ -35,26 +35,49 @@ const xss_1 = require("xss");
 const delete_message_args_1 = require("./args/delete-message.args");
 const typeorm_2 = require("typeorm");
 const app_roles_1 = require("../../app.roles");
+const punishments_repository_1 = require("../users/repositories/punishments.repository");
+const punishment_args_1 = require("../users/args/punishment.args");
 let MessagesService = class MessagesService {
-    constructor(pubSub, messagesRepository, picturesRepository, uploadService) {
+    constructor(pubSub, messagesRepository, picturesRepository, punishmentsRepository, uploadService) {
         this.pubSub = pubSub;
         this.messagesRepository = messagesRepository;
         this.picturesRepository = picturesRepository;
+        this.punishmentsRepository = punishmentsRepository;
         this.uploadService = uploadService;
     }
+    async throwOnPunished(targetId) {
+        const punishment = await this.punishmentsRepository.getLastPunishment(targetId);
+        if (!punishment)
+            return;
+        if (punishment.type === punishment_args_1.PunishmentTypes.mute)
+            throw new exceptions_1.BadRequestException('YOU_ARE_MUTED');
+        if (punishment.type === punishment_args_1.PunishmentTypes.ban)
+            throw new exceptions_1.BadRequestException('YOU_ARE_BANNED');
+    }
     async createMessage(args, user) {
-        var _a, _b, _c;
-        if (!((_a = args.content) === null || _a === void 0 ? void 0 : _a.trim()) && args.pictures.length === 0)
+        if (!args.content?.trim() && args.pictures.length === 0)
             throw new exceptions_1.BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
+        await this.throwOnPunished(user.id);
         let message = this.messagesRepository.create({
-            content: xss_1.escapeHtml(((_b = args.content) === null || _b === void 0 ? void 0 : _b.trim()) || ''),
+            content: xss_1.escapeHtml(args.content?.trim() || ''),
             ownerId: user.id,
             username: user.username.trim(),
-            randomId: (_c = args.randomId) === null || _c === void 0 ? void 0 : _c.trim(),
+            randomId: args.randomId?.trim(),
         });
         message.pictures = args.pictures.map((id) => this.picturesRepository.create({ id }));
         message = await this.uploadImagesFromMessage(message, user);
         return this.messagesRepository.save(message);
+    }
+    async createSystemMessage(content) {
+        if (!content.trim())
+            throw new exceptions_1.InternalServerErrorException('CANNOT_CREATE_EMPTY_MESSAGE');
+        let message = this.messagesRepository.create({
+            content: xss_1.escapeHtml(content.trim()),
+            system: true,
+        });
+        message = await this.messagesRepository.saveAndReturn(message);
+        await this.pubSub.publish('messageCreated', { messageCreated: message });
+        return message;
     }
     async uploadImagesFromMessage(message, user) {
         if (!message.content)
@@ -81,13 +104,12 @@ let MessagesService = class MessagesService {
         return message;
     }
     async getMessages(args, user) {
-        const canReadAny = (user && app_roles_1.roles.can(user === null || user === void 0 ? void 0 : user.roleNames).readAny('message').granted) || false;
+        const canReadAny = (user && app_roles_1.roles.can(user?.roleNames).readAny('message').granted) || false;
         if (canReadAny)
             return this.messagesRepository.getList(args, { order: { id: 'DESC' } });
         return this.messagesRepository.getList(args, { where: { deletedAt: typeorm_2.IsNull() }, order: { id: 'DESC' } });
     }
     async deleteMessage(args, user) {
-        var _a;
         const canDeleteAny = app_roles_1.roles.can(user.roleNames).deleteAny('message').granted;
         const canDeleteOwn = app_roles_1.roles.can(user.roleNames).deleteOwn('message').granted;
         if (!args.messageId || (!canDeleteOwn && !canDeleteAny))
@@ -97,7 +119,7 @@ let MessagesService = class MessagesService {
             throw new exceptions_1.BadRequestException('FORBIDDEN');
         if (!canDeleteAny && canDeleteOwn && message.ownerId !== user.id)
             throw new exceptions_1.BadRequestException('FORBIDDEN');
-        message.deletedById = (_a = user === null || user === void 0 ? void 0 : user.id) !== null && _a !== void 0 ? _a : undefined;
+        message.deletedById = user?.id ?? undefined;
         message.deletedAt = new Date();
         return this.messagesRepository.saveAndReturn(message);
     }
@@ -107,9 +129,11 @@ MessagesService = __decorate([
     __param(0, common_1.Inject('PUB_SUB')),
     __param(1, typeorm_1.InjectRepository(messages_repository_1.MessagesRepository)),
     __param(2, typeorm_1.InjectRepository(pictures_repository_1.PicturesRepository)),
+    __param(3, typeorm_1.InjectRepository(punishments_repository_1.PunishmentsRepository)),
     __metadata("design:paramtypes", [graphql_subscriptions_1.PubSub,
         messages_repository_1.MessagesRepository,
         pictures_repository_1.PicturesRepository,
+        punishments_repository_1.PunishmentsRepository,
         upload_service_1.UploadService])
 ], MessagesService);
 exports.MessagesService = MessagesService;

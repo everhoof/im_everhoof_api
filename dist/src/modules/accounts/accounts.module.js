@@ -23,7 +23,7 @@ let AccountsModule = class AccountsModule {
 AccountsModule = __decorate([
     common_1.Module({
         imports: [
-            users_module_1.UsersModule,
+            common_1.forwardRef(() => users_module_1.UsersModule),
             passport_1.PassportModule,
             typeorm_1.TypeOrmModule.forFeature([tokens_repository_1.TokensRepository, users_repository_1.UsersRepository, roles_repository_1.RolesRepository]),
         ],

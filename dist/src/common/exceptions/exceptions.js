@@ -47,6 +47,14 @@ const exceptions = {
         en: 'Cannot create empty message',
         ru: 'Невозможно создать пустое сообщение',
     },
+    YOU_ARE_MUTED: {
+        en: 'You are muted',
+        ru: 'Вы заглушены',
+    },
+    YOU_ARE_BANNED: {
+        en: 'You are muted',
+        ru: 'Вы забанены',
+    },
 };
 function createExceptionMessage(exception, lang = 'en', args = []) {
     if (exceptions[exception] && exceptions[exception][lang]) {

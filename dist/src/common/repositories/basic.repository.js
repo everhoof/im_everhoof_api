@@ -9,7 +9,7 @@ class BasicRepository extends typeorm_1.Repository {
         return this.find({
             skip: (args.page - 1) * args.count,
             take: args.count,
-            ...(options !== null && options !== void 0 ? options : {}),
+            ...(options ?? {}),
         });
     }
     async saveAndReturn(entity) {

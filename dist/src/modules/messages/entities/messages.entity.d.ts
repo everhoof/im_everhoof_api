@@ -4,6 +4,7 @@ export declare class Message {
     readonly id: number;
     ownerId: Nullable<number>;
     randomId: Nullable<string>;
+    system: boolean;
     content: string;
     username: string;
     deletedById: Nullable<number>;

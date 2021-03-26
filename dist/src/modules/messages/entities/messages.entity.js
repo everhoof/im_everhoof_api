@@ -49,6 +49,15 @@ __decorate([
     __metadata("design:type", Object)
 ], Message.prototype, "randomId", void 0);
 __decorate([
+    graphql_1.Field(() => Boolean),
+    typeorm_1.Column({
+        name: 'system',
+        type: 'boolean',
+        default: false,
+    }),
+    __metadata("design:type", Boolean)
+], Message.prototype, "system", void 0);
+__decorate([
     graphql_1.Field(() => String),
     typeorm_1.Column({
         type: 'text',

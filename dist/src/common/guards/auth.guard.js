@@ -19,7 +19,7 @@ function canActivate(context, optional = false) {
     const request = this.getRequest(context);
     if (!request || !request.user || request.user === -1) {
         if (optional) {
-            if ((request === null || request === void 0 ? void 0 : request.user) === -1)
+            if (request?.user === -1)
                 throw new common_1.UnauthorizedException();
             return true;
         }
@@ -70,10 +70,9 @@ let WsAuthGuard = class WsAuthGuard {
         this.accountsService = accountsService;
     }
     async canActivate(context) {
-        var _a;
         const client = context.switchToWs().getClient();
         const cookies = client.handshake.headers.cookie.split('; ');
-        const token = (_a = cookies.find((cookie) => cookie.startsWith('token'))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
+        const token = cookies.find((cookie) => cookie.startsWith('token'))?.split('=')[1];
         if (!token)
             return false;
         const tokenEntity = await this.accountsService.validateUserByToken(decodeURIComponent(token));

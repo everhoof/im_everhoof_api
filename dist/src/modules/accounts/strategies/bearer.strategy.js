@@ -41,7 +41,7 @@ let BearerStrategyNoException = class BearerStrategyNoException extends passport
     async validate(token) {
         try {
             const tokenEntity = await this.accountsService.validateUserByToken(token);
-            return (tokenEntity === null || tokenEntity === void 0 ? void 0 : tokenEntity.owner) || -1;
+            return tokenEntity?.owner || -1;
         }
         catch (e) {
             return -1;

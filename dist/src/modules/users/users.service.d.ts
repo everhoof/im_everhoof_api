@@ -7,17 +7,24 @@ import { Punishment } from '@modules/users/entities/punishments.entity';
 import { UnpunishmentArgs } from '@modules/users/args/unpunishment.args';
 import { TokensRepository } from '@modules/accounts/repositories/tokens.repository';
 import { GetUserByIdArgs } from '@modules/users/args/get-user-by-id.args';
+import { MessagesService } from '@modules/messages/messages.service';
+import { UpdateAvatarArgs } from '@modules/users/args/update-avatar.args';
+import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 export declare class UsersService {
     private readonly pubSub;
     private readonly usersRepository;
     private readonly tokensRepository;
     private readonly punishmentsRepository;
-    constructor(pubSub: PubSub, usersRepository: UsersRepository, tokensRepository: TokensRepository, punishmentsRepository: PunishmentsRepository);
+    private readonly picturesRepository;
+    private readonly messagesService;
+    constructor(pubSub: PubSub, usersRepository: UsersRepository, tokensRepository: TokensRepository, punishmentsRepository: PunishmentsRepository, picturesRepository: PicturesRepository, messagesService: MessagesService);
     onlineUsersIds: number[];
     getUserById(args: GetUserByIdArgs): Promise<User>;
     updateOnline(): Promise<void>;
+    unpunishUsers(): Promise<void>;
     getOnline(): Promise<User[]>;
     updateOnlineStatus(): Promise<void>;
+    updateAvatar(args: UpdateAvatarArgs, executor: User): Promise<User>;
     punish(args: PunishmentArgs, executor: User): Promise<Punishment>;
-    unpunish(args: UnpunishmentArgs, executor: User): Promise<Punishment>;
+    unpunish(args: UnpunishmentArgs, executor?: User): Promise<Punishment>;
 }
