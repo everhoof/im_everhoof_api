@@ -1,23 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import gm, { Dimensions } from 'gm';
 import got, { Got } from 'got';
 import FormData from 'form-data';
-import { createReadStream, readFile, writeFile, createFile, unlink } from 'fs-extra';
-import { extname, basename, resolve } from 'path';
+import { writeFile, createFile } from 'fs-extra';
+import { extname, basename } from 'path';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 import { PictureRepresentationsRepository } from '@modules/pictures/repositories/picture-representations.repository';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { User } from '@modules/users/entities/users.entity';
-import { BadRequestException, InternalServerErrorException } from '@common/exceptions/exceptions';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+  ServiceUnavailableException,
+  UnsupportedMediaTypeException,
+} from '@common/exceptions/exceptions';
 import { CompressedPicture } from '@modules/upload/types/compressed-picture';
 import { DiscordMessage } from '@modules/upload/types/DiscordMessage';
 import { UploadedPicture } from '@modules/upload/types/uploaded-picture';
 import { Utils } from '@common/utils/utils';
+import { fromBuffer } from 'file-type';
+import { imageSize } from 'image-size';
 
 @Injectable()
 export class UploadService {
   private readonly httpClient: Got;
+  private static queue: string[] = [];
+  private readonly logger = new Logger(UploadService.name, true);
 
   constructor(
     @InjectRepository(PicturesRepository) private readonly picturesRepository: PicturesRepository,
@@ -32,14 +41,39 @@ export class UploadService {
     });
   }
 
-  async uploadPicture(file: Express.Multer.File, user: User): Promise<Picture> {
+  async uploadPicture(file: Express.Multer.File, user: User, source?: string): Promise<Picture> {
+    if (UploadService.queue.length > 16) {
+      throw new ServiceUnavailableException('SERVER_IS_OVERLOADED');
+    }
+
     if (!file) throw new BadRequestException('NO_FILE_PROVIDED');
     const path = Utils.getRandomString(24);
+
+    const fileType = await fromBuffer(file.buffer);
+    if (!fileType?.ext.match(/(jpg|jpeg|png)/)) {
+      throw new UnsupportedMediaTypeException('UNSUPPORTED_MEDIA_TYPE');
+    }
+
+    const gmInstance = gm(file.buffer);
+    const dimensions = await this.gmToDimensions(gmInstance);
+    if (dimensions.height < 10 || dimensions.width < 10) {
+      throw new BadRequestException('IMAGE_CORRUPTED');
+    }
+    if (dimensions.height > 11000 || dimensions.width > 11000) {
+      throw new BadRequestException('IMAGE_DIMENSIONS_TOO_LARGE');
+    }
+
+    const id = file.originalname + '_' + Date.now() + '_' + user.id;
+    UploadService.queue.push(id);
+    await Utils.conditionalWait(() => !!UploadService.queue.length && UploadService.queue[0] === id);
+
     try {
-      if (!file.buffer) file.buffer = await readFile(file.path);
-      const { s, m } = await this.compressImage(file);
-      const message = await this.uploadFileToDiscord(file);
-      const attachment = message.attachments[0];
+      let attachment;
+      if (!source) {
+        const message = await this.uploadFileToDiscord(file);
+        attachment = message.attachments[0];
+      }
+      const { s, m } = await this.compressImage(gmInstance);
 
       const filename = basename(file.originalname, extname(file.originalname))
         .replace(/[^a-z0-9_\-+]/, '_')
@@ -57,27 +91,45 @@ export class UploadService {
         }),
       ];
 
-      await Promise.all([createFile(process.env.UPLOAD_DIR + sPath), createFile(process.env.UPLOAD_DIR + mPath)]);
       await Promise.all([
+        //
+        createFile(process.env.UPLOAD_DIR + sPath),
+        createFile(process.env.UPLOAD_DIR + mPath),
+      ]);
+      await Promise.all([
+        //
         writeFile(process.env.UPLOAD_DIR + sPath, s.buffer),
         writeFile(process.env.UPLOAD_DIR + mPath, m.buffer),
       ]);
 
-      await unlink(file.path);
-
-      return this.savePicture(user.id, {
-        s: { key: sPath, dimensions: s.dimensions, size: s.size },
-        m: { key: mPath, dimensions: m.dimensions, size: m.size },
-        o: {
+      let o;
+      if (source) {
+        o = {
+          key: source,
+          dimensions: imageSize(file.buffer),
+          size: this.bufferToFileSize(file.buffer),
+        };
+      } else {
+        o = {
           key: attachment.proxy_url,
           dimensions: {
             height: attachment.height,
             width: attachment.width,
           },
           size: attachment.size,
-        },
+        };
+      }
+      const picture = await this.savePicture(user.id, {
+        s: { key: sPath, dimensions: s.dimensions, size: s.size },
+        m: { key: mPath, dimensions: m.dimensions, size: m.size },
+        o: o,
       });
+
+      UploadService.queue.shift();
+      return picture;
     } catch (e) {
+      this.logger.debug(e);
+      UploadService.queue.shift();
       throw new InternalServerErrorException('UNKNOWN');
     }
   }
@@ -116,7 +168,7 @@ export class UploadService {
   async uploadFileToDiscord(file: Express.Multer.File): Promise<DiscordMessage> {
     try {
       const form = new FormData();
-      form.append('file', createReadStream(resolve(file.path)), file.originalname);
+      form.append('file', file.buffer, file.originalname);
       const message = await this.httpClient
         .post(`channels/${process.env.DISCORD_UPLOAD_CHANNEL_ID}/messages`, {
           body: form,
@@ -125,6 +177,7 @@ export class UploadService {
       if (!message.attachments[0]) throw new InternalServerErrorException('UNKNOWN');
       return message;
     } catch (e) {
+      this.logger.debug(e);
       throw new InternalServerErrorException('UNKNOWN');
     }
   }
@@ -158,11 +211,13 @@ export class UploadService {
     return { height, width };
   }
 
-  async compressImage(picture: Express.Multer.File): Promise<CompressedPicture> {
-    const s = gm(picture.buffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
-    const m = gm(picture.buffer).noProfile().setFormat('jpeg').resize(512, 512).quality(90);
+  async compressImage(gmInstance: gm.State): Promise<CompressedPicture> {
+    const m = gmInstance.noProfile().setFormat('jpeg').resize(512, 512).quality(90).limit('memory', '512M');
+    const mBuffer = await this.gmToBuffer(m);
 
-    const [sBuffer, mBuffer] = await Promise.all([this.gmToBuffer(s), this.gmToBuffer(m)]);
+    const s = gm(mBuffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
+    const sBuffer = await this.gmToBuffer(s);
+
     const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
     const sDimensions = await this.gmToDimensions(s);
     const mDimensions = await this.gmToDimensions(m);

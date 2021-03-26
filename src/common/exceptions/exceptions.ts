@@ -15,7 +15,11 @@ export type ExceptionKey =
   | 'NO_FILE_PROVIDED'
   | 'CANNOT_CREATE_EMPTY_MESSAGE'
   | 'YOU_ARE_MUTED'
-  | 'YOU_ARE_BANNED';
+  | 'YOU_ARE_BANNED'
+  | 'IMAGE_CORRUPTED'
+  | 'IMAGE_DIMENSIONS_TOO_LARGE'
+  | 'UNSUPPORTED_MEDIA_TYPE'
+  | 'SERVER_IS_OVERLOADED';
 
 type Exception = {
   [key in ExceptionKey]: { [key in ExceptionMessage]: string };
@@ -74,6 +78,22 @@ const exceptions: Exception = {
     en: 'You are muted',
     ru: 'Вы забанены',
   },
+  IMAGE_CORRUPTED: {
+    en: 'Image corrupted',
+    ru: 'Изображение повреждено',
+  },
+  IMAGE_DIMENSIONS_TOO_LARGE: {
+    en: 'Image dimensions too large',
+    ru: 'Разрешение изображения слишком большое',
+  },
+  UNSUPPORTED_MEDIA_TYPE: {
+    en: 'Unsupported Media Type',
+    ru: 'Неподдерживаемый тип медиа',
+  },
+  SERVER_IS_OVERLOADED: {
+    en: 'Service is overloaded',
+    ru: 'Сервер перегружен',
+  },
 };
 
 function createExceptionMessage(exception: ExceptionKey, lang: ExceptionMessage = 'en', args: string[] = []): string {
@@ -122,5 +142,17 @@ export class BadRequestException extends CustomHttpException {
 export class InternalServerErrorException extends CustomHttpException {
   constructor(exception: ExceptionKey, ...args: string[]) {
     super(HttpStatus.INTERNAL_SERVER_ERROR, exception, args);
+  }
+}
+
+export class UnsupportedMediaTypeException extends CustomHttpException {
+  constructor(exception: ExceptionKey, ...args: string[]) {
+    super(HttpStatus.UNSUPPORTED_MEDIA_TYPE, exception, args);
+  }
+}
+
+export class ServiceUnavailableException extends CustomHttpException {
+  constructor(exception: ExceptionKey, ...args: string[]) {
+    super(HttpStatus.SERVICE_UNAVAILABLE, exception, args);
   }
 }

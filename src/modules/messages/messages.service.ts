@@ -8,7 +8,6 @@ import { PicturesRepository } from '@modules/pictures/repositories/pictures.repo
 import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
 import { BadRequestException, InternalServerErrorException } from '@common/exceptions/exceptions';
 import got from 'got';
-import { writeFile } from 'fs-extra';
 import { Utils } from '@common/utils/utils';
 import { PubSub } from 'graphql-subscriptions';
 import { basename } from 'path';
@@ -77,15 +76,12 @@ export class MessagesService {
 
     const buffer = await got(message.content).buffer();
     const filename = Utils.getRandomString(32);
-    const path = './uploads/' + filename;
-    await writeFile(path, buffer);
     const file: Express.Multer.File = {
-      path,
       buffer,
       originalname: basename(message.content),
       filename,
     } as Express.Multer.File;
-    const picture = await this.uploadService.uploadPicture(file, user);
+    const picture = await this.uploadService.uploadPicture(file, user, message.content);
     message.pictures = [picture];
     message.content = '';
     return message;
