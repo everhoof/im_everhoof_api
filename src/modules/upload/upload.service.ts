@@ -17,7 +17,7 @@ import {
 } from '@common/exceptions/exceptions';
 import { CompressedPicture } from '@modules/upload/types/compressed-picture';
 import { DiscordMessage } from '@modules/upload/types/DiscordMessage';
-import { UploadedPicture } from '@modules/upload/types/uploaded-picture';
+import { UploadedPicture, UploadedPictureRepresentation } from '@modules/upload/types/uploaded-picture';
 import { Utils } from '@common/utils/utils';
 import { fromBuffer } from 'file-type';
 import { imageSize } from 'image-size';
@@ -102,11 +102,11 @@ export class UploadService {
         writeFile(process.env.UPLOAD_DIR + mPath, m.buffer),
       ]);
 
-      let o;
+      let o: UploadedPictureRepresentation;
       if (source) {
         o = {
           key: source,
-          dimensions: imageSize(file.buffer),
+          dimensions: imageSize(file.buffer) as Dimensions,
           size: this.bufferToFileSize(file.buffer),
         };
       } else {
@@ -120,8 +120,8 @@ export class UploadService {
         };
       }
       const picture = await this.savePicture(user.id, {
-        s: { key: sPath, dimensions: s.dimensions, size: s.size },
-        m: { key: mPath, dimensions: m.dimensions, size: m.size },
+        s: { key: sPath, dimensions: imageSize(s.buffer) as Dimensions, size: s.size },
+        m: { key: mPath, dimensions: imageSize(m.buffer) as Dimensions, size: m.size },
         o: o,
       });
 
@@ -219,12 +219,10 @@ export class UploadService {
     const sBuffer = await this.gmToBuffer(s);
 
     const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
-    const sDimensions = await this.gmToDimensions(s);
-    const mDimensions = await this.gmToDimensions(m);
 
     return {
-      s: { buffer: sBuffer, dimensions: sDimensions, size: sSize },
-      m: { buffer: mBuffer, dimensions: mDimensions, size: mSize },
+      s: { buffer: sBuffer, size: sSize },
+      m: { buffer: mBuffer, size: mSize },
     };
   }
 

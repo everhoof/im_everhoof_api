@@ -7,6 +7,5 @@ export interface CompressedPicture {
 
 export interface CompressedPictureRepresentation {
   buffer: Buffer;
-  dimensions: Dimensions;
   size: number;
 }
