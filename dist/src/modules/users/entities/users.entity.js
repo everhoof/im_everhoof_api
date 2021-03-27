@@ -39,6 +39,7 @@ __decorate([
     typeorm_1.Column({
         type: 'varchar',
         length: 254,
+        unique: true,
     }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
@@ -148,7 +149,9 @@ __decorate([
 ], User.prototype, "roles", void 0);
 User = __decorate([
     graphql_1.ObjectType(),
-    typeorm_1.Entity('users')
+    typeorm_1.Entity('users'),
+    typeorm_1.Unique('users_unique_email', ['email']),
+    typeorm_1.Unique('users_unique_username', ['username'])
 ], User);
 exports.User = User;
 //# sourceMappingURL=users.entity.js.map

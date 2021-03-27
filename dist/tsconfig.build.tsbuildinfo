@@ -1586,6 +1586,11 @@
         "signature": "c2a08398955a146d0cfd4fddaf63e336048211af787e5154e28755a55de97e1f",
         "affectsGlobalScope": false
       },
+      "../database/migrations/1616847453379-add_foreign_keys_and_unique_indexes_to_users_table.ts": {
+        "version": "c8198008b60b72b06bbab8358f4ce26ff2c9a6ec0503fcdaa6d5ce589ed03a7f",
+        "signature": "c18402f6b72126dc004b5d9277aab9c24789cab1cfb0eb80c8e84d0e77bf21a3",
+        "affectsGlobalScope": false
+      },
       "../database/seeds/1602986400000-create_basic_roles.ts": {
         "version": "8564c0d5f3637d020278670079f33e570a2e320d3d1aad39c55defa171b6549c",
         "signature": "f57c5162f010e0b8d13a8718c0725e3a83df0bb69b961966888378d0531ad7f9",
@@ -6616,7 +6621,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/users/entities/users.entity.ts": {
-        "version": "f2f5f09f75400b5d9bc365798db32b7eca60ac65a2df45ad8b8ea4333503b26f",
+        "version": "1974ad3d9da8122c1515562a7b292b3413ec8acdcbfe1b6306c1208fcf334a45",
         "signature": "0b518c225d5af51ecae0fc291996049029bf62f8979fac170a13ac47c154d6c5",
         "affectsGlobalScope": false
       },
@@ -7687,6 +7692,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1616688487961-make_username_nullable_in_messages_table.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1616847453379-add_foreign_keys_and_unique_indexes_to_users_table.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -14138,6 +14146,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1616688487961-make_username_nullable_in_messages_table.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1616847453379-add_foreign_keys_and_unique_indexes_to_users_table.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
