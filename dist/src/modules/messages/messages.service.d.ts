@@ -14,6 +14,7 @@ export declare class MessagesService {
     private readonly picturesRepository;
     private readonly punishmentsRepository;
     private readonly uploadService;
+    private static EMBED_UPLOAD_IMAGE_MAX_SIZE;
     constructor(pubSub: PubSub, messagesRepository: MessagesRepository, picturesRepository: PicturesRepository, punishmentsRepository: PunishmentsRepository, uploadService: UploadService);
     throwOnPunished(targetId: number): Promise<void>;
     createMessage(args: CreateMessageArgs, user: User): Promise<Message>;

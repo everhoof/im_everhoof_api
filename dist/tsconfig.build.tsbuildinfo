@@ -6906,8 +6906,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.service.ts": {
-        "version": "dda648f641c50eb71e1c00f390e828d8fd758fb97765034e26d0aab7f77c726b",
-        "signature": "8a543e69c9ee9c9a6e28ebeb8744a87422c6c20ffbbf841443e33bf3a45c5325",
+        "version": "d6402eb5eab9bf712e67283cdb03a976722f8d2f6d34476b911bc2e3dc4a4f5d",
+        "signature": "f43790b3bedcd12bd2528fc6fd95b1077c6021c5e1b20cd520edca0fa266fe31",
         "affectsGlobalScope": false
       },
       "../src/modules/users/args/update-avatar.args.ts": {

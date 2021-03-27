@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var MessagesService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessagesService = void 0;
 const common_1 = require("@nestjs/common");
@@ -36,7 +37,7 @@ const typeorm_2 = require("typeorm");
 const app_roles_1 = require("../../app.roles");
 const punishments_repository_1 = require("../users/repositories/punishments.repository");
 const punishment_args_1 = require("../users/args/punishment.args");
-let MessagesService = class MessagesService {
+let MessagesService = MessagesService_1 = class MessagesService {
     constructor(pubSub, messagesRepository, picturesRepository, punishmentsRepository, uploadService) {
         this.pubSub = pubSub;
         this.messagesRepository = messagesRepository;
@@ -64,7 +65,10 @@ let MessagesService = class MessagesService {
             randomId: args.randomId?.trim(),
         });
         message.pictures = args.pictures.map((id) => this.picturesRepository.create({ id }));
-        message = await this.uploadImagesFromMessage(message, user);
+        try {
+            message = await this.uploadImagesFromMessage(message, user);
+        }
+        catch (e) { }
         return this.messagesRepository.save(message);
     }
     async createSystemMessage(content) {
@@ -87,7 +91,14 @@ let MessagesService = class MessagesService {
         }
         if (!/^(https?:\/\/.*?\.(?:png|jpg))$/i.test(message.content))
             return message;
-        const buffer = await got_1.default(message.content).buffer();
+        const request = got_1.default(message.content);
+        request.on('downloadProgress', (progress) => {
+            if ((progress.total && progress.total > MessagesService_1.EMBED_UPLOAD_IMAGE_MAX_SIZE) ||
+                progress.transferred > MessagesService_1.EMBED_UPLOAD_IMAGE_MAX_SIZE) {
+                request.cancel();
+            }
+        });
+        const buffer = await request.buffer();
         const filename = utils_1.Utils.getRandomString(32);
         const file = {
             buffer,
@@ -120,7 +131,8 @@ let MessagesService = class MessagesService {
         return this.messagesRepository.saveAndReturn(message);
     }
 };
-MessagesService = __decorate([
+MessagesService.EMBED_UPLOAD_IMAGE_MAX_SIZE = parseInt(process.env.EMBED_UPLOAD_IMAGE_MAX_SIZE || '52428800') || 52428800;
+MessagesService = MessagesService_1 = __decorate([
     common_1.Injectable(),
     __param(0, common_1.Inject('PUB_SUB')),
     __param(1, typeorm_1.InjectRepository(messages_repository_1.MessagesRepository)),
