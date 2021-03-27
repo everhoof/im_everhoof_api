@@ -8,6 +8,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
@@ -19,6 +20,8 @@ import { Punishment } from '@modules/users/entities/punishments.entity';
 
 @ObjectType()
 @Entity('users')
+@Unique('users_unique_email', ['email'])
+@Unique('users_unique_username', ['username'])
 export class User {
   @Field(() => Int)
   @PrimaryColumn({
@@ -33,6 +36,7 @@ export class User {
   @Column({
     type: 'varchar',
     length: 254,
+    unique: true,
   })
   email: string;
 
