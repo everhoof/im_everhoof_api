@@ -209,12 +209,12 @@ let UploadService = UploadService_1 = class UploadService {
         const m = gmInstance
             .noProfile()
             .setFormat('jpeg')
-            .resize(512, 512)
+            .resize(512, 512, '>')
             .quality(90)
             .limit('memory', UploadService_1.GM_MEMORY_LIMIT)
             .limit('threads', UploadService_1.GM_THREADS_LIMIT);
         const mBuffer = await this.gmToBuffer(m);
-        const s = gm_1.default(mBuffer).noProfile().setFormat('jpeg').resize(128, 128).quality(98);
+        const s = gm_1.default(mBuffer).noProfile().setFormat('jpeg').resize(128, 128, '>').quality(98);
         const sBuffer = await this.gmToBuffer(s);
         const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
         return {
