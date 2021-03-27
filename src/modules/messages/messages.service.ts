@@ -21,6 +21,9 @@ import { PunishmentTypes } from '@modules/users/args/punishment.args';
 
 @Injectable()
 export class MessagesService {
+  private static EMBED_UPLOAD_IMAGE_MAX_SIZE =
+    parseInt(process.env.EMBED_UPLOAD_IMAGE_MAX_SIZE || '52428800') || 52428800;
+
   constructor(
     @Inject('PUB_SUB') private readonly pubSub: PubSub,
     @InjectRepository(MessagesRepository)
@@ -51,7 +54,9 @@ export class MessagesService {
       randomId: args.randomId?.trim(),
     });
     message.pictures = args.pictures.map((id) => this.picturesRepository.create({ id }));
-    message = await this.uploadImagesFromMessage(message, user);
+    try {
+      message = await this.uploadImagesFromMessage(message, user);
+    } catch (e) {}
     return this.messagesRepository.save(message);
   }
 
@@ -74,7 +79,17 @@ export class MessagesService {
     }
     if (!/^(https?:\/\/.*?\.(?:png|jpg))$/i.test(message.content)) return message;
 
-    const buffer = await got(message.content).buffer();
+    const request = got(message.content);
+    request.on('downloadProgress', (progress) => {
+      if (
+        (progress.total && progress.total > MessagesService.EMBED_UPLOAD_IMAGE_MAX_SIZE) ||
+        progress.transferred > MessagesService.EMBED_UPLOAD_IMAGE_MAX_SIZE
+      ) {
+        request.cancel();
+      }
+    });
+
+    const buffer = await request.buffer();
     const filename = Utils.getRandomString(32);
     const file: Express.Multer.File = {
       buffer,
