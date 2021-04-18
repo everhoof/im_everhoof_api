@@ -23,6 +23,7 @@ const users_entity_1 = require("../users/entities/users.entity");
 const sign_up_args_1 = require("./args/sign-up.args");
 const confirm_email_args_1 = require("./args/confirm-email.args");
 const reset_password_args_1 = require("./args/reset-password.args");
+const auth_guard_1 = require("../../common/guards/auth.guard");
 let AccountsResolver = class AccountsResolver {
     constructor(accountsService) {
         this.accountsService = accountsService;
@@ -36,8 +37,8 @@ let AccountsResolver = class AccountsResolver {
     async confirmEmail(args) {
         return this.accountsService.confirmEmail(args);
     }
-    async requestEmailConfirmation(args) {
-        return this.accountsService.requestEmailConfirmation(args);
+    async requestEmailConfirmation(user) {
+        return this.accountsService.requestEmailConfirmation(user);
     }
     async requestPasswordReset(args) {
         return this.accountsService.requestPasswordReset(args);
@@ -69,9 +70,10 @@ __decorate([
 ], AccountsResolver.prototype, "confirmEmail", null);
 __decorate([
     graphql_1.Mutation(() => users_entity_1.User),
-    __param(0, graphql_1.Args()),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, auth_guard_1.CurrentUser()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [sign_in_args_1.SignInArgs]),
+    __metadata("design:paramtypes", [users_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "requestEmailConfirmation", null);
 __decorate([

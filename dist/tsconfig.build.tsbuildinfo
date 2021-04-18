@@ -7151,8 +7151,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.service.ts": {
-        "version": "2dc05c59a024bc80a9469c4a44713c328055e26ff63339abc526ed359ab1e42f",
-        "signature": "890c049a564bde8727b8fc0b311e915d79b953720d5b5fd1e48d03e4c0176aa3",
+        "version": "bb36d2e05df7ce995af5160cfa47842caf718aece7b68e1838702341726db2f5",
+        "signature": "a6a464fec29d0934251eb88a16e97f6dd8169eb500771c81079527e9a4a5f642",
         "affectsGlobalScope": false
       },
       "../src/common/guards/auth.guard.ts": {
@@ -7211,8 +7211,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.resolver.ts": {
-        "version": "1b483454d6e0ef1a4c2d038616b7eb45ddb81bedebcbcbba25c7959e2247f7bd",
-        "signature": "59960002e62c1b5cbd21b85ae67da31b428cfa7c1d99486c32ead7a958fd2d0b",
+        "version": "b9c710bc6083fa9f62ce85e611a7ab619b1d66586c48a987626dfe1dcc21ec03",
+        "signature": "84c22e83cb49f59bc8f5b5492ce0e5af8dc44ca461cccc4032dbaea642d993a7",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/passport-anonymous/index.d.ts": {
@@ -14122,6 +14122,7 @@
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../src/common/filters/http-exception.filter.ts",
+        "../src/common/guards/auth.guard.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",

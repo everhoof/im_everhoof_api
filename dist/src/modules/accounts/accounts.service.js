@@ -84,17 +84,11 @@ let AccountsService = AccountsService_1 = class AccountsService {
         user.roles = [role];
         const result = await Promise.all([
             await this.usersRepository.saveAndReturn(user),
-            await this.requestEmailConfirmation({ email: input.email, password: input.password }),
+            await this.requestEmailConfirmation(user),
         ]);
         return result[0];
     }
-    async requestEmailConfirmation(args) {
-        const user = await this.usersRepository.getUserByEmailOrUsername(args.email);
-        if (!user)
-            throw new exceptions_1.BadRequestException('WRONG_CREDENTIALS');
-        const isPasswordValid = this.checkSaltHash(args.password, user.salt, user.hash);
-        if (!isPasswordValid)
-            throw new exceptions_1.BadRequestException('WRONG_CREDENTIALS');
+    async requestEmailConfirmation(user) {
         if (user.emailConfirmed)
             throw new exceptions_1.BadRequestException('EMAIL_ALREADY_CONFIRMED');
         const confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, confirmation_type_enum_1.ConfirmationType.registration);

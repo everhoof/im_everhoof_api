@@ -22,7 +22,7 @@ export declare class AccountsService {
     validateUserByEmailAndPassword(args: SignInArgs): Promise<Token>;
     validateUserByToken(value: string): Promise<Token>;
     createUser(input: SignUpArgs): Promise<User>;
-    requestEmailConfirmation(args: SignInArgs): Promise<User>;
+    requestEmailConfirmation(user: User): Promise<User>;
     requestPasswordReset(args: RequestPasswordResetArgs): Promise<boolean>;
     sendConfirmationEmail(args: {
         email: string;

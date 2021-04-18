@@ -11,7 +11,7 @@ export declare class AccountsResolver {
     signIn(args: SignInArgs): Promise<Token>;
     signUp(args: SignUpArgs): Promise<User>;
     confirmEmail(args: ConfirmEmailArgs): Promise<Token>;
-    requestEmailConfirmation(args: SignInArgs): Promise<User>;
+    requestEmailConfirmation(user: User): Promise<User>;
     requestPasswordReset(args: RequestPasswordResetArgs): Promise<boolean>;
     resetPassword(args: ResetPasswordArgs): Promise<Token>;
 }
