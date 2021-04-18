@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { UseFilters } from '@nestjs/common';
+import { UseFilters, UseGuards } from '@nestjs/common';
 import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
 import { AccountsService } from '@modules/accounts/accounts.service';
 import { Token } from '@modules/accounts/entities/tokens.entity';
@@ -8,6 +8,7 @@ import { User } from '@modules/users/entities/users.entity';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 import { ConfirmEmailArgs } from '@modules/accounts/args/confirm-email.args';
 import { RequestPasswordResetArgs, ResetPasswordArgs } from '@modules/accounts/args/reset-password.args';
+import { CurrentUser, GqlAuthGuard } from '@common/guards/auth.guard';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver('Accounts')
@@ -30,8 +31,9 @@ export class AccountsResolver {
   }
 
   @Mutation(() => User)
-  async requestEmailConfirmation(@Args() args: SignInArgs): Promise<User> {
-    return this.accountsService.requestEmailConfirmation(args);
+  @UseGuards(GqlAuthGuard)
+  async requestEmailConfirmation(@CurrentUser() user: User): Promise<User> {
+    return this.accountsService.requestEmailConfirmation(user);
   }
 
   @Mutation(() => Boolean)
