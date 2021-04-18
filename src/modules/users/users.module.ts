@@ -8,12 +8,13 @@ import { PunishmentsRepository } from '@modules/users/repositories/punishments.r
 import { TokensRepository } from '@modules/accounts/repositories/tokens.repository';
 import { MessagesModule } from '@modules/messages/messages.module';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
+import { PunishmentsLoader } from '@modules/users/loaders/punishments.loader';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UsersRepository, TokensRepository, PunishmentsRepository, PicturesRepository]),
     MessagesModule,
   ],
-  providers: [UsersService, UsersResolver, UsersLoader],
+  providers: [UsersService, UsersResolver, UsersLoader, PunishmentsLoader],
 })
 export class UsersModule {}

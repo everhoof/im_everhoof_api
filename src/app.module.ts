@@ -17,18 +17,46 @@ import { UploadModule } from '@modules/upload/upload.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { DataLoaderInterceptor } from '@intelrug/nestjs-graphql-dataloader';
 import { CommonModule } from '@modules/common/common.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env', '.env.local'] }),
     GraphQLModule.forRoot({
-      context: ({ req }) => ({ req }),
       debug: process.env.NODE_ENV !== 'production',
       autoSchemaFile: join(process.cwd(), './graphql/schema.graphql'),
       installSubscriptionHandlers: true,
+      subscriptions: {
+        onConnect: (connectionParams: { [key: string]: any }, websocket: { [key: string]: any }) => {
+          return {
+            headers: {
+              ...(websocket?.upgradeReq?.headers || {}),
+              authorization: connectionParams['Authorization'] || undefined,
+            },
+          };
+        },
+      },
+      context: ({ req, connection }) => ({
+        req: connection?.context || req,
+        connection,
+      }),
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
+    }),
+    MailerModule.forRoot({
+      transport: process.env.EMAIL_TRANSPORT,
+      defaults: {
+        from: `${process.env.EMAIL_DISPLAY_NAME} <${process.env.EMAIL_DISPLAY_EMAIL}>`,
+      },
+      template: {
+        dir: process.cwd() + '/mail/templates',
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true,
+        },
+      },
     }),
     AccessControlModule.forRoles(roles),
     ScheduleModule.forRoot(),

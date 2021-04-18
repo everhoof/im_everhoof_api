@@ -19,7 +19,11 @@ export type ExceptionKey =
   | 'IMAGE_CORRUPTED'
   | 'IMAGE_DIMENSIONS_TOO_LARGE'
   | 'UNSUPPORTED_MEDIA_TYPE'
-  | 'SERVER_IS_OVERLOADED';
+  | 'SERVER_IS_OVERLOADED'
+  | 'CONFIRMATION_IS_INVALID'
+  | 'EMAIL_IS_NOT_CONFIRMED'
+  | 'EMAIL_ALREADY_CONFIRMED'
+  | 'EMAIL_NOT_REGISTERED';
 
 type Exception = {
   [key in ExceptionKey]: { [key in ExceptionMessage]: string };
@@ -93,6 +97,22 @@ const exceptions: Exception = {
   SERVER_IS_OVERLOADED: {
     en: 'Service is overloaded',
     ru: 'Сервер перегружен',
+  },
+  CONFIRMATION_IS_INVALID: {
+    en: 'Confirmation is invalid',
+    ru: 'Подтверждение недействительно',
+  },
+  EMAIL_IS_NOT_CONFIRMED: {
+    en: 'E-mail is not confirmed',
+    ru: 'E-mail не подтверждён',
+  },
+  EMAIL_ALREADY_CONFIRMED: {
+    en: 'E-mail already confirmed',
+    ru: 'E-mail уже подтверждён',
+  },
+  EMAIL_NOT_REGISTERED: {
+    en: 'The user with this email address is not registered',
+    ru: 'Пользователь с таким E-mail не зарегистрирован',
   },
 };
 

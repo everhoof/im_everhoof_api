@@ -32,6 +32,10 @@ type Mutation {
   deleteMessage(messageId: Int!): Message!
   signIn(email: String!, password: String!): Token!
   signUp(email: String!, username: String, password: String!): User!
+  confirmEmail(token: String!): Token!
+  requestEmailConfirmation(email: String!, password: String!): User!
+  requestPasswordReset(email: String!): Boolean!
+  resetPassword(token: String!, password: String!): Token!
 }
 
 type Picture {
@@ -103,4 +107,6 @@ type User {
   updatedAt: DateTime!
   roles: [Role!]!
   avatar: Picture
+  emailConfirmed: Boolean
+  muted: Boolean
 }

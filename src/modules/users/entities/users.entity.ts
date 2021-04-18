@@ -17,6 +17,7 @@ import { Role } from '@modules/roles/entities/roles.entity';
 import { Message } from '@modules/messages/entities/messages.entity';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { Punishment } from '@modules/users/entities/punishments.entity';
+import { Confirmation } from '@modules/accounts/entities/confirmations.entity';
 
 @ObjectType()
 @Entity('users')
@@ -69,6 +70,12 @@ export class User {
   })
   hash: string;
 
+  @Column({
+    name: 'email_confirmed',
+    type: 'boolean',
+  })
+  emailConfirmed: boolean;
+
   @Field(() => Date, { nullable: true })
   @Column({
     name: 'was_online_at',
@@ -98,7 +105,6 @@ export class User {
   })
   avatar: Nullable<Picture>;
 
-  @JoinColumn()
   @OneToMany(() => Token, ({ owner }) => owner)
   messages: Message[];
 
@@ -113,6 +119,9 @@ export class User {
 
   @OneToMany(() => Punishment, ({ canceledBy }) => canceledBy)
   canceledPunishments: Punishment[];
+
+  @OneToMany(() => Confirmation, ({ user }) => user)
+  confirmations: Confirmation[];
 
   @Field(() => [Role])
   @ManyToMany(() => Role, ({ users }) => users, { eager: true })

@@ -2,7 +2,7 @@ import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } f
 import { Inject, UseFilters, UseGuards } from '@nestjs/common';
 import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
 import { User } from '@modules/users/entities/users.entity';
-import { CurrentUser, GqlAuthGuard } from '@common/guards/auth.guard';
+import { CurrentUser, GqlAuthGuard, OptionalGqlAuthGuard } from '@common/guards/auth.guard';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { PicturesLoader } from '@modules/pictures/loaders/pictures.loader';
 import { Loader } from '@intelrug/nestjs-graphql-dataloader';
@@ -10,11 +10,15 @@ import DataLoader from 'dataloader';
 import { PubSub } from 'graphql-subscriptions';
 import { UsersService } from '@modules/users/users.service';
 import { UseRoles } from 'nest-access-control';
-import { PunishmentArgs } from '@modules/users/args/punishment.args';
+import { PunishmentArgs, PunishmentTypes } from '@modules/users/args/punishment.args';
 import { UnpunishmentArgs } from '@modules/users/args/unpunishment.args';
 import { Punishment } from '@modules/users/entities/punishments.entity';
 import { GetUserByIdArgs } from '@modules/users/args/get-user-by-id.args';
 import { UpdateAvatarArgs } from '@modules/users/args/update-avatar.args';
+import { RoleResources, roles } from '../../app.roles';
+import { PunishmentsLoader } from '@modules/users/loaders/punishments.loader';
+import { SubscriptionEvents } from '@modules/common/types/subscription-events';
+import { Role } from '@modules/roles/entities/roles.entity';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver(() => User)
@@ -36,15 +40,53 @@ export class UsersResolver {
   @Query(() => User)
   @UseGuards(GqlAuthGuard)
   async getCurrentUser(@CurrentUser() user: User): Promise<User> {
+    await this.pubSub.publish(SubscriptionEvents.USER_UPDATED, user);
     return user;
   }
 
+  /**
+   * Перед отправкой проверить имеет ли пользователь доступ к этим данным.<br>
+   * Необходимо выполнение хотя бы одного условия:
+   * 1. Пользователь - владелец этих данных.
+   * 2. У пользователя есть permission readAny('user-settings').<br>
+   * Иначе вернуть null
+   */
+  @ResolveField(() => Boolean, { nullable: true })
+  async emailConfirmed(@Parent() parent: User, @CurrentUser() user?: User): Promise<boolean | null> {
+    if (user && (roles.can(user.roleNames).readAny(RoleResources.USER_SETTINGS).granted || user.id === parent.id))
+      return parent.emailConfirmed;
+    return null;
+  }
+
+  /**
+   * Перед отправкой проверить имеет ли пользователь доступ к этим данным.<br>
+   * Необходимо выполнение хотя бы одного условия:
+   * 1. Пользователь - владелец этих данных.
+   * 2. У пользователя есть permission readAny('user-settings').<br>
+   * Иначе вернуть null
+   */
+  @ResolveField(() => Boolean, { nullable: true })
+  async muted(
+    @Parent() parent: User,
+    @Loader(PunishmentsLoader)
+    punishmentsLoader: DataLoader<{ targetId: Punishment['targetId']; type: Punishment['type'] }, Punishment>,
+    @CurrentUser() user?: User,
+  ): Promise<boolean | null> {
+    if (user && (roles.can(user.roleNames).readAny(RoleResources.USER_SETTINGS).granted || user.id === parent.id)) {
+      const punishment = await punishmentsLoader.load({ targetId: parent.id, type: PunishmentTypes.mute });
+      return !!punishment.id;
+    }
+    return null;
+  }
+
   @Query(() => User)
+  @UseGuards(OptionalGqlAuthGuard)
   async getUserById(@Args() args: GetUserByIdArgs): Promise<User> {
     return this.usersService.getUserById(args);
   }
 
   @Query(() => [User])
+  @UseGuards(OptionalGqlAuthGuard)
   async getOnline(): Promise<User[]> {
     return this.usersService.getOnline();
   }
@@ -64,35 +106,51 @@ export class UsersResolver {
 
   @Mutation(() => User)
   @UseRoles({
-    resource: 'mute',
+    resource: RoleResources.MUTE,
     action: 'update',
   })
   @UseGuards(GqlAuthGuard)
-  punish(@Args() args: PunishmentArgs, @CurrentUser() executor: User): Promise<Punishment> {
+  punish(@Args() args: PunishmentArgs, @CurrentUser() executor: User): Promise<User> {
     return this.usersService.punish(args, executor);
   }
 
   @Mutation(() => User)
   @UseRoles({
-    resource: 'mute',
+    resource: RoleResources.MUTE,
     action: 'update',
   })
   @UseGuards(GqlAuthGuard)
-  unpunish(@Args() args: UnpunishmentArgs, @CurrentUser() executor: User): Promise<Punishment> {
+  unpunish(@Args() args: UnpunishmentArgs, @CurrentUser() executor: User): Promise<User> {
     return this.usersService.unpunish(args, executor);
   }
 
   @Subscription(() => [User], {
-    name: 'onlineUpdated',
+    resolve: (value) => value,
   })
   onlineUpdated(): AsyncIterator<User[]> {
-    return this.pubSub.asyncIterator('onlineUpdated');
+    return this.pubSub.asyncIterator(SubscriptionEvents.ONLINE_UPDATED);
   }
 
+  /**
+   * [Проверка убрана за ненадобностью, так как все проверки стоят на приватных свойствах, но осталась как пример]<br>
+   *
+   * Если получено событие USER_UPDATED_PRIVATE, то перед отправкой проверить имеет ли подписчик доступ к этим данным.<br>
+   * Необходимо выполнение хотя бы одного условия:
+   * 1. Подписчик - владелец этих данных.
+   * 2. У подписчика есть permission readAny('user-settings').
+   */
   @Subscription(() => User, {
-    name: 'userUpdated',
+    resolve: (value) => value,
+    // filter: (payload, variables, context) => {
+    //   return payload[Events.USER_UPDATED_PRIVATE]
+    //     ? context?.req?.user &&
+    //         (context.req.user.id === payload[Events.USER_UPDATED_PRIVATE].id ||
+    //           roles.can(context.req.user.roleNames).readAny(RoleResources.USER_SETTINGS).granted)
+    //     : true;
+    // },
   })
+  @UseGuards(OptionalGqlAuthGuard)
   userUpdated(): AsyncIterator<User> {
-    return this.pubSub.asyncIterator('userUpdated');
+    return this.pubSub.asyncIterator(SubscriptionEvents.USER_UPDATED);
   }
 }
