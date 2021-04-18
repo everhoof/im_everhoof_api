@@ -3,6 +3,7 @@ import { Role } from '@modules/roles/entities/roles.entity';
 import { Message } from '@modules/messages/entities/messages.entity';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { Punishment } from '@modules/users/entities/punishments.entity';
+import { Confirmation } from '@modules/accounts/entities/confirmations.entity';
 export declare class User {
     readonly id: number;
     email: string;
@@ -10,6 +11,7 @@ export declare class User {
     avatarId: Nullable<number>;
     salt: string;
     hash: string;
+    emailConfirmed: boolean;
     wasOnlineAt?: Date;
     createdAt: Date;
     updatedAt: Date;
@@ -20,6 +22,7 @@ export declare class User {
     punishments: Punishment[];
     executedPunishments: Punishment[];
     canceledPunishments: Punishment[];
+    confirmations: Confirmation[];
     roles: Role[];
     get roleNames(): string[];
 }

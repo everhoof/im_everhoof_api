@@ -26,6 +26,8 @@ const upload_module_1 = require("./modules/upload/upload.module");
 const core_1 = require("@nestjs/core");
 const nestjs_graphql_dataloader_1 = require("@intelrug/nestjs-graphql-dataloader");
 const common_module_1 = require("./modules/common/common.module");
+const mailer_1 = require("@nestjs-modules/mailer");
+const handlebars_adapter_1 = require("@nestjs-modules/mailer/dist/adapters/handlebars.adapter");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -33,13 +35,39 @@ AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env', '.env.local'] }),
             graphql_1.GraphQLModule.forRoot({
-                context: ({ req }) => ({ req }),
                 debug: process.env.NODE_ENV !== 'production',
                 autoSchemaFile: path_1.join(process.cwd(), './graphql/schema.graphql'),
                 installSubscriptionHandlers: true,
+                subscriptions: {
+                    onConnect: (connectionParams, websocket) => {
+                        return {
+                            headers: {
+                                ...(websocket?.upgradeReq?.headers || {}),
+                                authorization: connectionParams['Authorization'] || undefined,
+                            },
+                        };
+                    },
+                },
+                context: ({ req, connection }) => ({
+                    req: connection?.context || req,
+                    connection,
+                }),
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 useClass: typeorm_2.TypeOrmConfigService,
+            }),
+            mailer_1.MailerModule.forRoot({
+                transport: process.env.EMAIL_TRANSPORT,
+                defaults: {
+                    from: `${process.env.EMAIL_DISPLAY_NAME} <${process.env.EMAIL_DISPLAY_EMAIL}>`,
+                },
+                template: {
+                    dir: process.cwd() + '/mail/templates',
+                    adapter: new handlebars_adapter_1.HandlebarsAdapter(),
+                    options: {
+                        strict: true,
+                    },
+                },
             }),
             nest_access_control_1.AccessControlModule.forRoles(app_roles_1.roles),
             schedule_1.ScheduleModule.forRoot(),

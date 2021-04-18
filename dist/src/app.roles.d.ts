@@ -5,4 +5,10 @@ export declare enum AppRoles {
     USER = "USER",
     UNVERIFIED_USER = "UNVERIFIED_USER"
 }
+export declare enum RoleResources {
+    MESSAGE = "message",
+    MUTE = "mute",
+    BAN = "ban",
+    USER_SETTINGS = "user-settings"
+}
 export declare const roles: RolesBuilder;

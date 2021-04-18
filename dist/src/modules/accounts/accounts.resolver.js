@@ -21,6 +21,8 @@ const tokens_entity_1 = require("./entities/tokens.entity");
 const sign_in_args_1 = require("./args/sign-in.args");
 const users_entity_1 = require("../users/entities/users.entity");
 const sign_up_args_1 = require("./args/sign-up.args");
+const confirm_email_args_1 = require("./args/confirm-email.args");
+const reset_password_args_1 = require("./args/reset-password.args");
 let AccountsResolver = class AccountsResolver {
     constructor(accountsService) {
         this.accountsService = accountsService;
@@ -30,6 +32,18 @@ let AccountsResolver = class AccountsResolver {
     }
     async signUp(args) {
         return this.accountsService.createUser(args);
+    }
+    async confirmEmail(args) {
+        return this.accountsService.confirmEmail(args);
+    }
+    async requestEmailConfirmation(args) {
+        return this.accountsService.requestEmailConfirmation(args);
+    }
+    async requestPasswordReset(args) {
+        return this.accountsService.requestPasswordReset(args);
+    }
+    async resetPassword(args) {
+        return this.accountsService.resetPassword(args);
     }
 };
 __decorate([
@@ -46,6 +60,34 @@ __decorate([
     __metadata("design:paramtypes", [sign_up_args_1.SignUpArgs]),
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "signUp", null);
+__decorate([
+    graphql_1.Mutation(() => tokens_entity_1.Token),
+    __param(0, graphql_1.Args()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [confirm_email_args_1.ConfirmEmailArgs]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "confirmEmail", null);
+__decorate([
+    graphql_1.Mutation(() => users_entity_1.User),
+    __param(0, graphql_1.Args()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [sign_in_args_1.SignInArgs]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "requestEmailConfirmation", null);
+__decorate([
+    graphql_1.Mutation(() => Boolean),
+    __param(0, graphql_1.Args()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [reset_password_args_1.RequestPasswordResetArgs]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "requestPasswordReset", null);
+__decorate([
+    graphql_1.Mutation(() => tokens_entity_1.Token),
+    __param(0, graphql_1.Args()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [reset_password_args_1.ResetPasswordArgs]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "resetPassword", null);
 AccountsResolver = __decorate([
     common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
     graphql_1.Resolver('Accounts'),

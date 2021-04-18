@@ -24,7 +24,6 @@ const users_entity_1 = require("./entities/users.entity");
 const utils_1 = require("../../common/utils/utils");
 const punishment_args_1 = require("./args/punishment.args");
 const punishments_repository_1 = require("./repositories/punishments.repository");
-const punishments_entity_1 = require("./entities/punishments.entity");
 const unpunishment_args_1 = require("./args/unpunishment.args");
 const exceptions_1 = require("../../common/exceptions/exceptions");
 const tokens_repository_1 = require("../accounts/repositories/tokens.repository");
@@ -32,24 +31,25 @@ const get_user_by_id_args_1 = require("./args/get-user-by-id.args");
 const messages_service_1 = require("../messages/messages.service");
 const update_avatar_args_1 = require("./args/update-avatar.args");
 const pictures_repository_1 = require("../pictures/repositories/pictures.repository");
+const subscription_events_1 = require("../common/types/subscription-events");
 let UsersService = class UsersService {
-    constructor(pubSub, usersRepository, tokensRepository, punishmentsRepository, picturesRepository, messagesService) {
+    constructor(pubSub, users, tokens, punishments, pictures, messagesService) {
         this.pubSub = pubSub;
-        this.usersRepository = usersRepository;
-        this.tokensRepository = tokensRepository;
-        this.punishmentsRepository = punishmentsRepository;
-        this.picturesRepository = picturesRepository;
+        this.users = users;
+        this.tokens = tokens;
+        this.punishments = punishments;
+        this.pictures = pictures;
         this.messagesService = messagesService;
         this.onlineUsersIds = [];
     }
     async getUserById(args) {
-        const user = await this.usersRepository.findOne(args.id);
+        const user = await this.users.findOne(args.id);
         if (!user)
             throw new exceptions_1.BadRequestException('USER_DOES_NOT_EXIST_WITH_ID', args.id.toString());
         return user;
     }
     async updateOnline() {
-        const users = await this.usersRepository.find({
+        const users = await this.users.find({
             where: {
                 wasOnlineAt: typeorm_2.MoreThan(luxon_1.DateTime.utc().minus({ minutes: 2 }).toSQL()),
             },
@@ -58,51 +58,51 @@ let UsersService = class UsersService {
         const diff = utils_1.Utils.arrayDiff(this.onlineUsersIds, ids);
         if (diff.length > 0) {
             this.onlineUsersIds = ids;
-            await this.pubSub.publish('onlineUpdated', { onlineUpdated: users });
+            await this.pubSub.publish("onlineUpdated", users);
         }
     }
     async unpunishUsers() {
-        const punishments = await this.punishmentsRepository.find({
+        const punishments = await this.punishments.find({
             where: {
                 cancelAt: typeorm_2.LessThanOrEqual(luxon_1.DateTime.utc().toSQL()),
                 canceledAt: typeorm_2.IsNull(),
             },
         });
-        const jobs = punishments.map(async (punishment) => {
-            await this.unpunish({ userId: punishment.targetId });
+        const jobs = punishments.map((punishment) => {
+            this.unpunish({ userId: punishment.targetId });
         });
         await Promise.allSettled(jobs);
     }
     async getOnline() {
-        return this.usersRepository.findByIds(this.onlineUsersIds);
+        return this.users.findByIds(this.onlineUsersIds);
     }
     async updateOnlineStatus() {
         await this.updateOnline();
     }
     async updateAvatar(args, executor) {
-        const picture = await this.picturesRepository.isExist(args.pictureId);
+        const picture = await this.pictures.isExist(args.pictureId);
         if (picture.ownerId && picture.ownerId !== executor.id)
             throw new exceptions_1.BadRequestException('FORBIDDEN');
-        await this.usersRepository.update({
+        await this.users.update({
             id: executor.id,
         }, {
             avatarId: picture.id,
         });
-        const user = await this.usersRepository.isExist(executor.id);
+        const user = await this.users.isExist(executor.id);
         const message = `${user.username} uploaded a new avatar`;
         await Promise.all([
             this.messagesService.createSystemMessage(message),
-            this.pubSub.publish('userUpdated', { userUpdated: user }),
+            this.pubSub.publish("userUpdated", user),
         ]);
         return user;
     }
     async punish(args, executor) {
-        const user = await this.usersRepository.isExist(args.userId);
-        let punishment = await this.punishmentsRepository.getLastPunishment(args.userId);
+        const user = await this.users.isExist(args.userId);
+        let punishment = await this.punishments.getLastPunishment(args.userId);
         if (punishment)
             throw new exceptions_1.BadRequestException('USER_ALREADY_PUNISHED');
         const date = args.duration ? luxon_1.DateTime.local().plus({ minutes: args.duration }) : undefined;
-        punishment = this.punishmentsRepository.create({
+        punishment = this.punishments.create({
             targetId: args.userId,
             executorId: executor.id,
             type: args.type,
@@ -112,22 +112,22 @@ let UsersService = class UsersService {
         const content = args.duration
             ? `${user.username} was ${args.type === punishment_args_1.PunishmentTypes.mute ? 'muted' : 'banned'} for ${args.duration} minutes with reason: ${args.reason}`
             : `${user.username} was ${args.type === punishment_args_1.PunishmentTypes.mute ? 'muted' : 'banned'} forever with reason: ${args.reason}`;
-        await this.messagesService.createSystemMessage(content);
-        punishment = await this.punishmentsRepository.saveAndReturn(punishment);
-        return punishment;
+        await Promise.all([this.punishments.save(punishment), this.messagesService.createSystemMessage(content)]);
+        await this.pubSub.publish("userUpdated", user);
+        return user;
     }
     async unpunish(args, executor) {
-        const user = await this.usersRepository.isExist(args.userId);
-        let punishment = await this.punishmentsRepository.getLastPunishment(args.userId);
+        const user = await this.users.isExist(args.userId);
+        const punishment = await this.punishments.getLastPunishment(args.userId);
         if (!punishment)
             throw new exceptions_1.BadRequestException('USER_IS_NOT_PUNISHED');
         punishment.canceledAt = new Date();
         if (executor)
             punishment.canceledById = executor.id;
         const content = `${user.username} was ${punishment.type === punishment_args_1.PunishmentTypes.mute ? 'unmuted' : 'unbanned'}`;
-        await this.messagesService.createSystemMessage(content);
-        punishment = await this.punishmentsRepository.saveAndReturn(punishment);
-        return punishment;
+        await Promise.all([this.punishments.save(punishment), this.messagesService.createSystemMessage(content)]);
+        await this.pubSub.publish("userUpdated", user);
+        return user;
     }
 };
 __decorate([

@@ -18,6 +18,7 @@ const accounts_resolver_1 = require("./accounts.resolver");
 const accounts_service_1 = require("./accounts.service");
 const roles_repository_1 = require("../roles/repositories/roles.repository");
 const anonymous_strategy_1 = require("./strategies/anonymous.strategy");
+const confirmations_repository_1 = require("./repositories/confirmations.repository");
 let AccountsModule = class AccountsModule {
 };
 AccountsModule = __decorate([
@@ -25,7 +26,7 @@ AccountsModule = __decorate([
         imports: [
             common_1.forwardRef(() => users_module_1.UsersModule),
             passport_1.PassportModule,
-            typeorm_1.TypeOrmModule.forFeature([tokens_repository_1.TokensRepository, users_repository_1.UsersRepository, roles_repository_1.RolesRepository]),
+            typeorm_1.TypeOrmModule.forFeature([tokens_repository_1.TokensRepository, users_repository_1.UsersRepository, roles_repository_1.RolesRepository, confirmations_repository_1.ConfirmationsRepository]),
         ],
         providers: [accounts_service_1.AccountsService, accounts_resolver_1.AccountsResolver, bearer_strategy_1.BearerStrategy, bearer_strategy_1.BearerStrategyNoException, anonymous_strategy_1.AnonymousStrategy],
         exports: [accounts_service_1.AccountsService, typeorm_1.TypeOrmModule.forFeature([tokens_repository_1.TokensRepository])],

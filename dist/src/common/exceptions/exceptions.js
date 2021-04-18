@@ -71,6 +71,22 @@ const exceptions = {
         en: 'Service is overloaded',
         ru: 'Сервер перегружен',
     },
+    CONFIRMATION_IS_INVALID: {
+        en: 'Confirmation is invalid',
+        ru: 'Подтверждение недействительно',
+    },
+    EMAIL_IS_NOT_CONFIRMED: {
+        en: 'E-mail is not confirmed',
+        ru: 'E-mail не подтверждён',
+    },
+    EMAIL_ALREADY_CONFIRMED: {
+        en: 'E-mail already confirmed',
+        ru: 'E-mail уже подтверждён',
+    },
+    EMAIL_NOT_REGISTERED: {
+        en: 'The user with this email address is not registered',
+        ru: 'Пользователь с таким E-mail не зарегистрирован',
+    },
 };
 function createExceptionMessage(exception, lang = 'en', args = []) {
     if (exceptions[exception] && exceptions[exception][lang]) {

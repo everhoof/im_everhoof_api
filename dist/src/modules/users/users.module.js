@@ -17,6 +17,7 @@ const punishments_repository_1 = require("./repositories/punishments.repository"
 const tokens_repository_1 = require("../accounts/repositories/tokens.repository");
 const messages_module_1 = require("../messages/messages.module");
 const pictures_repository_1 = require("../pictures/repositories/pictures.repository");
+const punishments_loader_1 = require("./loaders/punishments.loader");
 let UsersModule = class UsersModule {
 };
 UsersModule = __decorate([
@@ -25,7 +26,7 @@ UsersModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([users_repository_1.UsersRepository, tokens_repository_1.TokensRepository, punishments_repository_1.PunishmentsRepository, pictures_repository_1.PicturesRepository]),
             messages_module_1.MessagesModule,
         ],
-        providers: [users_service_1.UsersService, users_resolver_1.UsersResolver, users_loader_1.UsersLoader],
+        providers: [users_service_1.UsersService, users_resolver_1.UsersResolver, users_loader_1.UsersLoader, punishments_loader_1.PunishmentsLoader],
     })
 ], UsersModule);
 exports.UsersModule = UsersModule;

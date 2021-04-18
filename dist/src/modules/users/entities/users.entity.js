@@ -17,6 +17,7 @@ const roles_entity_1 = require("../../roles/entities/roles.entity");
 const messages_entity_1 = require("../../messages/entities/messages.entity");
 const pictures_entity_1 = require("../../pictures/entities/pictures.entity");
 const punishments_entity_1 = require("./punishments.entity");
+const confirmations_entity_1 = require("../../accounts/entities/confirmations.entity");
 let User = class User {
     get roleNames() {
         if (!this.roles)
@@ -77,6 +78,13 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "hash", void 0);
 __decorate([
+    typeorm_1.Column({
+        name: 'email_confirmed',
+        type: 'boolean',
+    }),
+    __metadata("design:type", Boolean)
+], User.prototype, "emailConfirmed", void 0);
+__decorate([
     graphql_1.Field(() => Date, { nullable: true }),
     typeorm_1.Column({
         name: 'was_online_at',
@@ -111,7 +119,6 @@ __decorate([
     __metadata("design:type", Object)
 ], User.prototype, "avatar", void 0);
 __decorate([
-    typeorm_1.JoinColumn(),
     typeorm_1.OneToMany(() => tokens_entity_1.Token, ({ owner }) => owner),
     __metadata("design:type", Array)
 ], User.prototype, "messages", void 0);
@@ -131,6 +138,10 @@ __decorate([
     typeorm_1.OneToMany(() => punishments_entity_1.Punishment, ({ canceledBy }) => canceledBy),
     __metadata("design:type", Array)
 ], User.prototype, "canceledPunishments", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => confirmations_entity_1.Confirmation, ({ user }) => user),
+    __metadata("design:type", Array)
+], User.prototype, "confirmations", void 0);
 __decorate([
     graphql_1.Field(() => [roles_entity_1.Role]),
     typeorm_1.ManyToMany(() => roles_entity_1.Role, ({ users }) => users, { eager: true }),

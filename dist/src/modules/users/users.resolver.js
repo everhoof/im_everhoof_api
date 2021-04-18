@@ -33,6 +33,10 @@ const unpunishment_args_1 = require("./args/unpunishment.args");
 const punishments_entity_1 = require("./entities/punishments.entity");
 const get_user_by_id_args_1 = require("./args/get-user-by-id.args");
 const update_avatar_args_1 = require("./args/update-avatar.args");
+const app_roles_1 = require("../../app.roles");
+const punishments_loader_1 = require("./loaders/punishments.loader");
+const subscription_events_1 = require("../common/types/subscription-events");
+const roles_entity_1 = require("../roles/entities/roles.entity");
 let UsersResolver = class UsersResolver {
     constructor(pubSub, usersService) {
         this.pubSub = pubSub;
@@ -45,7 +49,20 @@ let UsersResolver = class UsersResolver {
         return null;
     }
     async getCurrentUser(user) {
+        await this.pubSub.publish("userUpdated", user);
         return user;
+    }
+    async emailConfirmed(parent, user) {
+        if (user && (app_roles_1.roles.can(user.roleNames).readAny(app_roles_1.RoleResources.USER_SETTINGS).granted || user.id === parent.id))
+            return parent.emailConfirmed;
+        return null;
+    }
+    async muted(parent, punishmentsLoader, user) {
+        if (user && (app_roles_1.roles.can(user.roleNames).readAny(app_roles_1.RoleResources.USER_SETTINGS).granted || user.id === parent.id)) {
+            const punishment = await punishmentsLoader.load({ targetId: parent.id, type: punishment_args_1.PunishmentTypes.mute });
+            return !!punishment.id;
+        }
+        return null;
     }
     async getUserById(args) {
         return this.usersService.getUserById(args);
@@ -67,10 +84,10 @@ let UsersResolver = class UsersResolver {
         return this.usersService.unpunish(args, executor);
     }
     onlineUpdated() {
-        return this.pubSub.asyncIterator('onlineUpdated');
+        return this.pubSub.asyncIterator("onlineUpdated");
     }
     userUpdated() {
-        return this.pubSub.asyncIterator('userUpdated');
+        return this.pubSub.asyncIterator("userUpdated");
     }
 };
 __decorate([
@@ -91,7 +108,26 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersResolver.prototype, "getCurrentUser", null);
 __decorate([
+    graphql_1.ResolveField(() => Boolean, { nullable: true }),
+    __param(0, graphql_1.Parent()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [users_entity_1.User, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "emailConfirmed", null);
+__decorate([
+    graphql_1.ResolveField(() => Boolean, { nullable: true }),
+    __param(0, graphql_1.Parent()),
+    __param(1, nestjs_graphql_dataloader_1.Loader(punishments_loader_1.PunishmentsLoader)),
+    __param(2, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [users_entity_1.User,
+        dataloader_1.default,
+        users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "muted", null);
+__decorate([
     graphql_1.Query(() => users_entity_1.User),
+    common_1.UseGuards(auth_guard_1.OptionalGqlAuthGuard),
     __param(0, graphql_1.Args()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [get_user_by_id_args_1.GetUserByIdArgs]),
@@ -99,6 +135,7 @@ __decorate([
 ], UsersResolver.prototype, "getUserById", null);
 __decorate([
     graphql_1.Query(() => [users_entity_1.User]),
+    common_1.UseGuards(auth_guard_1.OptionalGqlAuthGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -121,7 +158,7 @@ __decorate([
 __decorate([
     graphql_1.Mutation(() => users_entity_1.User),
     nest_access_control_1.UseRoles({
-        resource: 'mute',
+        resource: app_roles_1.RoleResources.MUTE,
         action: 'update',
     }),
     common_1.UseGuards(auth_guard_1.GqlAuthGuard),
@@ -133,7 +170,7 @@ __decorate([
 __decorate([
     graphql_1.Mutation(() => users_entity_1.User),
     nest_access_control_1.UseRoles({
-        resource: 'mute',
+        resource: app_roles_1.RoleResources.MUTE,
         action: 'update',
     }),
     common_1.UseGuards(auth_guard_1.GqlAuthGuard),
@@ -144,7 +181,7 @@ __decorate([
 ], UsersResolver.prototype, "unpunish", null);
 __decorate([
     graphql_1.Subscription(() => [users_entity_1.User], {
-        name: 'onlineUpdated',
+        resolve: (value) => value,
     }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -152,8 +189,9 @@ __decorate([
 ], UsersResolver.prototype, "onlineUpdated", null);
 __decorate([
     graphql_1.Subscription(() => users_entity_1.User, {
-        name: 'userUpdated',
+        resolve: (value) => value,
     }),
+    common_1.UseGuards(auth_guard_1.OptionalGqlAuthGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Object)
