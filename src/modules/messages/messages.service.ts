@@ -48,7 +48,7 @@ export class MessagesService {
       throw new BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
     await this.throwOnPunished(user.id);
     let message = this.messagesRepository.create({
-      content: escapeHtml(args.content?.trim() || ''),
+      content: Utils.escapeMessage(args.content?.trim() || ''),
       ownerId: user.id,
       username: user.username.trim(),
       randomId: args.randomId?.trim(),

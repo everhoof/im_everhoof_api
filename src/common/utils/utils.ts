@@ -1,3 +1,5 @@
+import { FilterXSS } from 'xss';
+
 export class Utils {
   static getDate(): string {
     const today = new Date();
@@ -28,5 +30,20 @@ export class Utils {
         }
       }, 100);
     });
+  }
+
+  static escapeMessage(message: string): string {
+    const whitelist = [/<@!\d+>/];
+    const escape = new FilterXSS({
+      whiteList: {},
+      onTag(tag, html) {
+        for (let i = 0; i < whitelist.length; ++i) {
+          if (whitelist[i].test(html)) {
+            return html;
+          }
+        }
+      },
+    });
+    return escape.process(message);
   }
 }
