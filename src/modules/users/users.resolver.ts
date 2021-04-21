@@ -18,7 +18,6 @@ import { UpdateAvatarArgs } from '@modules/users/args/update-avatar.args';
 import { RoleResources, roles } from '../../app.roles';
 import { PunishmentsLoader } from '@modules/users/loaders/punishments.loader';
 import { SubscriptionEvents } from '@modules/common/types/subscription-events';
-import { Role } from '@modules/roles/entities/roles.entity';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver(() => User)
@@ -75,6 +74,14 @@ export class UsersResolver {
     if (user && (roles.can(user.roleNames).readAny(RoleResources.USER_SETTINGS).granted || user.id === parent.id)) {
       const punishment = await punishmentsLoader.load({ targetId: parent.id, type: PunishmentTypes.mute });
       return !!punishment.id;
+    }
+    return null;
+  }
+
+  @ResolveField(() => String, { nullable: true })
+  async email(@Parent() parent: User, @CurrentUser() user?: User): Promise<string | null> {
+    if (user && (roles.can(user.roleNames).readAny(RoleResources.USER_SETTINGS).granted || user.id === parent.id)) {
+      return parent.email;
     }
     return null;
   }

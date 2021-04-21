@@ -99,7 +99,6 @@ type Token {
 
 type User {
   id: Int!
-  email: String!
   username: String
   avatarId: String
   wasOnlineAt: DateTime
@@ -109,4 +108,5 @@ type User {
   avatar: Picture
   emailConfirmed: Boolean
   muted: Boolean
+  email: String
 }

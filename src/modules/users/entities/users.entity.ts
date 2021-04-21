@@ -33,7 +33,6 @@ export class User {
   })
   readonly id: number;
 
-  @Field(() => String)
   @Column({
     type: 'varchar',
     length: 254,
