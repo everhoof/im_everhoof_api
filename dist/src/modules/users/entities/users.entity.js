@@ -36,7 +36,6 @@ __decorate([
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
-    graphql_1.Field(() => String),
     typeorm_1.Column({
         type: 'varchar',
         length: 254,

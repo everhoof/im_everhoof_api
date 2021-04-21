@@ -19,6 +19,7 @@ export declare class UsersResolver {
         targetId: Punishment['targetId'];
         type: Punishment['type'];
     }, Punishment>, user?: User): Promise<boolean | null>;
+    email(parent: User, user?: User): Promise<string | null>;
     getUserById(args: GetUserByIdArgs): Promise<User>;
     getOnline(): Promise<User[]>;
     updateOnlineStatus(): Promise<boolean>;

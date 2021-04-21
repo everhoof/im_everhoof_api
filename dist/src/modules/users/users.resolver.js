@@ -36,7 +36,6 @@ const update_avatar_args_1 = require("./args/update-avatar.args");
 const app_roles_1 = require("../../app.roles");
 const punishments_loader_1 = require("./loaders/punishments.loader");
 const subscription_events_1 = require("../common/types/subscription-events");
-const roles_entity_1 = require("../roles/entities/roles.entity");
 let UsersResolver = class UsersResolver {
     constructor(pubSub, usersService) {
         this.pubSub = pubSub;
@@ -61,6 +60,12 @@ let UsersResolver = class UsersResolver {
         if (user && (app_roles_1.roles.can(user.roleNames).readAny(app_roles_1.RoleResources.USER_SETTINGS).granted || user.id === parent.id)) {
             const punishment = await punishmentsLoader.load({ targetId: parent.id, type: punishment_args_1.PunishmentTypes.mute });
             return !!punishment.id;
+        }
+        return null;
+    }
+    async email(parent, user) {
+        if (user && (app_roles_1.roles.can(user.roleNames).readAny(app_roles_1.RoleResources.USER_SETTINGS).granted || user.id === parent.id)) {
+            return parent.email;
         }
         return null;
     }
@@ -125,6 +130,13 @@ __decorate([
         users_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], UsersResolver.prototype, "muted", null);
+__decorate([
+    graphql_1.ResolveField(() => String, { nullable: true }),
+    __param(0, graphql_1.Parent()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [users_entity_1.User, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], UsersResolver.prototype, "email", null);
 __decorate([
     graphql_1.Query(() => users_entity_1.User),
     common_1.UseGuards(auth_guard_1.OptionalGqlAuthGuard),

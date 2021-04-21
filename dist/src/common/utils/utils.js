@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Utils = void 0;
+const xss_1 = require("xss");
 class Utils {
     static getDate() {
         const today = new Date();
@@ -27,6 +28,20 @@ class Utils {
                 }
             }, 100);
         });
+    }
+    static escapeMessage(message) {
+        const whitelist = [/<@!\d+>/];
+        const escape = new xss_1.FilterXSS({
+            whiteList: {},
+            onTag(tag, html) {
+                for (let i = 0; i < whitelist.length; ++i) {
+                    if (whitelist[i].test(html)) {
+                        return html;
+                    }
+                }
+            },
+        });
+        return escape.process(message);
     }
 }
 exports.Utils = Utils;
