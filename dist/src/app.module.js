@@ -43,7 +43,7 @@ AppModule = __decorate([
                         return {
                             headers: {
                                 ...(websocket?.upgradeReq?.headers || {}),
-                                authorization: connectionParams['Authorization'] || undefined,
+                                authorization: connectionParams?.['Authorization'] || undefined,
                             },
                         };
                     },
