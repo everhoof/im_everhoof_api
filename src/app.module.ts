@@ -32,7 +32,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
           return {
             headers: {
               ...(websocket?.upgradeReq?.headers || {}),
-              authorization: connectionParams['Authorization'] || undefined,
+              authorization: connectionParams?.['Authorization'] || undefined,
             },
           };
         },
