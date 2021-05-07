@@ -14,7 +14,7 @@ import { basename } from 'path';
 import { UploadService } from '@modules/upload/upload.service';
 import { escapeHtml } from 'xss';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
-import { IsNull } from 'typeorm';
+import { FindManyOptions, IsNull, MoreThan } from 'typeorm';
 import { roles } from '../../app.roles';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 import { PunishmentTypes } from '@modules/users/args/punishment.args';
@@ -103,9 +103,18 @@ export class MessagesService {
   }
 
   async getMessages(args: GetMessagesArgs, user?: User): Promise<Message[]> {
+    const where: FindManyOptions<Message>['where'] = args.lastId ? { id: MoreThan(args.lastId) } : {};
     const canReadAny: boolean = (user && roles.can(user?.roleNames).readAny('message').granted) || false;
-    if (canReadAny) return this.messagesRepository.getList(args, { order: { id: 'DESC' } });
-    return this.messagesRepository.getList(args, { where: { deletedAt: IsNull() }, order: { id: 'DESC' } });
+    if (canReadAny) {
+      return this.messagesRepository.getList(args, {
+        where: where,
+        order: { id: 'DESC' },
+      });
+    }
+    return this.messagesRepository.getList(args, {
+      where: { ...where, deletedAt: IsNull() },
+      order: { id: 'DESC' },
+    });
   }
 
   async deleteMessage(args: DeleteMessageArgs, user: User): Promise<Message> {

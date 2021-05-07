@@ -15,4 +15,10 @@ export class GetMessagesArgs {
   @Min(1)
   @IsOptional()
   page: number;
+
+  @Field(() => Int, { nullable: true })
+  @IsInt()
+  @Min(1)
+  @IsOptional()
+  lastId: number;
 }
