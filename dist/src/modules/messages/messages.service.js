@@ -111,10 +111,18 @@ let MessagesService = MessagesService_1 = class MessagesService {
         return message;
     }
     async getMessages(args, user) {
+        const where = args.lastId ? { id: typeorm_2.MoreThan(args.lastId) } : {};
         const canReadAny = (user && app_roles_1.roles.can(user?.roleNames).readAny('message').granted) || false;
-        if (canReadAny)
-            return this.messagesRepository.getList(args, { order: { id: 'DESC' } });
-        return this.messagesRepository.getList(args, { where: { deletedAt: typeorm_2.IsNull() }, order: { id: 'DESC' } });
+        if (canReadAny) {
+            return this.messagesRepository.getList(args, {
+                where: where,
+                order: { id: 'DESC' },
+            });
+        }
+        return this.messagesRepository.getList(args, {
+            where: { ...where, deletedAt: typeorm_2.IsNull() },
+            order: { id: 'DESC' },
+        });
     }
     async deleteMessage(args, user) {
         const canDeleteAny = app_roles_1.roles.can(user.roleNames).deleteAny('message').granted;
