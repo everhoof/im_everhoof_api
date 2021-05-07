@@ -7,10 +7,10 @@ import { Confirmation } from '@modules/accounts/entities/confirmations.entity';
 export declare class User {
     readonly id: number;
     email: string;
-    username: string;
+    username?: string;
     avatarId: Nullable<number>;
-    salt: string;
-    hash: string;
+    salt?: string;
+    hash?: string;
     emailConfirmed: boolean;
     wasOnlineAt?: Date;
     createdAt: Date;

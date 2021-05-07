@@ -30,7 +30,7 @@ class Utils {
         });
     }
     static escapeMessage(message) {
-        const whitelist = [/<@!\d+>/];
+        const whitelist = [/<@!:[\w-]+:\d+>/];
         const escape = new xss_1.FilterXSS({
             whiteList: {},
             onTag(tag, html) {

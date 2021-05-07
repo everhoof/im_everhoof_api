@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.roles = exports.RoleResources = exports.AppRoles = void 0;
 const nest_access_control_1 = require("nest-access-control");
-const roles_entity_1 = require("./modules/roles/entities/roles.entity");
 var AppRoles;
 (function (AppRoles) {
     AppRoles["ADMIN"] = "ADMIN";

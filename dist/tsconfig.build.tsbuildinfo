@@ -1601,6 +1601,11 @@
         "signature": "206f50a519caac3a1ecbde9bf6a7106ff7b95e3a120a14945d463d4f55dfeece",
         "affectsGlobalScope": false
       },
+      "../database/migrations/1620245717733-add_discord_support.ts": {
+        "version": "00a2e936452a4470eeb4ace57fcc893db0eed66f6c997e43219d2fa3593ee1ee",
+        "signature": "4d2bde2ac57aba06814c1c722a862436b8dac3cb2126dc961058057177b2d62f",
+        "affectsGlobalScope": false
+      },
       "../database/seeds/1602986400000-create_basic_roles.ts": {
         "version": "8564c0d5f3637d020278670079f33e570a2e320d3d1aad39c55defa171b6549c",
         "signature": "f57c5162f010e0b8d13a8718c0725e3a83df0bb69b961966888378d0531ad7f9",
@@ -5925,9 +5930,69 @@
         "signature": "6a045657b87ef3f4005e8c00d48330472733297620a48a89bd434c2240f63e8c",
         "affectsGlobalScope": false
       },
+      "../src/app.roles.ts": {
+        "version": "dd679a80a066cdb88d1a13376a530d7c2f2ec5243e53e6ba6d2ebb3dffcc51c8",
+        "signature": "3cb19e341989b8a064d3fe519ef42f2fd3f566d251e34c96186aebc2c57758a8",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/enums/cron-expression.enum.d.ts": {
+        "version": "64421c66dcd1ec7b5f7a79f9869a6c4e2090d031105fa70324b74db914423f97",
+        "signature": "64421c66dcd1ec7b5f7a79f9869a6c4e2090d031105fa70324b74db914423f97",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/enums/index.d.ts": {
+        "version": "68065ce3af3ef8599af8338068cf336be35249eff281ee393186a0ef40db3abf",
+        "signature": "68065ce3af3ef8599af8338068cf336be35249eff281ee393186a0ef40db3abf",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/decorators/cron.decorator.d.ts": {
+        "version": "f5e11b3470c7c3c44c05ef445eb509e1d339df13cee0e882edbcc5c389294f6a",
+        "signature": "f5e11b3470c7c3c44c05ef445eb509e1d339df13cee0e882edbcc5c389294f6a",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/decorators/interval.decorator.d.ts": {
+        "version": "d1fd6ff6e0d1cee69f853c805f3842924425f68edc108283a0bb1628c78d1a51",
+        "signature": "d1fd6ff6e0d1cee69f853c805f3842924425f68edc108283a0bb1628c78d1a51",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/decorators/timeout.decorator.d.ts": {
+        "version": "6d3eb6a1c83878770cc946e7b8d59c51e1649aee979f4a11356a74613c52c649",
+        "signature": "6d3eb6a1c83878770cc946e7b8d59c51e1649aee979f4a11356a74613c52c649",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/decorators/index.d.ts": {
+        "version": "4e5f1234308de112f09920e0a0b99f35a9780b3abbc13a84445f32a490d0bb87",
+        "signature": "4e5f1234308de112f09920e0a0b99f35a9780b3abbc13a84445f32a490d0bb87",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/schedule.module.d.ts": {
+        "version": "a8a3b336f10078fb021c597d024a5526f2e72d81a349667db1a5cb5e9db8832c",
+        "signature": "a8a3b336f10078fb021c597d024a5526f2e72d81a349667db1a5cb5e9db8832c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/scheduler.registry.d.ts": {
+        "version": "f3e7032600be820836b4ed393f8cb82fa9024e128bbf86816d3903dc2a28f93c",
+        "signature": "f3e7032600be820836b4ed393f8cb82fa9024e128bbf86816d3903dc2a28f93c",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/dist/index.d.ts": {
+        "version": "0e00d55a00ecd78664a623d02a3cc73cd5cd5074fd0195be57ef1a1f5a9c9305",
+        "signature": "0e00d55a00ecd78664a623d02a3cc73cd5cd5074fd0195be57ef1a1f5a9c9305",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/schedule/index.d.ts": {
+        "version": "8f1241f5d9f0d3d72117768b3c974e462840fbd85026fb66685078945404cf2f",
+        "signature": "8f1241f5d9f0d3d72117768b3c974e462840fbd85026fb66685078945404cf2f",
+        "affectsGlobalScope": false
+      },
       "../src/modules/accounts/entities/tokens.entity.ts": {
         "version": "df19c458a17d9418230ee2efbf536f4536806fbd07a1c4d883021d9e9d928f57",
         "signature": "1be132536e540018dea7bc4e30d464ad5f7520f41131451ea881390a800ecf37",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/roles/entities/roles.entity.ts": {
+        "version": "390b9151161fffb0fe9bdb49dbc4fe4895e809267c7b7ddc162ca9d476985326",
+        "signature": "83b9f014ac7b26a15d0e957619798124daa27815467f6a37f6b34c67b67d90fd",
         "affectsGlobalScope": false
       },
       "../src/modules/pictures/entities/picture-representations.entity.ts": {
@@ -6581,68 +6646,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/users/entities/users.entity.ts": {
-        "version": "5f24c57e6a2c15ab20081568f3395dfef6c108c511f7d0ae4baa9ba364c9b139",
-        "signature": "6e0d6c8eccce6c6c03da25ebf5cb499e4232354ea6b86ca12954fc44dce42ae4",
-        "affectsGlobalScope": false
-      },
-      "../src/modules/roles/entities/roles.entity.ts": {
-        "version": "390b9151161fffb0fe9bdb49dbc4fe4895e809267c7b7ddc162ca9d476985326",
-        "signature": "83b9f014ac7b26a15d0e957619798124daa27815467f6a37f6b34c67b67d90fd",
-        "affectsGlobalScope": false
-      },
-      "../src/app.roles.ts": {
-        "version": "e822d89d849a34a1afe2885d196b7ace78c383aa5ff913f61568aaf67d760f57",
-        "signature": "3cb19e341989b8a064d3fe519ef42f2fd3f566d251e34c96186aebc2c57758a8",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/enums/cron-expression.enum.d.ts": {
-        "version": "64421c66dcd1ec7b5f7a79f9869a6c4e2090d031105fa70324b74db914423f97",
-        "signature": "64421c66dcd1ec7b5f7a79f9869a6c4e2090d031105fa70324b74db914423f97",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/enums/index.d.ts": {
-        "version": "68065ce3af3ef8599af8338068cf336be35249eff281ee393186a0ef40db3abf",
-        "signature": "68065ce3af3ef8599af8338068cf336be35249eff281ee393186a0ef40db3abf",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/decorators/cron.decorator.d.ts": {
-        "version": "f5e11b3470c7c3c44c05ef445eb509e1d339df13cee0e882edbcc5c389294f6a",
-        "signature": "f5e11b3470c7c3c44c05ef445eb509e1d339df13cee0e882edbcc5c389294f6a",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/decorators/interval.decorator.d.ts": {
-        "version": "d1fd6ff6e0d1cee69f853c805f3842924425f68edc108283a0bb1628c78d1a51",
-        "signature": "d1fd6ff6e0d1cee69f853c805f3842924425f68edc108283a0bb1628c78d1a51",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/decorators/timeout.decorator.d.ts": {
-        "version": "6d3eb6a1c83878770cc946e7b8d59c51e1649aee979f4a11356a74613c52c649",
-        "signature": "6d3eb6a1c83878770cc946e7b8d59c51e1649aee979f4a11356a74613c52c649",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/decorators/index.d.ts": {
-        "version": "4e5f1234308de112f09920e0a0b99f35a9780b3abbc13a84445f32a490d0bb87",
-        "signature": "4e5f1234308de112f09920e0a0b99f35a9780b3abbc13a84445f32a490d0bb87",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/schedule.module.d.ts": {
-        "version": "a8a3b336f10078fb021c597d024a5526f2e72d81a349667db1a5cb5e9db8832c",
-        "signature": "a8a3b336f10078fb021c597d024a5526f2e72d81a349667db1a5cb5e9db8832c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/scheduler.registry.d.ts": {
-        "version": "f3e7032600be820836b4ed393f8cb82fa9024e128bbf86816d3903dc2a28f93c",
-        "signature": "f3e7032600be820836b4ed393f8cb82fa9024e128bbf86816d3903dc2a28f93c",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/dist/index.d.ts": {
-        "version": "0e00d55a00ecd78664a623d02a3cc73cd5cd5074fd0195be57ef1a1f5a9c9305",
-        "signature": "0e00d55a00ecd78664a623d02a3cc73cd5cd5074fd0195be57ef1a1f5a9c9305",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@nestjs/schedule/index.d.ts": {
-        "version": "8f1241f5d9f0d3d72117768b3c974e462840fbd85026fb66685078945404cf2f",
-        "signature": "8f1241f5d9f0d3d72117768b3c974e462840fbd85026fb66685078945404cf2f",
+        "version": "740b2fde5604ef2a400ca7b3d14597d71937b167d379c53f3c4f637d7a4c15ff",
+        "signature": "ea136d04be5334d6d4f4e765f3d9f5c205a7455f132516b50ca2854896cb6580",
         "affectsGlobalScope": false
       },
       "../src/common/exceptions/exceptions.ts": {
@@ -6701,7 +6706,7 @@
         "affectsGlobalScope": true
       },
       "../src/common/utils/utils.ts": {
-        "version": "1597dca61332e59c9a4e760000caecebdb0258bb9e3230821b9e36b23fbbfb47",
+        "version": "52d047016faebe6df8c74fbf5aadd5c413356cc60dbc2e81b1bf8dfa20a34433",
         "signature": "4f1290a49fdae6ab0d8cc2826c82a2550f1dec8ac7cfc214c3d926208fb8e09a",
         "affectsGlobalScope": false
       },
@@ -6931,7 +6936,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.service.ts": {
-        "version": "8c304e574d7ace4c42ff0f9ee9f6cf9f4b112cf74dccb0e050b271f97ecd64dc",
+        "version": "e5fb401bb808f88160d38351a5115fe2484b8cc17fa86dc9a638f72c50633e54",
         "signature": "f43790b3bedcd12bd2528fc6fd95b1077c6021c5e1b20cd520edca0fa266fe31",
         "affectsGlobalScope": false
       },
@@ -6941,8 +6946,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/common/types/subscription-events.ts": {
-        "version": "f19032848eb3bad155f59f9b7b2b95b248b40c0df217d6966e5eb2621cbadcd7",
-        "signature": "a713feaee2344ae2276357f8f50b5b14f3c67bf0ddb9d6022f084af2462f45ad",
+        "version": "c597bc40e0e9b9c1fd9d3e2879199b1150a73bd9b7ce6f3e3132b35da96107e7",
+        "signature": "fff4523b11ce59cdd5ff517b8f793f207d9aeb524ef8db4260024e7ab9d943d1",
         "affectsGlobalScope": false
       },
       "../src/modules/users/users.service.ts": {
@@ -7150,9 +7155,39 @@
         "signature": "9d82edc6db9782e0ea27d1a30469e33d9292e5e1dfdf21e7b5a0374856a440d4",
         "affectsGlobalScope": false
       },
+      "../src/modules/accounts/types/oauth-type.enum.ts": {
+        "version": "77329d21a572fdef37192d20dfa23ceb31be8724edd7ab6fae2b0e1aedc35c4c",
+        "signature": "c386a638ccd9ac79f94294cb3191d42b019276661899c3c7eeb4b2c12b90ecdb",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/entities/oauth.entity.ts": {
+        "version": "2b42857095845c6aa367f75beaf00fad6a4ec6208bb14c9f0fbe002857ece279",
+        "signature": "f5f4a3a40f98e7cff403d83ea7cc5c5bbe8064207420058661c0b897c3a16cec",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/repositories/oauth.repository.ts": {
+        "version": "7f4d60d433a3656acba1a9f666c11bcd37b0fa62b56944c452cbfeba092f25bc",
+        "signature": "c6f737b1add0040e33d2bea8b2747a05a7a5af9e0abdf58db08702b897a67f74",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/args/is-username-free.args.ts": {
+        "version": "d73f566e13c4545b818727e134cf6f8b8e2ba35650e1106c267842f5dd501e34",
+        "signature": "73b21bebc6f024b39a07bf308da9d8deb2d3e4d7d33f19a45cd280a058fb069c",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/args/update-username.args.ts": {
+        "version": "801faa525d23b0166724e7066b514e57f66497055718d768d55ad60604ff213c",
+        "signature": "a1e01c1cb4046bfd6b918ad554cfebcc67d8c0e70a7c87329c1391ff655d7654",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/args/get-token-by-discord-id.args.ts": {
+        "version": "1bb19ece52c6b6b2ce685e56f059662192523ae32d19ddb4a9e80290c192cc84",
+        "signature": "42e574d98831103c3ed3758ec8391843643b5fc4db62c553f9ca6f89258f8028",
+        "affectsGlobalScope": false
+      },
       "../src/modules/accounts/accounts.service.ts": {
-        "version": "bb36d2e05df7ce995af5160cfa47842caf718aece7b68e1838702341726db2f5",
-        "signature": "a6a464fec29d0934251eb88a16e97f6dd8169eb500771c81079527e9a4a5f642",
+        "version": "25315fc50359c68174db894429868940633ba215be0c716e2eb5c9ac816047f3",
+        "signature": "0f32353262cec8b58551c4267a6d0b9776ce793be32adb43f0ff6b947ff20cce",
         "affectsGlobalScope": false
       },
       "../src/common/guards/auth.guard.ts": {
@@ -7211,8 +7246,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.resolver.ts": {
-        "version": "b9c710bc6083fa9f62ce85e611a7ab619b1d66586c48a987626dfe1dcc21ec03",
-        "signature": "84c22e83cb49f59bc8f5b5492ce0e5af8dc44ca461cccc4032dbaea642d993a7",
+        "version": "4adee54e57a3051e82fa8429ca447a434cef8229a3b3501f129c1360f183b837",
+        "signature": "683395da565e4c8a30cfb9c25bbd228d203010522f48de2173174036d23085ef",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/passport-anonymous/index.d.ts": {
@@ -7225,8 +7260,33 @@
         "signature": "43c05bc4e5dc49bd6e16e92ee24aa35e976e59767c271b0f8624ecce4a963c4d",
         "affectsGlobalScope": false
       },
+      "../node_modules/@types/oauth/index.d.ts": {
+        "version": "ee4b33bde3c17180fc5ef9f8d3f153659fd9827ae82eef9ca4e8956ca343fadd",
+        "signature": "ee4b33bde3c17180fc5ef9f8d3f153659fd9827ae82eef9ca4e8956ca343fadd",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/passport-oauth2/index.d.ts": {
+        "version": "023e21ea98df7e3f81bf31f6919b8957a8fb09b1e75398096e79eceb59f8e7e4",
+        "signature": "023e21ea98df7e3f81bf31f6919b8957a8fb09b1e75398096e79eceb59f8e7e4",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/passport-discord/index.d.ts": {
+        "version": "7565d0bd5fb89277bdd861a4e577f3fc9cbe91873d56af6376d04db96872e019",
+        "signature": "7565d0bd5fb89277bdd861a4e577f3fc9cbe91873d56af6376d04db96872e019",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/strategies/discord.strategy.ts": {
+        "version": "f98b5625e2da5e6f6828ef0243d077458bcc9b50d9c0f2b9973024c4d943351f",
+        "signature": "a0cbe291bdfccd4520566b62ceaf5bed6691fe10aa064c16104ffc73279c1335",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/accounts.controller.ts": {
+        "version": "5ba7e3406705dd73a05d0cdaffdb998dc4849e9a48d97b389b5e3c2363355b25",
+        "signature": "2cf3955589d683bae308f427aeddfc7302bdd83c08781c254c78e5c6ab16ef95",
+        "affectsGlobalScope": false
+      },
       "../src/modules/accounts/accounts.module.ts": {
-        "version": "16bbb739f0144a589c2546d2a2f9604edae680a796c0013f755f569f8629fdaa",
+        "version": "470a77e4e717e88c5e1438877b117ac0868ac5f80bae34b50183e7f431bec8de",
         "signature": "ea58d875d88ad3fbdddd073ad89b3e13456607bc13ffb3df2db8dbaca87a35d5",
         "affectsGlobalScope": false
       },
@@ -7901,6 +7961,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1616862144678-add_email_confirmed_to_users_table.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1620245717733-add_discord_support.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -10722,7 +10785,18 @@
         "../node_modules/@types/node/stream.d.ts",
         "../node_modules/@types/nodemailer/lib/shared.d.ts"
       ],
+      "../node_modules/@types/oauth/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/node/index.d.ts",
+        "../node_modules/@types/node/url.d.ts"
+      ],
       "../node_modules/@types/passport-anonymous/index.d.ts": [
+        "../node_modules/@types/passport/index.d.ts"
+      ],
+      "../node_modules/@types/passport-discord/index.d.ts": [
+        "../node_modules/@types/express/index.d.ts",
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/passport-oauth2/index.d.ts",
         "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-http-bearer/index.d.ts": [
@@ -10733,6 +10807,12 @@
       "../node_modules/@types/passport-local/index.d.ts": [
         "../node_modules/@types/express/index.d.ts",
         "../node_modules/@types/passport-strategy/index.d.ts",
+        "../node_modules/@types/passport/index.d.ts"
+      ],
+      "../node_modules/@types/passport-oauth2/index.d.ts": [
+        "../node_modules/@types/express/index.d.ts",
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/oauth/index.d.ts",
         "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-strategy/index.d.ts": [
@@ -14055,8 +14135,7 @@
         "../src/common/filters/http-exception.filter.ts"
       ],
       "../src/app.roles.ts": [
-        "../node_modules/nest-access-control/index.d.ts",
-        "../src/modules/roles/entities/roles.entity.ts"
+        "../node_modules/nest-access-control/index.d.ts"
       ],
       "../src/common/args/get-list.args.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts",
@@ -14107,16 +14186,25 @@
         "../node_modules/@nestjs/core/index.d.ts",
         "../src/app.module.ts"
       ],
+      "../src/modules/accounts/accounts.controller.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/passport/index.d.ts",
+        "../node_modules/@types/express/index.d.ts",
+        "../src/common/filters/http-exception.filter.ts"
+      ],
       "../src/modules/accounts/accounts.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/passport/index.d.ts",
         "../node_modules/@nestjs/typeorm/index.d.ts",
+        "../src/modules/accounts/accounts.controller.ts",
         "../src/modules/accounts/accounts.resolver.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/repositories/confirmations.repository.ts",
+        "../src/modules/accounts/repositories/oauth.repository.ts",
         "../src/modules/accounts/repositories/tokens.repository.ts",
         "../src/modules/accounts/strategies/anonymous.strategy.ts",
         "../src/modules/accounts/strategies/bearer.strategy.ts",
+        "../src/modules/accounts/strategies/discord.strategy.ts",
         "../src/modules/roles/repositories/roles.repository.ts",
         "../src/modules/users/repositories/users.repository.ts",
         "../src/modules/users/users.module.ts"
@@ -14124,14 +14212,21 @@
       "../src/modules/accounts/accounts.resolver.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/graphql-subscriptions/dist/index.d.ts",
+        "../src/app.roles.ts",
+        "../src/common/exceptions/exceptions.ts",
         "../src/common/filters/http-exception.filter.ts",
         "../src/common/guards/auth.guard.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
+        "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
+        "../src/modules/accounts/args/is-username-free.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
+        "../src/modules/accounts/args/update-username.args.ts",
         "../src/modules/accounts/entities/tokens.entity.ts",
+        "../src/modules/common/types/subscription-events.ts",
         "../src/modules/users/entities/users.entity.ts"
       ],
       "../src/modules/accounts/accounts.service.ts": [
@@ -14139,22 +14234,36 @@
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/typeorm/index.d.ts",
         "../node_modules/@types/node/crypto.d.ts",
+        "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
         "../src/common/exceptions/exceptions.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
+        "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
+        "../src/modules/accounts/args/is-username-free.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
+        "../src/modules/accounts/args/update-username.args.ts",
         "../src/modules/accounts/entities/tokens.entity.ts",
         "../src/modules/accounts/repositories/confirmations.repository.ts",
+        "../src/modules/accounts/repositories/oauth.repository.ts",
         "../src/modules/accounts/repositories/tokens.repository.ts",
         "../src/modules/accounts/types/confirmation-type.enum.ts",
+        "../src/modules/accounts/types/oauth-type.enum.ts",
+        "../src/modules/common/types/subscription-events.ts",
         "../src/modules/roles/repositories/roles.repository.ts",
         "../src/modules/users/entities/users.entity.ts",
         "../src/modules/users/repositories/users.repository.ts"
       ],
       "../src/modules/accounts/args/confirm-email.args.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts"
+      ],
+      "../src/modules/accounts/args/get-token-by-discord-id.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts"
+      ],
+      "../src/modules/accounts/args/is-username-free.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/class-validator/types/index.d.ts"
       ],
       "../src/modules/accounts/args/reset-password.args.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts",
@@ -14167,10 +14276,19 @@
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/class-validator/types/index.d.ts"
       ],
+      "../src/modules/accounts/args/update-username.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/class-validator/types/index.d.ts"
+      ],
       "../src/modules/accounts/entities/confirmations.entity.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
         "../src/modules/accounts/types/confirmation-type.enum.ts",
+        "../src/modules/users/entities/users.entity.ts"
+      ],
+      "../src/modules/accounts/entities/oauth.entity.ts": [
+        "../node_modules/typeorm/index.d.ts",
+        "../src/modules/accounts/types/oauth-type.enum.ts",
         "../src/modules/users/entities/users.entity.ts"
       ],
       "../src/modules/accounts/entities/tokens.entity.ts": [
@@ -14185,6 +14303,10 @@
         "../src/common/utils/utils.ts",
         "../src/modules/accounts/entities/confirmations.entity.ts",
         "../src/modules/accounts/types/confirmation-type.enum.ts"
+      ],
+      "../src/modules/accounts/repositories/oauth.repository.ts": [
+        "../node_modules/typeorm/index.d.ts",
+        "../src/modules/accounts/entities/oauth.entity.ts"
       ],
       "../src/modules/accounts/repositories/tokens.repository.ts": [
         "../node_modules/@types/node/crypto.d.ts",
@@ -14202,6 +14324,13 @@
         "../node_modules/@types/passport-http-bearer/index.d.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/users/entities/users.entity.ts"
+      ],
+      "../src/modules/accounts/strategies/discord.strategy.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/passport/index.d.ts",
+        "../node_modules/@types/passport-discord/index.d.ts",
+        "../src/modules/accounts/accounts.service.ts",
+        "../src/modules/accounts/entities/tokens.entity.ts"
       ],
       "../src/modules/common/common.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
@@ -14590,6 +14719,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1616862144678-add_email_confirmed_to_users_table.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1620245717733-add_discord_support.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -17408,7 +17540,18 @@
         "../node_modules/@types/node/stream.d.ts",
         "../node_modules/@types/nodemailer/lib/shared.d.ts"
       ],
+      "../node_modules/@types/oauth/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/node/index.d.ts",
+        "../node_modules/@types/node/url.d.ts"
+      ],
       "../node_modules/@types/passport-anonymous/index.d.ts": [
+        "../node_modules/@types/passport/index.d.ts"
+      ],
+      "../node_modules/@types/passport-discord/index.d.ts": [
+        "../node_modules/@types/express/index.d.ts",
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/passport-oauth2/index.d.ts",
         "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-http-bearer/index.d.ts": [
@@ -17419,6 +17562,12 @@
       "../node_modules/@types/passport-local/index.d.ts": [
         "../node_modules/@types/express/index.d.ts",
         "../node_modules/@types/passport-strategy/index.d.ts",
+        "../node_modules/@types/passport/index.d.ts"
+      ],
+      "../node_modules/@types/passport-oauth2/index.d.ts": [
+        "../node_modules/@types/express/index.d.ts",
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/oauth/index.d.ts",
         "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-strategy/index.d.ts": [
@@ -20745,24 +20894,36 @@
       "../src/global.d.ts": [
         "../node_modules/graphql/index.d.ts"
       ],
+      "../src/modules/accounts/accounts.controller.ts": [
+        "../node_modules/@types/express/index.d.ts"
+      ],
       "../src/modules/accounts/accounts.resolver.ts": [
+        "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
+        "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
+        "../src/modules/accounts/args/is-username-free.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
+        "../src/modules/accounts/args/update-username.args.ts",
         "../src/modules/accounts/entities/tokens.entity.ts",
         "../src/modules/users/entities/users.entity.ts"
       ],
       "../src/modules/accounts/accounts.service.ts": [
         "../node_modules/@nestjs-modules/mailer/index.d.ts",
+        "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
+        "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
+        "../src/modules/accounts/args/is-username-free.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
+        "../src/modules/accounts/args/update-username.args.ts",
         "../src/modules/accounts/entities/tokens.entity.ts",
         "../src/modules/accounts/repositories/confirmations.repository.ts",
+        "../src/modules/accounts/repositories/oauth.repository.ts",
         "../src/modules/accounts/repositories/tokens.repository.ts",
         "../src/modules/roles/repositories/roles.repository.ts",
         "../src/modules/users/entities/users.entity.ts",
@@ -20772,6 +20933,10 @@
         "../src/modules/accounts/types/confirmation-type.enum.ts",
         "../src/modules/users/entities/users.entity.ts"
       ],
+      "../src/modules/accounts/entities/oauth.entity.ts": [
+        "../src/modules/accounts/types/oauth-type.enum.ts",
+        "../src/modules/users/entities/users.entity.ts"
+      ],
       "../src/modules/accounts/entities/tokens.entity.ts": [
         "../src/modules/users/entities/users.entity.ts"
       ],
@@ -20779,6 +20944,10 @@
         "../src/common/repositories/basic.repository.ts",
         "../src/modules/accounts/entities/confirmations.entity.ts",
         "../src/modules/accounts/types/confirmation-type.enum.ts"
+      ],
+      "../src/modules/accounts/repositories/oauth.repository.ts": [
+        "../node_modules/typeorm/index.d.ts",
+        "../src/modules/accounts/entities/oauth.entity.ts"
       ],
       "../src/modules/accounts/repositories/tokens.repository.ts": [
         "../node_modules/typeorm/index.d.ts",
@@ -20791,6 +20960,11 @@
         "../node_modules/@types/passport-http-bearer/index.d.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/users/entities/users.entity.ts"
+      ],
+      "../src/modules/accounts/strategies/discord.strategy.ts": [
+        "../node_modules/@types/passport-discord/index.d.ts",
+        "../src/modules/accounts/accounts.service.ts",
+        "../src/modules/accounts/entities/tokens.entity.ts"
       ],
       "../src/modules/messages/entities/messages.entity.ts": [
         "../src/modules/pictures/entities/pictures.entity.ts",

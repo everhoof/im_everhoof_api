@@ -61,7 +61,7 @@ let MessagesService = MessagesService_1 = class MessagesService {
         let message = this.messagesRepository.create({
             content: utils_1.Utils.escapeMessage(args.content?.trim() || ''),
             ownerId: user.id,
-            username: user.username.trim(),
+            username: user.username?.trim(),
             randomId: args.randomId?.trim(),
         });
         message.pictures = args.pictures.map((id) => this.picturesRepository.create({ id }));

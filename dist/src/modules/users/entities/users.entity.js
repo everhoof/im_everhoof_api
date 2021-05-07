@@ -48,6 +48,7 @@ __decorate([
     typeorm_1.Column({
         type: 'varchar',
         length: 32,
+        nullable: true,
     }),
     __metadata("design:type", String)
 ], User.prototype, "username", void 0);
@@ -66,6 +67,7 @@ __decorate([
     typeorm_1.Column({
         length: 64,
         select: false,
+        nullable: true,
     }),
     __metadata("design:type", String)
 ], User.prototype, "salt", void 0);
@@ -73,6 +75,7 @@ __decorate([
     typeorm_1.Column({
         length: 64,
         select: false,
+        nullable: true,
     }),
     __metadata("design:type", String)
 ], User.prototype, "hash", void 0);

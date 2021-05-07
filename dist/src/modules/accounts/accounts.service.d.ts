@@ -10,17 +10,25 @@ import { ConfirmationsRepository } from '@modules/accounts/repositories/confirma
 import { RequestPasswordResetArgs, ResetPasswordArgs } from '@modules/accounts/args/reset-password.args';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfirmEmailArgs } from '@modules/accounts/args/confirm-email.args';
+import { OAuthRepository } from '@modules/accounts/repositories/oauth.repository';
+import { IsUsernameFreeArgs } from '@modules/accounts/args/is-username-free.args';
+import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args';
+import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
+import { PubSub } from 'graphql-subscriptions';
 export declare class AccountsService {
     private readonly connection;
     private readonly tokensRepository;
     private readonly usersRepository;
     private readonly rolesRepository;
+    private readonly oauthRepository;
     private readonly confirmationsRepository;
     private readonly mailerService;
+    private readonly pubSub;
     private readonly logger;
-    constructor(connection: Connection, tokensRepository: TokensRepository, usersRepository: UsersRepository, rolesRepository: RolesRepository, confirmationsRepository: ConfirmationsRepository, mailerService: MailerService);
+    constructor(connection: Connection, tokensRepository: TokensRepository, usersRepository: UsersRepository, rolesRepository: RolesRepository, oauthRepository: OAuthRepository, confirmationsRepository: ConfirmationsRepository, mailerService: MailerService, pubSub: PubSub);
     validateUserByEmailAndPassword(args: SignInArgs): Promise<Token>;
     validateUserByToken(value: string): Promise<Token>;
+    validateUserByDiscord(accessToken: string, refreshToken: string, profile: Record<string, unknown>): Promise<Token>;
     createUser(input: SignUpArgs): Promise<User>;
     requestEmailConfirmation(user: User): Promise<User>;
     requestPasswordReset(args: RequestPasswordResetArgs): Promise<boolean>;
@@ -36,6 +44,9 @@ export declare class AccountsService {
     }): Promise<void>;
     confirmEmail(args: ConfirmEmailArgs): Promise<Token>;
     resetPassword(args: ResetPasswordArgs): Promise<Token>;
+    isUsernameFree(args: IsUsernameFreeArgs): Promise<boolean>;
+    updateUsername(args: UpdateUsernameArgs, user: User): Promise<User>;
+    getTokenByDiscordId(args: GetTokenByDiscordIdArgs): Promise<Token | undefined>;
     createSaltHash(password: string): {
         salt: string;
         hash: string;

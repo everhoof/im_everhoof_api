@@ -31,19 +31,28 @@ const confirmation_type_enum_1 = require("./types/confirmation-type.enum");
 const reset_password_args_1 = require("./args/reset-password.args");
 const mailer_1 = require("@nestjs-modules/mailer");
 const confirm_email_args_1 = require("./args/confirm-email.args");
+const oauth_repository_1 = require("./repositories/oauth.repository");
+const oauth_type_enum_1 = require("./types/oauth-type.enum");
+const is_username_free_args_1 = require("./args/is-username-free.args");
+const update_username_args_1 = require("./args/update-username.args");
+const get_token_by_discord_id_args_1 = require("./args/get-token-by-discord-id.args");
+const graphql_subscriptions_1 = require("graphql-subscriptions");
+const subscription_events_1 = require("../common/types/subscription-events");
 let AccountsService = AccountsService_1 = class AccountsService {
-    constructor(connection, tokensRepository, usersRepository, rolesRepository, confirmationsRepository, mailerService) {
+    constructor(connection, tokensRepository, usersRepository, rolesRepository, oauthRepository, confirmationsRepository, mailerService, pubSub) {
         this.connection = connection;
         this.tokensRepository = tokensRepository;
         this.usersRepository = usersRepository;
         this.rolesRepository = rolesRepository;
+        this.oauthRepository = oauthRepository;
         this.confirmationsRepository = confirmationsRepository;
         this.mailerService = mailerService;
+        this.pubSub = pubSub;
         this.logger = new common_1.Logger(AccountsService_1.name, true);
     }
     async validateUserByEmailAndPassword(args) {
         const user = await this.usersRepository.getUserByEmailOrUsername(args.email);
-        if (!user)
+        if (!user || !user.salt || !user.hash)
             throw new exceptions_1.UnauthorizedException('WRONG_CREDENTIALS');
         const isPasswordValid = this.checkSaltHash(args.password, user.salt, user.hash);
         if (!isPasswordValid)
@@ -66,6 +75,43 @@ let AccountsService = AccountsService_1 = class AccountsService {
             });
             await entityManager.save(tokens_entity_1.Token, token);
         });
+        return token;
+    }
+    async validateUserByDiscord(accessToken, refreshToken, profile) {
+        let newUser = false;
+        let oauth = await this.oauthRepository.findOne({
+            where: { externalId: profile['id'], type: oauth_type_enum_1.OAuthType.discord },
+        });
+        if (!oauth) {
+            let user;
+            if (profile['email']) {
+                user = await this.usersRepository.findOne({ where: { email: profile['email'] } });
+            }
+            if (!user) {
+                user = this.usersRepository.create({
+                    email: profile['email'],
+                    emailConfirmed: true,
+                });
+                user = await this.usersRepository.save(user);
+                newUser = true;
+            }
+            oauth = this.oauthRepository.create({
+                type: oauth_type_enum_1.OAuthType.discord,
+                externalId: profile['id'],
+                accessToken,
+                refreshToken,
+                userId: user.id,
+                data: profile,
+            });
+            oauth = await this.oauthRepository.save(oauth);
+        }
+        const token = await this.tokensRepository.createNewToken(oauth.userId);
+        if (!token)
+            throw new exceptions_1.InternalServerErrorException('UNKNOWN');
+        if (newUser)
+            await this.pubSub.publish("userRegisteredViaDiscord", {
+                ["userRegisteredViaDiscord"]: oauth.externalId,
+            });
         return token;
     }
     async createUser(input) {
@@ -94,7 +140,7 @@ let AccountsService = AccountsService_1 = class AccountsService {
         const confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, confirmation_type_enum_1.ConfirmationType.registration);
         this.sendConfirmationEmail({
             email: user.email,
-            name: user.username,
+            name: user.username || 'user',
             token: confirmation.value,
         }).catch((e) => this.logger.error(e));
         return user;
@@ -106,7 +152,7 @@ let AccountsService = AccountsService_1 = class AccountsService {
         const confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, confirmation_type_enum_1.ConfirmationType.password);
         this.sendPasswordResetEmail({
             email: user.email,
-            name: user.username,
+            name: user.username || 'user',
             token: confirmation.value,
         }).catch((e) => this.logger.error(e));
         return true;
@@ -170,6 +216,22 @@ let AccountsService = AccountsService_1 = class AccountsService {
             throw new exceptions_1.InternalServerErrorException('UNKNOWN');
         return token;
     }
+    async isUsernameFree(args) {
+        return !(await this.usersRepository.findOne({ where: { username: args.username } }));
+    }
+    async updateUsername(args, user) {
+        const free = await this.isUsernameFree({ username: args.username });
+        if (!free)
+            throw new exceptions_1.BadRequestException('USERNAME_OCCUPIED');
+        await this.usersRepository.update({ id: user.id }, { username: args.username });
+        return this.usersRepository.isExist(user.id);
+    }
+    async getTokenByDiscordId(args) {
+        const oauth = await this.oauthRepository.findOne({ where: { externalId: args.id, type: oauth_type_enum_1.OAuthType.discord } });
+        if (!oauth)
+            return;
+        return this.tokensRepository.createNewToken(oauth.userId);
+    }
     createSaltHash(password) {
         const salt = crypto_1.randomBytes(48).toString('base64');
         const hash = crypto_1.pbkdf2Sync(password, salt, 10, 48, 'sha512').toString('base64');
@@ -188,13 +250,17 @@ AccountsService = AccountsService_1 = __decorate([
     __param(1, typeorm_1.InjectRepository(tokens_repository_1.TokensRepository)),
     __param(2, typeorm_1.InjectRepository(users_repository_1.UsersRepository)),
     __param(3, typeorm_1.InjectRepository(roles_repository_1.RolesRepository)),
-    __param(4, typeorm_1.InjectRepository(confirmations_repository_1.ConfirmationsRepository)),
+    __param(4, typeorm_1.InjectRepository(oauth_repository_1.OAuthRepository)),
+    __param(5, typeorm_1.InjectRepository(confirmations_repository_1.ConfirmationsRepository)),
+    __param(7, common_1.Inject('PUB_SUB')),
     __metadata("design:paramtypes", [typeorm_2.Connection,
         tokens_repository_1.TokensRepository,
         users_repository_1.UsersRepository,
         roles_repository_1.RolesRepository,
+        oauth_repository_1.OAuthRepository,
         confirmations_repository_1.ConfirmationsRepository,
-        mailer_1.MailerService])
+        mailer_1.MailerService,
+        graphql_subscriptions_1.PubSub])
 ], AccountsService);
 exports.AccountsService = AccountsService;
 //# sourceMappingURL=accounts.service.js.map

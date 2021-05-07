@@ -24,8 +24,16 @@ const sign_up_args_1 = require("./args/sign-up.args");
 const confirm_email_args_1 = require("./args/confirm-email.args");
 const reset_password_args_1 = require("./args/reset-password.args");
 const auth_guard_1 = require("../../common/guards/auth.guard");
+const is_username_free_args_1 = require("./args/is-username-free.args");
+const update_username_args_1 = require("./args/update-username.args");
+const subscription_events_1 = require("../common/types/subscription-events");
+const graphql_subscriptions_1 = require("graphql-subscriptions");
+const app_roles_1 = require("../../app.roles");
+const get_token_by_discord_id_args_1 = require("./args/get-token-by-discord-id.args");
+const exceptions_1 = require("../../common/exceptions/exceptions");
 let AccountsResolver = class AccountsResolver {
-    constructor(accountsService) {
+    constructor(pubSub, accountsService) {
+        this.pubSub = pubSub;
         this.accountsService = accountsService;
     }
     async signIn(args) {
@@ -45,6 +53,20 @@ let AccountsResolver = class AccountsResolver {
     }
     async resetPassword(args) {
         return this.accountsService.resetPassword(args);
+    }
+    async updateUsername(args, user) {
+        return this.accountsService.updateUsername(args, user);
+    }
+    isUsernameFree(args) {
+        return this.accountsService.isUsernameFree(args);
+    }
+    getTokenByDiscordId(args, user) {
+        if (!user.roleNames.includes(app_roles_1.AppRoles.ADMIN))
+            throw new exceptions_1.BadRequestException('FORBIDDEN');
+        return this.accountsService.getTokenByDiscordId(args);
+    }
+    userRegisteredViaDiscord() {
+        return this.pubSub.asyncIterator("userRegisteredViaDiscord");
     }
 };
 __decorate([
@@ -90,10 +112,40 @@ __decorate([
     __metadata("design:paramtypes", [reset_password_args_1.ResetPasswordArgs]),
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "resetPassword", null);
+__decorate([
+    graphql_1.Mutation(() => users_entity_1.User),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_username_args_1.UpdateUsernameArgs, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "updateUsername", null);
+__decorate([
+    graphql_1.Query(() => Boolean),
+    __param(0, graphql_1.Args()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [is_username_free_args_1.IsUsernameFreeArgs]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "isUsernameFree", null);
+__decorate([
+    graphql_1.Query(() => tokens_entity_1.Token, { nullable: true }),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [get_token_by_discord_id_args_1.GetTokenByDiscordIdArgs, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "getTokenByDiscordId", null);
+__decorate([
+    graphql_1.Subscription(() => String),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], AccountsResolver.prototype, "userRegisteredViaDiscord", null);
 AccountsResolver = __decorate([
     common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
     graphql_1.Resolver('Accounts'),
-    __metadata("design:paramtypes", [accounts_service_1.AccountsService])
+    __param(0, common_1.Inject('PUB_SUB')),
+    __metadata("design:paramtypes", [graphql_subscriptions_1.PubSub, accounts_service_1.AccountsService])
 ], AccountsResolver);
 exports.AccountsResolver = AccountsResolver;
 //# sourceMappingURL=accounts.resolver.js.map
