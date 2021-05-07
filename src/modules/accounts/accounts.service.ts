@@ -26,6 +26,8 @@ import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args'
 import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
 import { PubSub } from 'graphql-subscriptions';
 import { SubscriptionEvents } from '@modules/common/types/subscription-events';
+import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
+import { AppRoles } from '../../app.roles';
 
 @Injectable()
 export class AccountsService {
@@ -252,6 +254,23 @@ export class AccountsService {
     const oauth = await this.oauthRepository.findOne({ where: { externalId: args.id, type: OAuthType.discord } });
     if (!oauth) return;
     return this.tokensRepository.createNewToken(oauth.userId);
+  }
+
+  async invalidateTokenById(args: InvalidateTokenByIdArgs, user: User): Promise<boolean> {
+    const token = await this.tokensRepository.isExist(args.id);
+    if (token.ownerId !== user.id && !user.roleNames.includes(AppRoles.ADMIN))
+      throw new BadRequestException('FORBIDDEN');
+    await this.tokensRepository.delete(token.id);
+    return true;
+  }
+
+  async invalidateAllTokens(user: User): Promise<boolean> {
+    await this.tokensRepository.delete({ ownerId: user.id });
+    return true;
+  }
+
+  async getTokens(user: User): Promise<Token[]> {
+    return this.tokensRepository.find({ where: { ownerId: user.id } });
   }
 
   createSaltHash(password: string): { salt: string; hash: string } {

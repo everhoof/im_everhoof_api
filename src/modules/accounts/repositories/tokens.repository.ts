@@ -1,9 +1,10 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository } from 'typeorm';
 import { randomBytes } from 'crypto';
 import { Token } from '@modules/accounts/entities/tokens.entity';
+import { BasicRepository } from '@common/repositories/basic.repository';
 
 @EntityRepository(Token)
-export class TokensRepository extends Repository<Token> {
+export class TokensRepository extends BasicRepository<Token> {
   async createNewToken(ownerId: number | undefined): Promise<Token | undefined> {
     if (!ownerId) return Promise.resolve(undefined);
 

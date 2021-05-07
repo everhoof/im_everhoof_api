@@ -16,6 +16,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { AppRoles } from '../../app.roles';
 import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
 import { BadRequestException } from '@common/exceptions/exceptions';
+import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver('Accounts')
@@ -69,6 +70,24 @@ export class AccountsResolver {
   getTokenByDiscordId(@Args() args: GetTokenByDiscordIdArgs, @CurrentUser() user: User): Promise<Token | undefined> {
     if (!user.roleNames.includes(AppRoles.ADMIN)) throw new BadRequestException('FORBIDDEN');
     return this.accountsService.getTokenByDiscordId(args);
+  }
+
+  @Mutation(() => Boolean)
+  @UseGuards(GqlAuthGuard)
+  invalidateTokenById(@Args() args: InvalidateTokenByIdArgs, @CurrentUser() user: User): Promise<boolean> {
+    return this.accountsService.invalidateTokenById(args, user);
+  }
+
+  @Mutation(() => Boolean)
+  @UseGuards(GqlAuthGuard)
+  invalidateAllTokens(@CurrentUser() user: User): Promise<boolean> {
+    return this.accountsService.invalidateAllTokens(user);
+  }
+
+  @Query(() => [Token])
+  @UseGuards(GqlAuthGuard)
+  getTokens(@CurrentUser() user: User): Promise<Token[]> {
+    return this.accountsService.getTokens(user);
   }
 
   @Subscription(() => String)
