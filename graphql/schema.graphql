@@ -36,6 +36,7 @@ type Mutation {
   requestEmailConfirmation: User!
   requestPasswordReset(email: String!): Boolean!
   resetPassword(token: String!, password: String!): Token!
+  updateUsername(username: String!): User!
 }
 
 type Picture {
@@ -71,6 +72,8 @@ type Query {
   getUserById(id: Int!): User!
   getOnline: [User!]!
   getMessages(count: Int = 100, page: Int = 1): [Message!]!
+  isUsernameFree(username: String!): Boolean!
+  getTokenByDiscordId(id: String!): Token
   getGrants: String!
   getHello: String!
   getPictureById(pictureId: Int!): Picture!
@@ -86,6 +89,7 @@ type Subscription {
   userUpdated: User!
   messageCreated: Message!
   messageDeleted: Message!
+  userRegisteredViaDiscord: String!
 }
 
 type Token {

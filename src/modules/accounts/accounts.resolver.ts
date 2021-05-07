@@ -1,5 +1,5 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { UseFilters, UseGuards } from '@nestjs/common';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import { Inject, UseFilters, UseGuards } from '@nestjs/common';
 import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
 import { AccountsService } from '@modules/accounts/accounts.service';
 import { Token } from '@modules/accounts/entities/tokens.entity';
@@ -9,11 +9,18 @@ import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 import { ConfirmEmailArgs } from '@modules/accounts/args/confirm-email.args';
 import { RequestPasswordResetArgs, ResetPasswordArgs } from '@modules/accounts/args/reset-password.args';
 import { CurrentUser, GqlAuthGuard } from '@common/guards/auth.guard';
+import { IsUsernameFreeArgs } from '@modules/accounts/args/is-username-free.args';
+import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args';
+import { SubscriptionEvents } from '@modules/common/types/subscription-events';
+import { PubSub } from 'graphql-subscriptions';
+import { AppRoles } from '../../app.roles';
+import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
+import { BadRequestException } from '@common/exceptions/exceptions';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver('Accounts')
 export class AccountsResolver {
-  constructor(private readonly accountsService: AccountsService) {}
+  constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub, private readonly accountsService: AccountsService) {}
 
   @Mutation(() => Token)
   async signIn(@Args() args: SignInArgs): Promise<Token> {
@@ -44,5 +51,28 @@ export class AccountsResolver {
   @Mutation(() => Token)
   async resetPassword(@Args() args: ResetPasswordArgs): Promise<Token> {
     return this.accountsService.resetPassword(args);
+  }
+
+  @Mutation(() => User)
+  @UseGuards(GqlAuthGuard)
+  async updateUsername(@Args() args: UpdateUsernameArgs, @CurrentUser() user: User): Promise<User> {
+    return this.accountsService.updateUsername(args, user);
+  }
+
+  @Query(() => Boolean)
+  isUsernameFree(@Args() args: IsUsernameFreeArgs): Promise<boolean> {
+    return this.accountsService.isUsernameFree(args);
+  }
+
+  @Query(() => Token, { nullable: true })
+  @UseGuards(GqlAuthGuard)
+  getTokenByDiscordId(@Args() args: GetTokenByDiscordIdArgs, @CurrentUser() user: User): Promise<Token | undefined> {
+    if (!user.roleNames.includes(AppRoles.ADMIN)) throw new BadRequestException('FORBIDDEN');
+    return this.accountsService.getTokenByDiscordId(args);
+  }
+
+  @Subscription(() => String)
+  userRegisteredViaDiscord(): AsyncIterator<string> {
+    return this.pubSub.asyncIterator(SubscriptionEvents.USER_REGISTERED_VIA_DISCORD);
   }
 }

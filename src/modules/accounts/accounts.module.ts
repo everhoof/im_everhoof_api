@@ -10,14 +10,31 @@ import { AccountsService } from '@modules/accounts/accounts.service';
 import { RolesRepository } from '@modules/roles/repositories/roles.repository';
 import { AnonymousStrategy } from '@modules/accounts/strategies/anonymous.strategy';
 import { ConfirmationsRepository } from '@modules/accounts/repositories/confirmations.repository';
+import { OAuthRepository } from '@modules/accounts/repositories/oauth.repository';
+import { DiscordStrategy } from '@modules/accounts/strategies/discord.strategy';
+import { OAuthController } from '@modules/accounts/accounts.controller';
 
 @Module({
   imports: [
     forwardRef(() => UsersModule),
     PassportModule,
-    TypeOrmModule.forFeature([TokensRepository, UsersRepository, RolesRepository, ConfirmationsRepository]),
+    TypeOrmModule.forFeature([
+      TokensRepository,
+      UsersRepository,
+      RolesRepository,
+      ConfirmationsRepository,
+      OAuthRepository,
+    ]),
   ],
-  providers: [AccountsService, AccountsResolver, BearerStrategy, BearerStrategyNoException, AnonymousStrategy],
+  providers: [
+    AccountsService,
+    AccountsResolver,
+    BearerStrategy,
+    BearerStrategyNoException,
+    AnonymousStrategy,
+    DiscordStrategy,
+  ],
+  controllers: [OAuthController],
   exports: [AccountsService, TypeOrmModule.forFeature([TokensRepository])],
 })
 export class AccountsModule {}

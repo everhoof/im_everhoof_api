@@ -1,5 +1,4 @@
 import { RolesBuilder } from 'nest-access-control';
-import { Role } from '@modules/roles/entities/roles.entity';
 
 export enum AppRoles {
   ADMIN = 'ADMIN',

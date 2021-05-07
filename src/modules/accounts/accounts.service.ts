@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { pbkdf2Sync, randomBytes } from 'crypto';
 import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { TokensRepository } from '@modules/accounts/repositories/tokens.repository';
@@ -19,6 +19,13 @@ import { ConfirmationType } from '@modules/accounts/types/confirmation-type.enum
 import { RequestPasswordResetArgs, ResetPasswordArgs } from '@modules/accounts/args/reset-password.args';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfirmEmailArgs } from '@modules/accounts/args/confirm-email.args';
+import { OAuthRepository } from '@modules/accounts/repositories/oauth.repository';
+import { OAuthType } from '@modules/accounts/types/oauth-type.enum';
+import { IsUsernameFreeArgs } from '@modules/accounts/args/is-username-free.args';
+import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args';
+import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
+import { PubSub } from 'graphql-subscriptions';
+import { SubscriptionEvents } from '@modules/common/types/subscription-events';
 
 @Injectable()
 export class AccountsService {
@@ -33,14 +40,17 @@ export class AccountsService {
     private readonly usersRepository: UsersRepository,
     @InjectRepository(RolesRepository)
     private readonly rolesRepository: RolesRepository,
+    @InjectRepository(OAuthRepository)
+    private readonly oauthRepository: OAuthRepository,
     @InjectRepository(ConfirmationsRepository)
     private readonly confirmationsRepository: ConfirmationsRepository,
     private readonly mailerService: MailerService,
+    @Inject('PUB_SUB') private readonly pubSub: PubSub,
   ) {}
 
   async validateUserByEmailAndPassword(args: SignInArgs): Promise<Token> {
     const user = await this.usersRepository.getUserByEmailOrUsername(args.email);
-    if (!user) throw new UnauthorizedException('WRONG_CREDENTIALS');
+    if (!user || !user.salt || !user.hash) throw new UnauthorizedException('WRONG_CREDENTIALS');
 
     const isPasswordValid: boolean = this.checkSaltHash(args.password, user.salt, user.hash);
     if (!isPasswordValid) throw new UnauthorizedException('WRONG_CREDENTIALS');
@@ -66,6 +76,48 @@ export class AccountsService {
       );
       await entityManager.save(Token, token);
     });
+    return token;
+  }
+
+  async validateUserByDiscord(
+    accessToken: string,
+    refreshToken: string,
+    profile: Record<string, unknown>,
+  ): Promise<Token> {
+    let newUser = false;
+    let oauth = await this.oauthRepository.findOne({
+      where: { externalId: profile['id'], type: OAuthType.discord },
+    });
+    if (!oauth) {
+      let user;
+      if (profile['email']) {
+        user = await this.usersRepository.findOne({ where: { email: profile['email'] as string } });
+      }
+      if (!user) {
+        user = this.usersRepository.create({
+          email: profile['email'] as string,
+          emailConfirmed: true,
+        });
+        user = await this.usersRepository.save(user);
+        newUser = true;
+      }
+      oauth = this.oauthRepository.create({
+        type: OAuthType.discord,
+        externalId: profile['id'] as string,
+        accessToken,
+        refreshToken,
+        userId: user.id,
+        data: profile,
+      });
+      oauth = await this.oauthRepository.save(oauth);
+    }
+    const token = await this.tokensRepository.createNewToken(oauth.userId);
+    if (!token) throw new InternalServerErrorException('UNKNOWN');
+
+    if (newUser)
+      await this.pubSub.publish(SubscriptionEvents.USER_REGISTERED_VIA_DISCORD, {
+        [SubscriptionEvents.USER_REGISTERED_VIA_DISCORD]: oauth.externalId,
+      });
     return token;
   }
 
@@ -100,7 +152,7 @@ export class AccountsService {
     );
     this.sendConfirmationEmail({
       email: user.email,
-      name: user.username,
+      name: user.username || 'user',
       token: confirmation.value,
     }).catch((e) => this.logger.error(e));
     return user;
@@ -113,7 +165,7 @@ export class AccountsService {
     const confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, ConfirmationType.password);
     this.sendPasswordResetEmail({
       email: user.email,
-      name: user.username,
+      name: user.username || 'user',
       token: confirmation.value,
     }).catch((e) => this.logger.error(e));
     return true;
@@ -182,6 +234,24 @@ export class AccountsService {
     if (!token) throw new InternalServerErrorException('UNKNOWN');
 
     return token;
+  }
+
+  async isUsernameFree(args: IsUsernameFreeArgs): Promise<boolean> {
+    return !(await this.usersRepository.findOne({ where: { username: args.username } }));
+  }
+
+  async updateUsername(args: UpdateUsernameArgs, user: User): Promise<User> {
+    const free = await this.isUsernameFree({ username: args.username });
+    if (!free) throw new BadRequestException('USERNAME_OCCUPIED');
+
+    await this.usersRepository.update({ id: user.id }, { username: args.username });
+    return this.usersRepository.isExist(user.id);
+  }
+
+  async getTokenByDiscordId(args: GetTokenByDiscordIdArgs): Promise<Token | undefined> {
+    const oauth = await this.oauthRepository.findOne({ where: { externalId: args.id, type: OAuthType.discord } });
+    if (!oauth) return;
+    return this.tokensRepository.createNewToken(oauth.userId);
   }
 
   createSaltHash(password: string): { salt: string; hash: string } {

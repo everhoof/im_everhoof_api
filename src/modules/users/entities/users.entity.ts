@@ -44,8 +44,9 @@ export class User {
   @Column({
     type: 'varchar',
     length: 32,
+    nullable: true,
   })
-  username: string;
+  username?: string;
 
   @Field(() => String, { nullable: true })
   @Column({
@@ -60,14 +61,16 @@ export class User {
   @Column({
     length: 64,
     select: false,
+    nullable: true,
   })
-  salt: string;
+  salt?: string;
 
   @Column({
     length: 64,
     select: false,
+    nullable: true,
   })
-  hash: string;
+  hash?: string;
 
   @Column({
     name: 'email_confirmed',

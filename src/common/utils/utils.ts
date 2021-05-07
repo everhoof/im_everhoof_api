@@ -33,7 +33,7 @@ export class Utils {
   }
 
   static escapeMessage(message: string): string {
-    const whitelist = [/<@!\d+>/];
+    const whitelist = [/<@!:[\w-]+:\d+>/];
     const escape = new FilterXSS({
       whiteList: {},
       onTag(tag, html) {
