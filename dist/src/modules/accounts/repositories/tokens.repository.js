@@ -10,7 +10,8 @@ exports.TokensRepository = void 0;
 const typeorm_1 = require("typeorm");
 const crypto_1 = require("crypto");
 const tokens_entity_1 = require("../entities/tokens.entity");
-let TokensRepository = class TokensRepository extends typeorm_1.Repository {
+const basic_repository_1 = require("../../../common/repositories/basic.repository");
+let TokensRepository = class TokensRepository extends basic_repository_1.BasicRepository {
     async createNewToken(ownerId) {
         if (!ownerId)
             return Promise.resolve(undefined);

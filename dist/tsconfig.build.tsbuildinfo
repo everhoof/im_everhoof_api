@@ -6721,8 +6721,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/repositories/tokens.repository.ts": {
-        "version": "5dc5300dde436088ad437ca5812203b2345d7111405daf4dc3243d0cf4694d9e",
-        "signature": "557946b6d049c4c7058512d1c934adbf8388e4719637d6436eef86d62c451277",
+        "version": "34114434d14540978c1274973964aac0bf463acc7178f6ee3dc49bdc4784a714",
+        "signature": "0122634765049f3bb0247bc9587dcb43f05e548825e87864c345b88f0197ebb4",
         "affectsGlobalScope": false
       },
       "../src/modules/users/args/get-user-by-id.args.ts": {
@@ -7185,9 +7185,14 @@
         "signature": "42e574d98831103c3ed3758ec8391843643b5fc4db62c553f9ca6f89258f8028",
         "affectsGlobalScope": false
       },
+      "../src/modules/accounts/args/invalidate-token-by-id.args.ts": {
+        "version": "d92c74d07752e31469f3556bdd5e83eb3b22a97198d2f4edfd759e20152938af",
+        "signature": "09080767678ddfc35b865357980ee97f5b410136b824ee38e18f2e984c8bd66a",
+        "affectsGlobalScope": false
+      },
       "../src/modules/accounts/accounts.service.ts": {
-        "version": "25315fc50359c68174db894429868940633ba215be0c716e2eb5c9ac816047f3",
-        "signature": "0f32353262cec8b58551c4267a6d0b9776ce793be32adb43f0ff6b947ff20cce",
+        "version": "858bd19b5609c42bbd240416db88f9f079cb588c411b6b16b1c122d093b50db7",
+        "signature": "e98788634c5e98c3895682482c4ba285ee07d27ede8c85043acb0c55b942c869",
         "affectsGlobalScope": false
       },
       "../src/common/guards/auth.guard.ts": {
@@ -7246,8 +7251,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.resolver.ts": {
-        "version": "4adee54e57a3051e82fa8429ca447a434cef8229a3b3501f129c1360f183b837",
-        "signature": "683395da565e4c8a30cfb9c25bbd228d203010522f48de2173174036d23085ef",
+        "version": "755507625db5dc468348e741538cf56f450e728712af2093aa3b6638cc32ad58",
+        "signature": "fc60fbb76d3a38e54097f7d32ee843db82f5b1c3895945652fb291ebe6e95b86",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/passport-anonymous/index.d.ts": {
@@ -14220,6 +14225,7 @@
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
         "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
+        "../src/modules/accounts/args/invalidate-token-by-id.args.ts",
         "../src/modules/accounts/args/is-username-free.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
@@ -14236,9 +14242,11 @@
         "../node_modules/@types/node/crypto.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
+        "../src/app.roles.ts",
         "../src/common/exceptions/exceptions.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
         "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
+        "../src/modules/accounts/args/invalidate-token-by-id.args.ts",
         "../src/modules/accounts/args/is-username-free.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
@@ -14259,6 +14267,9 @@
         "../node_modules/@nestjs/graphql/index.d.ts"
       ],
       "../src/modules/accounts/args/get-token-by-discord-id.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts"
+      ],
+      "../src/modules/accounts/args/invalidate-token-by-id.args.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts"
       ],
       "../src/modules/accounts/args/is-username-free.args.ts": [
@@ -14311,6 +14322,7 @@
       "../src/modules/accounts/repositories/tokens.repository.ts": [
         "../node_modules/@types/node/crypto.d.ts",
         "../node_modules/typeorm/index.d.ts",
+        "../src/common/repositories/basic.repository.ts",
         "../src/modules/accounts/entities/tokens.entity.ts"
       ],
       "../src/modules/accounts/strategies/anonymous.strategy.ts": [
@@ -20902,6 +20914,7 @@
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
         "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
+        "../src/modules/accounts/args/invalidate-token-by-id.args.ts",
         "../src/modules/accounts/args/is-username-free.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
@@ -20916,6 +20929,7 @@
         "../node_modules/typeorm/index.d.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
         "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
+        "../src/modules/accounts/args/invalidate-token-by-id.args.ts",
         "../src/modules/accounts/args/is-username-free.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
@@ -20950,7 +20964,7 @@
         "../src/modules/accounts/entities/oauth.entity.ts"
       ],
       "../src/modules/accounts/repositories/tokens.repository.ts": [
-        "../node_modules/typeorm/index.d.ts",
+        "../src/common/repositories/basic.repository.ts",
         "../src/modules/accounts/entities/tokens.entity.ts"
       ],
       "../src/modules/accounts/strategies/anonymous.strategy.ts": [

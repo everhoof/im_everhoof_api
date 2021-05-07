@@ -9,6 +9,7 @@ import { IsUsernameFreeArgs } from '@modules/accounts/args/is-username-free.args
 import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args';
 import { PubSub } from 'graphql-subscriptions';
 import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
+import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
 export declare class AccountsResolver {
     private readonly pubSub;
     private readonly accountsService;
@@ -22,5 +23,8 @@ export declare class AccountsResolver {
     updateUsername(args: UpdateUsernameArgs, user: User): Promise<User>;
     isUsernameFree(args: IsUsernameFreeArgs): Promise<boolean>;
     getTokenByDiscordId(args: GetTokenByDiscordIdArgs, user: User): Promise<Token | undefined>;
+    invalidateTokenById(args: InvalidateTokenByIdArgs, user: User): Promise<boolean>;
+    invalidateAllTokens(user: User): Promise<boolean>;
+    getTokens(user: User): Promise<Token[]>;
     userRegisteredViaDiscord(): AsyncIterator<string>;
 }

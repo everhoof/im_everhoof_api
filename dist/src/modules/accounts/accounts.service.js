@@ -38,6 +38,8 @@ const update_username_args_1 = require("./args/update-username.args");
 const get_token_by_discord_id_args_1 = require("./args/get-token-by-discord-id.args");
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const subscription_events_1 = require("../common/types/subscription-events");
+const invalidate_token_by_id_args_1 = require("./args/invalidate-token-by-id.args");
+const app_roles_1 = require("../../app.roles");
 let AccountsService = AccountsService_1 = class AccountsService {
     constructor(connection, tokensRepository, usersRepository, rolesRepository, oauthRepository, confirmationsRepository, mailerService, pubSub) {
         this.connection = connection;
@@ -231,6 +233,20 @@ let AccountsService = AccountsService_1 = class AccountsService {
         if (!oauth)
             return;
         return this.tokensRepository.createNewToken(oauth.userId);
+    }
+    async invalidateTokenById(args, user) {
+        const token = await this.tokensRepository.isExist(args.id);
+        if (token.ownerId !== user.id && !user.roleNames.includes(app_roles_1.AppRoles.ADMIN))
+            throw new exceptions_1.BadRequestException('FORBIDDEN');
+        await this.tokensRepository.delete(token.id);
+        return true;
+    }
+    async invalidateAllTokens(user) {
+        await this.tokensRepository.delete({ ownerId: user.id });
+        return true;
+    }
+    async getTokens(user) {
+        return this.tokensRepository.find({ where: { ownerId: user.id } });
     }
     createSaltHash(password) {
         const salt = crypto_1.randomBytes(48).toString('base64');

@@ -31,6 +31,7 @@ const graphql_subscriptions_1 = require("graphql-subscriptions");
 const app_roles_1 = require("../../app.roles");
 const get_token_by_discord_id_args_1 = require("./args/get-token-by-discord-id.args");
 const exceptions_1 = require("../../common/exceptions/exceptions");
+const invalidate_token_by_id_args_1 = require("./args/invalidate-token-by-id.args");
 let AccountsResolver = class AccountsResolver {
     constructor(pubSub, accountsService) {
         this.pubSub = pubSub;
@@ -64,6 +65,15 @@ let AccountsResolver = class AccountsResolver {
         if (!user.roleNames.includes(app_roles_1.AppRoles.ADMIN))
             throw new exceptions_1.BadRequestException('FORBIDDEN');
         return this.accountsService.getTokenByDiscordId(args);
+    }
+    invalidateTokenById(args, user) {
+        return this.accountsService.invalidateTokenById(args, user);
+    }
+    invalidateAllTokens(user) {
+        return this.accountsService.invalidateAllTokens(user);
+    }
+    getTokens(user) {
+        return this.accountsService.getTokens(user);
     }
     userRegisteredViaDiscord() {
         return this.pubSub.asyncIterator("userRegisteredViaDiscord");
@@ -135,6 +145,30 @@ __decorate([
     __metadata("design:paramtypes", [get_token_by_discord_id_args_1.GetTokenByDiscordIdArgs, users_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "getTokenByDiscordId", null);
+__decorate([
+    graphql_1.Mutation(() => Boolean),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [invalidate_token_by_id_args_1.InvalidateTokenByIdArgs, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "invalidateTokenById", null);
+__decorate([
+    graphql_1.Mutation(() => Boolean),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "invalidateAllTokens", null);
+__decorate([
+    graphql_1.Query(() => [tokens_entity_1.Token]),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "getTokens", null);
 __decorate([
     graphql_1.Subscription(() => String),
     __metadata("design:type", Function),

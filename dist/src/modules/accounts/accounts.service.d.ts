@@ -15,6 +15,7 @@ import { IsUsernameFreeArgs } from '@modules/accounts/args/is-username-free.args
 import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args';
 import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
 import { PubSub } from 'graphql-subscriptions';
+import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
 export declare class AccountsService {
     private readonly connection;
     private readonly tokensRepository;
@@ -47,6 +48,9 @@ export declare class AccountsService {
     isUsernameFree(args: IsUsernameFreeArgs): Promise<boolean>;
     updateUsername(args: UpdateUsernameArgs, user: User): Promise<User>;
     getTokenByDiscordId(args: GetTokenByDiscordIdArgs): Promise<Token | undefined>;
+    invalidateTokenById(args: InvalidateTokenByIdArgs, user: User): Promise<boolean>;
+    invalidateAllTokens(user: User): Promise<boolean>;
+    getTokens(user: User): Promise<Token[]>;
     createSaltHash(password: string): {
         salt: string;
         hash: string;
