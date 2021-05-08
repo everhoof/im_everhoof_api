@@ -125,7 +125,7 @@ let MessagesService = MessagesService_1 = class MessagesService {
         else if (args.lastId) {
             where = { id: typeorm_2.MoreThan(args.lastId) };
         }
-        const canReadAny = (user && app_roles_1.roles.can(user?.roleNames).readAny('message').granted) || false;
+        const canReadAny = (user && app_roles_1.roles.can(user?.roleNames).readAny(app_roles_1.RoleResources.DELETED_MESSAGE).granted) || false;
         if (canReadAny) {
             return this.messagesRepository.getList(args, {
                 where: where,

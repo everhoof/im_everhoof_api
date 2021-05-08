@@ -7,6 +7,7 @@ export declare enum AppRoles {
 }
 export declare enum RoleResources {
     MESSAGE = "message",
+    DELETED_MESSAGE = "deleted-message",
     MUTE = "mute",
     BAN = "ban",
     USER_SETTINGS = "user-settings"

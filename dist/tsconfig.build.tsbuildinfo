@@ -5931,8 +5931,8 @@
         "affectsGlobalScope": false
       },
       "../src/app.roles.ts": {
-        "version": "dd679a80a066cdb88d1a13376a530d7c2f2ec5243e53e6ba6d2ebb3dffcc51c8",
-        "signature": "3cb19e341989b8a064d3fe519ef42f2fd3f566d251e34c96186aebc2c57758a8",
+        "version": "52a5ed7367979013e18021f891486b98ff25c91217587ffd004ed06b39862e2d",
+        "signature": "0a3a3f8eee380d35c8a7656e5a63ac4e8db63f3ffa316b5b24d5ab3c0a01f91b",
         "affectsGlobalScope": false
       },
       "../node_modules/@nestjs/schedule/dist/enums/cron-expression.enum.d.ts": {
@@ -6936,7 +6936,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.service.ts": {
-        "version": "8374e6614263f9fa0b18b62cb8cda255b4a1dc3845b99d8db388336a8f5321b0",
+        "version": "083c264ebe0a6c753eab35e216558991710acaa1a757cd186548e1ac19722391",
         "signature": "f43790b3bedcd12bd2528fc6fd95b1077c6021c5e1b20cd520edca0fa266fe31",
         "affectsGlobalScope": false
       },

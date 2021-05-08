@@ -12,6 +12,7 @@ var AppRoles;
 var RoleResources;
 (function (RoleResources) {
     RoleResources["MESSAGE"] = "message";
+    RoleResources["DELETED_MESSAGE"] = "deleted-message";
     RoleResources["MUTE"] = "mute";
     RoleResources["BAN"] = "ban";
     RoleResources["USER_SETTINGS"] = "user-settings";
@@ -22,6 +23,7 @@ exports.roles.grant(AppRoles.USER).extend(AppRoles.UNVERIFIED_USER);
 exports.roles
     .grant(AppRoles.MODERATOR)
     .extend(AppRoles.USER)
+    .read(RoleResources.DELETED_MESSAGE)
     .readAny(RoleResources.MESSAGE)
     .deleteAny(RoleResources.MESSAGE)
     .update(RoleResources.MUTE)
