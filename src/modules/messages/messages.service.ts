@@ -104,12 +104,8 @@ export class MessagesService {
 
   async getMessages(args: GetMessagesArgs, user?: User): Promise<Message[]> {
     let where: FindManyOptions<Message>['where'] = {};
-    let order: FindManyOptions<Message>['order'];
-    if (args.reverse) {
-      order = { id: 'ASC' };
-    } else {
-      order = { id: 'DESC' };
-    }
+    const order: FindManyOptions<Message>['order'] = { id: 'DESC' };
+
     if (args.lastId && args.reverse) {
       where = { id: LessThan(args.lastId) };
     } else if (args.lastId) {
