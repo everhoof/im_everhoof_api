@@ -241,6 +241,13 @@ let AccountsService = AccountsService_1 = class AccountsService {
         await this.tokensRepository.delete(token.id);
         return true;
     }
+    async invalidateTokenByValue(value) {
+        const token = await this.tokensRepository.findOne({ where: { value } });
+        if (!token)
+            throw new exceptions_1.BadRequestException('FORBIDDEN');
+        await this.tokensRepository.delete(token.id);
+        return true;
+    }
     async invalidateAllTokens(user) {
         await this.tokensRepository.delete({ ownerId: user.id });
         return true;

@@ -23,6 +23,7 @@ export declare class AccountsResolver {
     updateUsername(args: UpdateUsernameArgs, user: User): Promise<User>;
     isUsernameFree(args: IsUsernameFreeArgs): Promise<boolean>;
     getTokenByDiscordId(args: GetTokenByDiscordIdArgs, user: User): Promise<Token | undefined>;
+    invalidateCurrentToken(context: any): Promise<boolean>;
     invalidateTokenById(args: InvalidateTokenByIdArgs, user: User): Promise<boolean>;
     invalidateAllTokens(user: User): Promise<boolean>;
     getTokens(user: User): Promise<Token[]>;

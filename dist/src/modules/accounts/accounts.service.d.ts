@@ -49,6 +49,7 @@ export declare class AccountsService {
     updateUsername(args: UpdateUsernameArgs, user: User): Promise<User>;
     getTokenByDiscordId(args: GetTokenByDiscordIdArgs): Promise<Token | undefined>;
     invalidateTokenById(args: InvalidateTokenByIdArgs, user: User): Promise<boolean>;
+    invalidateTokenByValue(value: string): Promise<boolean>;
     invalidateAllTokens(user: User): Promise<boolean>;
     getTokens(user: User): Promise<Token[]>;
     createSaltHash(password: string): {

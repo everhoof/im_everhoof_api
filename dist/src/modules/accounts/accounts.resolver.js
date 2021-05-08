@@ -66,6 +66,10 @@ let AccountsResolver = class AccountsResolver {
             throw new exceptions_1.BadRequestException('FORBIDDEN');
         return this.accountsService.getTokenByDiscordId(args);
     }
+    invalidateCurrentToken(context) {
+        const token = context?.req?.headers['authorization']?.replace('Bearer ', '') || '';
+        return this.accountsService.invalidateTokenByValue(token);
+    }
     invalidateTokenById(args, user) {
         return this.accountsService.invalidateTokenById(args, user);
     }
@@ -145,6 +149,14 @@ __decorate([
     __metadata("design:paramtypes", [get_token_by_discord_id_args_1.GetTokenByDiscordIdArgs, users_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "getTokenByDiscordId", null);
+__decorate([
+    graphql_1.Mutation(() => Boolean),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    __param(0, graphql_1.Context()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "invalidateCurrentToken", null);
 __decorate([
     graphql_1.Mutation(() => Boolean),
     common_1.UseGuards(auth_guard_1.GqlAuthGuard),
