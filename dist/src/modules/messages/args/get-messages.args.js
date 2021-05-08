@@ -36,6 +36,11 @@ __decorate([
     class_validator_1.IsOptional(),
     __metadata("design:type", Number)
 ], GetMessagesArgs.prototype, "lastId", void 0);
+__decorate([
+    graphql_1.Field(() => Boolean, { defaultValue: false }),
+    class_validator_1.IsBoolean(),
+    __metadata("design:type", Boolean)
+], GetMessagesArgs.prototype, "reverse", void 0);
 GetMessagesArgs = __decorate([
     graphql_1.ArgsType()
 ], GetMessagesArgs);
