@@ -14,7 +14,7 @@ import { basename } from 'path';
 import { UploadService } from '@modules/upload/upload.service';
 import { escapeHtml } from 'xss';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
-import { FindManyOptions, IsNull, MoreThan } from 'typeorm';
+import { FindManyOptions, IsNull, LessThan, MoreThan } from 'typeorm';
 import { roles } from '../../app.roles';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 import { PunishmentTypes } from '@modules/users/args/punishment.args';
@@ -103,17 +103,28 @@ export class MessagesService {
   }
 
   async getMessages(args: GetMessagesArgs, user?: User): Promise<Message[]> {
-    const where: FindManyOptions<Message>['where'] = args.lastId ? { id: MoreThan(args.lastId) } : {};
+    let where: FindManyOptions<Message>['where'] = {};
+    let order: FindManyOptions<Message>['order'];
+    if (args.reverse) {
+      order = { id: 'ASC' };
+    } else {
+      order = { id: 'DESC' };
+    }
+    if (args.lastId && args.reverse) {
+      where = { id: LessThan(args.lastId) };
+    } else if (args.lastId) {
+      where = { id: MoreThan(args.lastId) };
+    }
     const canReadAny: boolean = (user && roles.can(user?.roleNames).readAny('message').granted) || false;
     if (canReadAny) {
       return this.messagesRepository.getList(args, {
         where: where,
-        order: { id: 'DESC' },
+        order: order,
       });
     }
     return this.messagesRepository.getList(args, {
       where: { ...where, deletedAt: IsNull() },
-      order: { id: 'DESC' },
+      order: order,
     });
   }
 
