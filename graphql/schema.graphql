@@ -37,6 +37,7 @@ type Mutation {
   requestPasswordReset(email: String!): Boolean!
   resetPassword(token: String!, password: String!): Token!
   updateUsername(username: String!): User!
+  invalidateCurrentToken: Boolean!
   invalidateTokenById(id: Int!): Boolean!
   invalidateAllTokens: Boolean!
 }

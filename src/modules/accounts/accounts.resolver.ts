@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, UseFilters, UseGuards } from '@nestjs/common';
 import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
 import { AccountsService } from '@modules/accounts/accounts.service';
@@ -70,6 +70,14 @@ export class AccountsResolver {
   getTokenByDiscordId(@Args() args: GetTokenByDiscordIdArgs, @CurrentUser() user: User): Promise<Token | undefined> {
     if (!user.roleNames.includes(AppRoles.ADMIN)) throw new BadRequestException('FORBIDDEN');
     return this.accountsService.getTokenByDiscordId(args);
+  }
+
+  @Mutation(() => Boolean)
+  @UseGuards(GqlAuthGuard)
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  invalidateCurrentToken(@Context() context: any): Promise<boolean> {
+    const token = context?.req?.headers['authorization']?.replace('Bearer ', '') || '';
+    return this.accountsService.invalidateTokenByValue(token);
   }
 
   @Mutation(() => Boolean)

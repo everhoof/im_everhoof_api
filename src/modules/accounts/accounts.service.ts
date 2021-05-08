@@ -264,6 +264,13 @@ export class AccountsService {
     return true;
   }
 
+  async invalidateTokenByValue(value: string): Promise<boolean> {
+    const token = await this.tokensRepository.findOne({ where: { value } });
+    if (!token) throw new BadRequestException('FORBIDDEN');
+    await this.tokensRepository.delete(token.id);
+    return true;
+  }
+
   async invalidateAllTokens(user: User): Promise<boolean> {
     await this.tokensRepository.delete({ ownerId: user.id });
     return true;
