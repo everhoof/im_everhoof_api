@@ -6936,7 +6936,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.service.ts": {
-        "version": "083c264ebe0a6c753eab35e216558991710acaa1a757cd186548e1ac19722391",
+        "version": "2da1eab8303b89e97ca722abd2572c65f8e33d622bddb205fbfdf59649b2eb5a",
         "signature": "f43790b3bedcd12bd2528fc6fd95b1077c6021c5e1b20cd520edca0fa266fe31",
         "affectsGlobalScope": false
       },

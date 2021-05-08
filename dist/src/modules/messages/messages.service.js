@@ -112,13 +112,7 @@ let MessagesService = MessagesService_1 = class MessagesService {
     }
     async getMessages(args, user) {
         let where = {};
-        let order;
-        if (args.reverse) {
-            order = { id: 'ASC' };
-        }
-        else {
-            order = { id: 'DESC' };
-        }
+        const order = { id: 'DESC' };
         if (args.lastId && args.reverse) {
             where = { id: typeorm_2.LessThan(args.lastId) };
         }
