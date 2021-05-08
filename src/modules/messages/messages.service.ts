@@ -15,7 +15,7 @@ import { UploadService } from '@modules/upload/upload.service';
 import { escapeHtml } from 'xss';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
 import { FindManyOptions, IsNull, LessThan, MoreThan } from 'typeorm';
-import { roles } from '../../app.roles';
+import { RoleResources, roles } from '../../app.roles';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 import { PunishmentTypes } from '@modules/users/args/punishment.args';
 
@@ -115,7 +115,8 @@ export class MessagesService {
     } else if (args.lastId) {
       where = { id: MoreThan(args.lastId) };
     }
-    const canReadAny: boolean = (user && roles.can(user?.roleNames).readAny('message').granted) || false;
+    const canReadAny: boolean =
+      (user && roles.can(user?.roleNames).readAny(RoleResources.DELETED_MESSAGE).granted) || false;
     if (canReadAny) {
       return this.messagesRepository.getList(args, {
         where: where,

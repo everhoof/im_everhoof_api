@@ -9,6 +9,7 @@ export enum AppRoles {
 
 export enum RoleResources {
   MESSAGE = 'message',
+  DELETED_MESSAGE = 'deleted-message',
   MUTE = 'mute',
   BAN = 'ban',
   USER_SETTINGS = 'user-settings',
@@ -21,6 +22,7 @@ roles.grant(AppRoles.USER).extend(AppRoles.UNVERIFIED_USER);
 roles
   .grant(AppRoles.MODERATOR)
   .extend(AppRoles.USER)
+  .read(RoleResources.DELETED_MESSAGE)
   .readAny(RoleResources.MESSAGE)
   .deleteAny(RoleResources.MESSAGE)
   .update(RoleResources.MUTE)
