@@ -15,6 +15,7 @@ import { UsersLoader } from '@modules/users/loaders/users.loader';
 import { PubSub } from 'graphql-subscriptions';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
 import { ACGuard } from '@common/guards/access-control.guard';
+import { RateLimit } from 'nestjs-rate-limiter';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver(() => Message)
@@ -55,6 +56,11 @@ export class MessagesResolver {
   }
 
   @UseGuards(GqlAuthGuard)
+  @RateLimit({
+    points: 5,
+    duration: 10,
+    maxQueueSize: 5,
+  })
   @Mutation(() => Message)
   async createMessage(@Args() args: CreateMessageArgs, @CurrentUser() user: User): Promise<Message> {
     const message = await this.messagesService.createMessage(args, user);
