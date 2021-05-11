@@ -33,6 +33,7 @@ const users_loader_1 = require("../users/loaders/users.loader");
 const graphql_subscriptions_1 = require("graphql-subscriptions");
 const delete_message_args_1 = require("./args/delete-message.args");
 const access_control_guard_1 = require("../../common/guards/access-control.guard");
+const nestjs_rate_limiter_1 = require("nestjs-rate-limiter");
 let MessagesResolver = class MessagesResolver {
     constructor(pubSub, messagesService) {
         this.pubSub = pubSub;
@@ -102,6 +103,11 @@ __decorate([
 ], MessagesResolver.prototype, "deletedBy", null);
 __decorate([
     common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    nestjs_rate_limiter_1.RateLimit({
+        points: 5,
+        duration: 10,
+        maxQueueSize: 5,
+    }),
     graphql_1.Mutation(() => messages_entity_1.Message),
     __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
     __metadata("design:type", Function),
