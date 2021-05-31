@@ -76,6 +76,7 @@ AppModule = __decorate([
                 duration: +(process.env.RATE_LIMIT_DURATION || '5'),
                 queueEnabled: (process.env.QUEUE_ENABLED || 'true') === 'true',
                 maxQueueSize: +(process.env.QUEUE_SIZE || '10'),
+                omitResponseHeaders: true,
             }),
             nest_access_control_1.AccessControlModule.forRoles(app_roles_1.roles),
             schedule_1.ScheduleModule.forRoot(),

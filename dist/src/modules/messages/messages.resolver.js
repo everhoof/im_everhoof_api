@@ -102,12 +102,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], MessagesResolver.prototype, "deletedBy", null);
 __decorate([
-    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
     nestjs_rate_limiter_1.RateLimit({
         points: 5,
-        duration: 10,
-        maxQueueSize: 5,
+        duration: 15,
     }),
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
     graphql_1.Mutation(() => messages_entity_1.Message),
     __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
     __metadata("design:type", Function),
