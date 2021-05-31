@@ -55,12 +55,11 @@ export class MessagesResolver {
     return null;
   }
 
-  @UseGuards(GqlAuthGuard)
   @RateLimit({
     points: 5,
-    duration: 10,
-    maxQueueSize: 5,
+    duration: 15,
   })
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async createMessage(@Args() args: CreateMessageArgs, @CurrentUser() user: User): Promise<Message> {
     const message = await this.messagesService.createMessage(args, user);

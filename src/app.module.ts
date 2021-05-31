@@ -65,6 +65,7 @@ import { RateLimiterInterceptor, RateLimiterModule } from 'nestjs-rate-limiter';
       duration: +(process.env.RATE_LIMIT_DURATION || '5'),
       queueEnabled: (process.env.QUEUE_ENABLED || 'true') === 'true',
       maxQueueSize: +(process.env.QUEUE_SIZE || '10'),
+      omitResponseHeaders: true,
     }),
     AccessControlModule.forRoles(roles),
     ScheduleModule.forRoot(),
