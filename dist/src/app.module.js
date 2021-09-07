@@ -28,7 +28,7 @@ const nestjs_graphql_dataloader_1 = require("@intelrug/nestjs-graphql-dataloader
 const common_module_1 = require("./modules/common/common.module");
 const mailer_1 = require("@nestjs-modules/mailer");
 const handlebars_adapter_1 = require("@nestjs-modules/mailer/dist/adapters/handlebars.adapter");
-const nestjs_rate_limiter_1 = require("nestjs-rate-limiter");
+const throttler_1 = require("@nestjs/throttler");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -49,8 +49,9 @@ AppModule = __decorate([
                         };
                     },
                 },
-                context: ({ req, connection }) => ({
+                context: ({ req, res, connection }) => ({
                     req: connection?.context || req,
+                    res,
                     connection,
                 }),
             }),
@@ -70,14 +71,7 @@ AppModule = __decorate([
                     },
                 },
             }),
-            nestjs_rate_limiter_1.RateLimiterModule.register({
-                for: 'ExpressGraphql',
-                points: +(process.env.RATE_LIMIT_POINTS || '15'),
-                duration: +(process.env.RATE_LIMIT_DURATION || '5'),
-                queueEnabled: (process.env.QUEUE_ENABLED || 'true') === 'true',
-                maxQueueSize: +(process.env.QUEUE_SIZE || '10'),
-                omitResponseHeaders: true,
-            }),
+            throttler_1.ThrottlerModule.forRoot(),
             nest_access_control_1.AccessControlModule.forRoles(app_roles_1.roles),
             schedule_1.ScheduleModule.forRoot(),
             common_module_1.CommonModule,
@@ -93,10 +87,6 @@ AppModule = __decorate([
             {
                 provide: core_1.APP_INTERCEPTOR,
                 useClass: nestjs_graphql_dataloader_1.DataLoaderInterceptor,
-            },
-            {
-                provide: core_1.APP_INTERCEPTOR,
-                useClass: nestjs_rate_limiter_1.RateLimiterInterceptor,
             },
         ],
     })

@@ -7235,38 +7235,58 @@
         "signature": "49222076aead599028b6934acaead1ce31ca7b674c22b398f5bc566ebe3ad561",
         "affectsGlobalScope": false
       },
-      "../node_modules/rate-limiter-flexible/lib/index.d.ts": {
-        "version": "a5644523c6b73160bbe89f0423ab305b67144728b595914b65204f619d78089a",
-        "signature": "a5644523c6b73160bbe89f0423ab305b67144728b595914b65204f619d78089a",
+      "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts": {
+        "version": "97da896dd84b1eb71f6e8c5df98183c810090bbf6f229482a80294b8070386cd",
+        "signature": "97da896dd84b1eb71f6e8c5df98183c810090bbf6f229482a80294b8070386cd",
         "affectsGlobalScope": false
       },
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts": {
-        "version": "7e3709d2fba7bfec1948109a77bde88f787eb3c38d15e0db0ad1204054aa74cf",
-        "signature": "7e3709d2fba7bfec1948109a77bde88f787eb3c38d15e0db0ad1204054aa74cf",
+      "../node_modules/@nestjs/throttler/dist/throttler-storage.interface.d.ts": {
+        "version": "09ab02626f2f8cd4c7fd4aa7a3a0adc0aef61e3248c07f9dc78e537106ee4609",
+        "signature": "09ab02626f2f8cd4c7fd4aa7a3a0adc0aef61e3248c07f9dc78e537106ee4609",
         "affectsGlobalScope": false
       },
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.decorator.d.ts": {
-        "version": "747f70c8a309e42fb534030bd7c6b19973cce043aadd27465feec7e28808cf02",
-        "signature": "747f70c8a309e42fb534030bd7c6b19973cce043aadd27465feec7e28808cf02",
+      "../node_modules/@nestjs/throttler/dist/throttler.decorator.d.ts": {
+        "version": "97472de358a19ce369cdbb312e6ea79a2fac2b4573989e78ae045ad4cb2a454c",
+        "signature": "97472de358a19ce369cdbb312e6ea79a2fac2b4573989e78ae045ad4cb2a454c",
         "affectsGlobalScope": false
       },
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interceptor.d.ts": {
-        "version": "a4a622cc5f8a8d028c0901ae0f7bbe4eb026ca03de369994a99426f3ebfd395b",
-        "signature": "a4a622cc5f8a8d028c0901ae0f7bbe4eb026ca03de369994a99426f3ebfd395b",
+      "../node_modules/@nestjs/throttler/dist/throttler.exception.d.ts": {
+        "version": "81477bb2c9b97a9dd5ce7750ab4ae655e74172f0d536d637be345ba76b41cd92",
+        "signature": "81477bb2c9b97a9dd5ce7750ab4ae655e74172f0d536d637be345ba76b41cd92",
         "affectsGlobalScope": false
       },
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.module.d.ts": {
-        "version": "b7e2d8373a1161eabc4190b70d4ba03fa374aa6abcf30f7f13f3e13cf5e60d49",
-        "signature": "b7e2d8373a1161eabc4190b70d4ba03fa374aa6abcf30f7f13f3e13cf5e60d49",
+      "../node_modules/@nestjs/throttler/dist/throttler.guard.d.ts": {
+        "version": "679af85b482d142e26dab66d84778476bcc2fb85b8f6cf319b782e28e0f882d8",
+        "signature": "679af85b482d142e26dab66d84778476bcc2fb85b8f6cf319b782e28e0f882d8",
         "affectsGlobalScope": false
       },
-      "../node_modules/nestjs-rate-limiter/dist/index.d.ts": {
-        "version": "e0104fe9b6b141ee459d1ef9f5c039c9793369d0c7ffce14a6ce1ca81f15a0dd",
-        "signature": "e0104fe9b6b141ee459d1ef9f5c039c9793369d0c7ffce14a6ce1ca81f15a0dd",
+      "../node_modules/@nestjs/throttler/dist/throttler.module.d.ts": {
+        "version": "b7d85dc2de8db4ca983d848c8cfad6cf4d743f8cb35afe1957bedf997c858052",
+        "signature": "b7d85dc2de8db4ca983d848c8cfad6cf4d743f8cb35afe1957bedf997c858052",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/throttler/dist/throttler.providers.d.ts": {
+        "version": "3e56a4591a173093146f30c366f2d6b3b4e1f2ce632d8095f3fc5ae2b6ec4b4a",
+        "signature": "3e56a4591a173093146f30c366f2d6b3b4e1f2ce632d8095f3fc5ae2b6ec4b4a",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/throttler/dist/throttler.service.d.ts": {
+        "version": "8a81e5db78aba43e3b54a76b28c56c5f032e1732562a43b3a9d28a7e7532e6c9",
+        "signature": "8a81e5db78aba43e3b54a76b28c56c5f032e1732562a43b3a9d28a7e7532e6c9",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@nestjs/throttler/dist/index.d.ts": {
+        "version": "f7b3abf909345fc509b09ef3b4a2f7a96e13fa0a68f2a6b630e663ff92414a65",
+        "signature": "f7b3abf909345fc509b09ef3b4a2f7a96e13fa0a68f2a6b630e663ff92414a65",
+        "affectsGlobalScope": false
+      },
+      "../src/common/guards/throttler.guard.ts": {
+        "version": "cf3d704056a852c17d76cf6de14e8893d88e590989d6e9b2c28c883364a549f0",
+        "signature": "a13616c2e2ebd0fc84be5470d5b0b22cedfaefb471f0c9dbf9f6d0b4eb746eab",
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.resolver.ts": {
-        "version": "01e5ef7467be09278b6cf404966904d9aeacc4b4a5fb180b1516feed56182479",
+        "version": "94713d39ff47c53a2c0754e13d17b523080c2f249ca2518ec6677b1a66b1674f",
         "signature": "d6031dcfa2076730b0e7c5fdf45283f8b4315c6bc9d09f5f4e17553ec38e8be1",
         "affectsGlobalScope": false
       },
@@ -7486,7 +7506,7 @@
         "affectsGlobalScope": false
       },
       "../src/app.module.ts": {
-        "version": "c5b986207a98b2d7e884bd5ccb7551dfebdb8ae4cb79f8fdf37b8f0133aae8f9",
+        "version": "eb17c26efa9c40ae8ea6be2f01dbe41233ef0e0942197eba0ccdd02be6c27e21",
         "signature": "b82491e2990291580288c5602d4c017238977749d52b17391f0e45d9a29be644",
         "affectsGlobalScope": false
       },
@@ -9681,6 +9701,40 @@
       "../node_modules/@nestjs/schedule/index.d.ts": [
         "../node_modules/@nestjs/schedule/dist/index.d.ts"
       ],
+      "../node_modules/@nestjs/throttler/dist/index.d.ts": [
+        "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-storage.interface.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.decorator.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.exception.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.guard.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.module.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.providers.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.service.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts": [
+        "../node_modules/@nestjs/common/interfaces/index.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.exception.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.guard.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-storage.interface.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.module.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.providers.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.service.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-storage.interface.d.ts"
+      ],
       "../node_modules/@nestjs/typeorm/dist/common/index.d.ts": [
         "../node_modules/@nestjs/typeorm/dist/common/typeorm.decorators.d.ts",
         "../node_modules/@nestjs/typeorm/dist/common/typeorm.utils.d.ts"
@@ -12696,30 +12750,6 @@
       "../node_modules/nest-access-control/roles-builder.class.d.ts": [
         "../node_modules/accesscontrol/lib/index.d.ts"
       ],
-      "../node_modules/nestjs-rate-limiter/dist/index.d.ts": [
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.decorator.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interceptor.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.module.d.ts"
-      ],
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.decorator.d.ts": [
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts"
-      ],
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interceptor.d.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@nestjs/core/index.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts",
-        "../node_modules/rate-limiter-flexible/lib/index.d.ts"
-      ],
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@nestjs/common/interfaces/index.d.ts",
-        "../node_modules/rate-limiter-flexible/lib/index.d.ts"
-      ],
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.module.d.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts"
-      ],
       "../node_modules/peek-readable/lib/index.d.ts": [
         "../node_modules/@types/node/index.d.ts",
         "../node_modules/@types/node/stream.d.ts",
@@ -14174,10 +14204,10 @@
         "../node_modules/@nestjs/core/index.d.ts",
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/@nestjs/schedule/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/index.d.ts",
         "../node_modules/@nestjs/typeorm/index.d.ts",
         "../node_modules/@types/node/path.d.ts",
         "../node_modules/nest-access-control/index.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/index.d.ts",
         "../src/app.resolver.ts",
         "../src/app.roles.ts",
         "../src/config/typeorm.ts",
@@ -14224,6 +14254,11 @@
         "../node_modules/@nestjs/passport/index.d.ts",
         "../node_modules/@types/express/index.d.ts",
         "../src/modules/accounts/accounts.service.ts"
+      ],
+      "../src/common/guards/throttler.guard.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/index.d.ts"
       ],
       "../src/common/repositories/basic.repository.ts": [
         "../node_modules/typeorm/index.d.ts",
@@ -14436,12 +14471,13 @@
         "../node_modules/@intelrug/nestjs-graphql-dataloader/dist/types/index.d.ts",
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/index.d.ts",
         "../node_modules/dataloader/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/index.d.ts",
         "../src/common/filters/http-exception.filter.ts",
         "../src/common/guards/access-control.guard.ts",
         "../src/common/guards/auth.guard.ts",
+        "../src/common/guards/throttler.guard.ts",
         "../src/modules/messages/args/create-message.args.ts",
         "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
@@ -16469,6 +16505,40 @@
       "../node_modules/@nestjs/schedule/index.d.ts": [
         "../node_modules/@nestjs/schedule/dist/index.d.ts"
       ],
+      "../node_modules/@nestjs/throttler/dist/index.d.ts": [
+        "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-storage.interface.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.decorator.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.exception.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.guard.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.module.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.providers.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler.service.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts": [
+        "../node_modules/@nestjs/common/interfaces/index.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.exception.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.guard.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-storage.interface.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.module.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.providers.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-module-options.interface.d.ts"
+      ],
+      "../node_modules/@nestjs/throttler/dist/throttler.service.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/throttler-storage.interface.d.ts"
+      ],
       "../node_modules/@nestjs/typeorm/dist/common/index.d.ts": [
         "../node_modules/@nestjs/typeorm/dist/common/typeorm.decorators.d.ts",
         "../node_modules/@nestjs/typeorm/dist/common/typeorm.utils.d.ts"
@@ -19484,30 +19554,6 @@
       "../node_modules/nest-access-control/roles-builder.class.d.ts": [
         "../node_modules/accesscontrol/lib/index.d.ts"
       ],
-      "../node_modules/nestjs-rate-limiter/dist/index.d.ts": [
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.decorator.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interceptor.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.module.d.ts"
-      ],
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.decorator.d.ts": [
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts"
-      ],
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interceptor.d.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@nestjs/core/index.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts",
-        "../node_modules/rate-limiter-flexible/lib/index.d.ts"
-      ],
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@nestjs/common/interfaces/index.d.ts",
-        "../node_modules/rate-limiter-flexible/lib/index.d.ts"
-      ],
-      "../node_modules/nestjs-rate-limiter/dist/rate-limiter.module.d.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/nestjs-rate-limiter/dist/rate-limiter.interface.d.ts"
-      ],
       "../node_modules/peek-readable/lib/index.d.ts": [
         "../node_modules/@types/node/index.d.ts",
         "../node_modules/@types/node/stream.d.ts",
@@ -20975,6 +21021,10 @@
         "../node_modules/@nestjs/passport/index.d.ts",
         "../node_modules/@types/express/index.d.ts",
         "../src/modules/accounts/accounts.service.ts"
+      ],
+      "../src/common/guards/throttler.guard.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/index.d.ts"
       ],
       "../src/common/repositories/basic.repository.ts": [
         "../node_modules/typeorm/index.d.ts",
