@@ -19,7 +19,7 @@ import { DataLoaderInterceptor } from '@intelrug/nestjs-graphql-dataloader';
 import { CommonModule } from '@modules/common/common.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { RateLimiterInterceptor, RateLimiterModule } from 'nestjs-rate-limiter';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -38,8 +38,9 @@ import { RateLimiterInterceptor, RateLimiterModule } from 'nestjs-rate-limiter';
           };
         },
       },
-      context: ({ req, connection }) => ({
+      context: ({ req, res, connection }) => ({
         req: connection?.context || req,
+        res,
         connection,
       }),
     }),
@@ -59,14 +60,7 @@ import { RateLimiterInterceptor, RateLimiterModule } from 'nestjs-rate-limiter';
         },
       },
     }),
-    RateLimiterModule.register({
-      for: 'ExpressGraphql',
-      points: +(process.env.RATE_LIMIT_POINTS || '15'),
-      duration: +(process.env.RATE_LIMIT_DURATION || '5'),
-      queueEnabled: (process.env.QUEUE_ENABLED || 'true') === 'true',
-      maxQueueSize: +(process.env.QUEUE_SIZE || '10'),
-      omitResponseHeaders: true,
-    }),
+    ThrottlerModule.forRoot(),
     AccessControlModule.forRoles(roles),
     ScheduleModule.forRoot(),
     CommonModule,
@@ -82,10 +76,6 @@ import { RateLimiterInterceptor, RateLimiterModule } from 'nestjs-rate-limiter';
     {
       provide: APP_INTERCEPTOR,
       useClass: DataLoaderInterceptor,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: RateLimiterInterceptor,
     },
   ],
 })
