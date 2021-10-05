@@ -1,5 +1,5 @@
 import { Args, Context, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { Inject, UseFilters, UseGuards } from '@nestjs/common';
+import { Inject, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
 import { AccountsService } from '@modules/accounts/accounts.service';
 import { Token } from '@modules/accounts/entities/tokens.entity';
@@ -17,6 +17,8 @@ import { AppRoles } from '../../app.roles';
 import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
 import { BadRequestException } from '@common/exceptions/exceptions';
 import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
+import { OAuthDiscordArgs } from '@modules/accounts/args/oauth-discord.args';
+import { Request } from 'express';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver('Accounts')
@@ -31,6 +33,11 @@ export class AccountsResolver {
   @Mutation(() => User)
   async signUp(@Args() args: SignUpArgs): Promise<User> {
     return this.accountsService.createUser(args);
+  }
+
+  @Mutation(() => Token)
+  async OAuthDiscord(@Req() req: Request, @Args() args: OAuthDiscordArgs): Promise<Token> {
+    return this.accountsService.getTokenByDiscordCode(args);
   }
 
   @Mutation(() => Token)

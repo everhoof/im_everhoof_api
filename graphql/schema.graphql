@@ -32,6 +32,7 @@ type Mutation {
   deleteMessage(messageId: Int!): Message!
   signIn(email: String!, password: String!): Token!
   signUp(email: String!, username: String, password: String!): User!
+  OAuthDiscord(code: String!): Token!
   confirmEmail(token: String!): Token!
   requestEmailConfirmation: User!
   requestPasswordReset(email: String!): Boolean!

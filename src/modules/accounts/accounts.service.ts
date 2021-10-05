@@ -28,6 +28,10 @@ import { PubSub } from 'graphql-subscriptions';
 import { SubscriptionEvents } from '@modules/common/types/subscription-events';
 import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
 import { AppRoles } from '../../app.roles';
+import { OAuthDiscordArgs } from '@modules/accounts/args/oauth-discord.args';
+import { OAuthDiscordTokenResponse } from '@modules/accounts/types/oauth-discord-response';
+import { Utils } from '@common/utils/utils';
+import got from 'got';
 
 @Injectable()
 export class AccountsService {
@@ -81,6 +85,38 @@ export class AccountsService {
     return token;
   }
 
+  async getTokenByDiscordCode(args: OAuthDiscordArgs): Promise<Token> {
+    if (!process.env.DISCORD_OAUTH_CLIENT_ID || !process.env.DISCORD_OAUTH_CLIENT_SECRET || !process.env.PUBLIC_URL) {
+      throw new InternalServerErrorException('UNKNOWN');
+    }
+
+    const form = {
+      client_id: process.env.DISCORD_OAUTH_CLIENT_ID,
+      client_secret: process.env.DISCORD_OAUTH_CLIENT_SECRET,
+      grant_type: 'authorization_code',
+      code: args.code,
+      redirect_uri: process.env.DISCORD_OAUTH_CALLBACK_URL,
+    };
+
+    try {
+      const { access_token, refresh_token } = await got
+        .post(`https://discord.com/api/v${process.env.DISCORD_API_VERSION}/oauth2/token`, {
+          form,
+        })
+        .json<OAuthDiscordTokenResponse>();
+
+      const profile = await got
+        .get(`https://discord.com/api/v${process.env.DISCORD_API_VERSION}/users/@me`, {
+          headers: { Authorization: `Bearer ${access_token}` },
+        })
+        .json<Record<string, string>>();
+
+      return this.validateUserByDiscord(access_token, refresh_token, profile);
+    } catch (e) {
+      throw new InternalServerErrorException('UNKNOWN');
+    }
+  }
+
   async validateUserByDiscord(
     accessToken: string,
     refreshToken: string,
@@ -93,11 +129,21 @@ export class AccountsService {
     if (!oauth) {
       let user;
       if (profile['email']) {
-        user = await this.usersRepository.findOne({ where: { email: profile['email'] as string } });
+        user = await this.usersRepository.findOne({
+          where: { email: profile['email'] as string },
+        });
       }
       if (!user) {
+        let username = profile['username'] as string;
+        user = await this.usersRepository.findOne({
+          where: { username: profile['username'] as string },
+        });
+        if (user) {
+          username = Utils.getRandomString(8);
+        }
         user = this.usersRepository.create({
           email: profile['email'] as string,
+          username,
           emailConfirmed: true,
         });
         user = await this.usersRepository.save(user);

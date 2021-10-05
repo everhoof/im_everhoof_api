@@ -11,8 +11,6 @@ import { RolesRepository } from '@modules/roles/repositories/roles.repository';
 import { AnonymousStrategy } from '@modules/accounts/strategies/anonymous.strategy';
 import { ConfirmationsRepository } from '@modules/accounts/repositories/confirmations.repository';
 import { OAuthRepository } from '@modules/accounts/repositories/oauth.repository';
-import { DiscordStrategy } from '@modules/accounts/strategies/discord.strategy';
-import { OAuthController } from '@modules/accounts/accounts.controller';
 
 @Module({
   imports: [
@@ -26,15 +24,7 @@ import { OAuthController } from '@modules/accounts/accounts.controller';
       OAuthRepository,
     ]),
   ],
-  providers: [
-    AccountsService,
-    AccountsResolver,
-    BearerStrategy,
-    BearerStrategyNoException,
-    AnonymousStrategy,
-    DiscordStrategy,
-  ],
-  controllers: [OAuthController],
+  providers: [AccountsService, AccountsResolver, BearerStrategy, BearerStrategyNoException, AnonymousStrategy],
   exports: [AccountsService, TypeOrmModule.forFeature([TokensRepository])],
 })
 export class AccountsModule {}
