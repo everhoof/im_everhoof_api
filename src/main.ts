@@ -11,9 +11,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
 
-  app.useStaticAssets(join(process.cwd(), 'uploads'), {
-    prefix: '/cdn/',
-  });
+  if (process.env.NODE_ENV === 'development' && process.env.UPLOAD_DIR) {
+    app.useStaticAssets(join(process.cwd(), process.env.UPLOAD_DIR), {
+      prefix: '/cdn/',
+    });
+  }
 
   await app.listen(PORT);
 }
