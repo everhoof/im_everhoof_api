@@ -11,6 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var AccountsService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountsService = void 0;
@@ -40,6 +43,7 @@ const graphql_subscriptions_1 = require("graphql-subscriptions");
 const subscription_events_1 = require("../common/types/subscription-events");
 const invalidate_token_by_id_args_1 = require("./args/invalidate-token-by-id.args");
 const app_roles_1 = require("../../app.roles");
+const the_big_username_blacklist_1 = __importDefault(require("the-big-username-blacklist"));
 let AccountsService = AccountsService_1 = class AccountsService {
     constructor(connection, tokensRepository, usersRepository, rolesRepository, oauthRepository, confirmationsRepository, mailerService, pubSub) {
         this.connection = connection;
@@ -125,6 +129,9 @@ let AccountsService = AccountsService_1 = class AccountsService {
             else {
                 throw new exceptions_1.BadRequestException('EMAIL_OCCUPIED');
             }
+        }
+        if (!the_big_username_blacklist_1.default.validate(input.username)) {
+            throw new exceptions_1.BadRequestException('USERNAME_BLACKLISTED');
         }
         const { salt, hash } = this.createSaltHash(input.password);
         user = await this.usersRepository.createNewUser({ ...input, salt, hash });

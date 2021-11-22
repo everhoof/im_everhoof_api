@@ -35,6 +35,10 @@ const exceptions = {
         en: 'This email is already occupied',
         ru: 'Этот электронный адрес уже используется',
     },
+    USERNAME_BLACKLISTED: {
+        en: 'This username has blocked',
+        ru: 'Нельзя использовать это имя',
+    },
     WRONG_CREDENTIALS: {
         en: 'Wrong credentials',
         ru: 'Неверные учётные данные',
