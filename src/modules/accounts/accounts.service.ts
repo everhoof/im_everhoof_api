@@ -33,6 +33,7 @@ import { OAuthDiscordTokenResponse } from '@modules/accounts/types/oauth-discord
 import { Utils } from '@common/utils/utils';
 import got from 'got';
 import blacklist from 'the-big-username-blacklist';
+import { EmailDisposableResponse } from '@modules/accounts/types/email-disposable-response';
 
 @Injectable()
 export class AccountsService {
@@ -170,6 +171,22 @@ export class AccountsService {
     return token;
   }
 
+  async checkEmailForDisposability(email: string): Promise<boolean> {
+    const emailDomain = email.split('@')[1];
+
+    try {
+      const isInValidEmail = (
+        await got.get(`https://open.kickbox.com/v1/disposable/${emailDomain}`, { timeout: 5000 })
+          .json<EmailDisposableResponse>()
+      ).disposable;
+      return isInValidEmail;
+    } catch {
+      this.logger.warn('Unable to connect to kickbox.com');
+    }
+
+    return true;
+  }
+
   async createUser(input: SignUpArgs): Promise<User> {
     let user = await this.usersRepository.getUserByEmailAndUsername(input.email, input.username);
     if (user) {
@@ -178,6 +195,12 @@ export class AccountsService {
       } else {
         throw new BadRequestException('EMAIL_OCCUPIED');
       }
+    }
+
+    const isDisposableEmail = await this.checkEmailForDisposability(input.email);
+
+    if (isDisposableEmail) {
+      throw new BadRequestException('EMAIL_BLACKLISTED');
     }
 
     if (!blacklist.validate(input.username)) {

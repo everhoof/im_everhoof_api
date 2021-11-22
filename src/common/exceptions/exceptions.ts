@@ -12,6 +12,7 @@ export type ExceptionKey =
   | 'USERNAME_OCCUPIED'
   | 'EMAIL_OCCUPIED'
   | 'USERNAME_BLACKLISTED'
+  | 'EMAIL_BLACKLISTED'
   | 'WRONG_CREDENTIALS'
   | 'NO_FILE_PROVIDED'
   | 'CANNOT_CREATE_EMPTY_MESSAGE'
@@ -66,6 +67,10 @@ const exceptions: Exception = {
   USERNAME_BLACKLISTED: {
     en: 'This username has blocked',
     ru: 'Нельзя использовать это имя',
+  },
+  EMAIL_BLACKLISTED: {
+    en: 'This email has blocked',
+    ru: 'Этот электронный адрес нельзя использовать',
   },
   WRONG_CREDENTIALS: {
     en: 'Wrong credentials',
