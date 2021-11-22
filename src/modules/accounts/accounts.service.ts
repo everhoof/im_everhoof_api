@@ -28,6 +28,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { SubscriptionEvents } from '@modules/common/types/subscription-events';
 import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
 import { AppRoles } from '../../app.roles';
+import blacklist from 'the-big-username-blacklist';
 
 @Injectable()
 export class AccountsService {
@@ -48,7 +49,7 @@ export class AccountsService {
     private readonly confirmationsRepository: ConfirmationsRepository,
     private readonly mailerService: MailerService,
     @Inject('PUB_SUB') private readonly pubSub: PubSub,
-  ) {}
+  ) { }
 
   async validateUserByEmailAndPassword(args: SignInArgs): Promise<Token> {
     const user = await this.usersRepository.getUserByEmailOrUsername(args.email);
@@ -133,6 +134,10 @@ export class AccountsService {
       }
     }
 
+    if (!blacklist.validate(input.username)) {
+      throw new BadRequestException('USERNAME_BLACKLISTED');
+    }
+
     const { salt, hash } = this.createSaltHash(input.password);
     user = await this.usersRepository.createNewUser({ ...input, salt, hash });
     const role = await this.rolesRepository.getDefaultRole();
@@ -142,6 +147,7 @@ export class AccountsService {
       await this.usersRepository.saveAndReturn(user),
       await this.requestEmailConfirmation(user),
     ]);
+
     return result[0];
   }
 
