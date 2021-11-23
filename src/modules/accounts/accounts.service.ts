@@ -34,6 +34,7 @@ import { Utils } from '@common/utils/utils';
 import got from 'got';
 import blacklist from 'the-big-username-blacklist';
 import { EmailDisposableResponse } from '@modules/accounts/types/email-disposable-response';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class AccountsService {
@@ -54,7 +55,7 @@ export class AccountsService {
     private readonly confirmationsRepository: ConfirmationsRepository,
     private readonly mailerService: MailerService,
     @Inject('PUB_SUB') private readonly pubSub: PubSub,
-  ) { }
+  ) {}
 
   async validateUserByEmailAndPassword(args: SignInArgs): Promise<Token> {
     const user = await this.usersRepository.getUserByEmailOrUsername(args.email);
@@ -176,7 +177,8 @@ export class AccountsService {
 
     try {
       const isInValidEmail = (
-        await got.get(`https://open.kickbox.com/v1/disposable/${emailDomain}`, { timeout: 5000 })
+        await got
+          .get(`https://open.kickbox.com/v1/disposable/${emailDomain}`, { timeout: 5000 })
           .json<EmailDisposableResponse>()
       ).disposable;
       return isInValidEmail;
@@ -239,12 +241,26 @@ export class AccountsService {
     const user = await this.usersRepository.getUserByEmailOrUsername(args.email);
     if (!user) return true;
 
-    const confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, ConfirmationType.password);
+    let confirmation = await this.confirmationsRepository.findOnePasswordResetByUserId(user.id);
+
+    if (!confirmation) {
+      confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, ConfirmationType.password);
+    }
+
+    const rateLimitEndAt = DateTime.fromJSDate(confirmation.updatedAt).plus({ days: 1 }).toMillis();
+    if (((confirmation.sendCount % 3 == 0 && rateLimitEndAt > Date.now()) && confirmation.sendCount !== 0)) {
+      throw new BadRequestException('RESET_PASSWORD_RATE_LIMIT_HIT');
+    }
+
     this.sendPasswordResetEmail({
       email: user.email,
       name: user.username || 'user',
       token: confirmation.value,
     }).catch((e) => this.logger.error(e));
+
+    confirmation.sendCount += 1;
+    await this.confirmationsRepository.save(confirmation);
+
     return true;
   }
 

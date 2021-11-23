@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, Unique } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+  Unique,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { ConfirmationType } from '@modules/accounts/types/confirmation-type.enum';
 import { User } from '@modules/users/entities/users.entity';
@@ -46,6 +55,20 @@ export class Confirmation {
     name: 'created_at',
   })
   createdAt: Date;
+
+  @Field(() => Date)
+  @UpdateDateColumn({
+    name: 'updated_at',
+  })
+  updatedAt: Date;
+
+  @Field(() => Int)
+  @Column({
+    type: 'smallint',
+    name: 'send_count',
+    default: '1',
+  })
+  sendCount: number;
 
   @ManyToOne(() => User, (user) => user.confirmations, { onDelete: 'CASCADE' })
   @JoinColumn({

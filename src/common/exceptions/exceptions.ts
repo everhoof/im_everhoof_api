@@ -13,6 +13,7 @@ export type ExceptionKey =
   | 'EMAIL_OCCUPIED'
   | 'USERNAME_BLACKLISTED'
   | 'EMAIL_BLACKLISTED'
+  | 'RESET_PASSWORD_RATE_LIMIT_HIT'
   | 'WRONG_CREDENTIALS'
   | 'NO_FILE_PROVIDED'
   | 'CANNOT_CREATE_EMPTY_MESSAGE'
@@ -71,6 +72,10 @@ const exceptions: Exception = {
   EMAIL_BLACKLISTED: {
     en: 'This email has blocked',
     ru: 'Этот электронный адрес нельзя использовать',
+  },
+  RESET_PASSWORD_RATE_LIMIT_HIT: {
+    en: 'Password recovery request limit exceeded',
+    ru: 'Превышен лимит запросов на восстановление пароля',
   },
   WRONG_CREDENTIALS: {
     en: 'Wrong credentials',

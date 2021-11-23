@@ -7,7 +7,7 @@ import { BasicRepository } from '@common/repositories/basic.repository';
 
 @EntityRepository(Confirmation)
 export class ConfirmationsRepository extends BasicRepository<Confirmation> {
-  async createNewConfirmation(userId: number, type: ConfirmationType): Promise<Confirmation> {
+  async createNewConfirmation(userId: number, type: ConfirmationType, sendCount = 0): Promise<Confirmation> {
     if (!userId) throw new InternalServerErrorException('UNKNOWN');
 
     let confirmationEntity: Confirmation | undefined = await this.findOne({ where: { userId, type } });
@@ -19,6 +19,7 @@ export class ConfirmationsRepository extends BasicRepository<Confirmation> {
         value: confirmationString,
         userId,
         type,
+        sendCount,
       });
     }
 
@@ -34,5 +35,9 @@ export class ConfirmationsRepository extends BasicRepository<Confirmation> {
     const newValue = Utils.getRandomString();
     const value = await this.findOne({ where: { value: newValue } });
     return value ? this.createConfirmationString() : newValue;
+  }
+
+  findOnePasswordResetByUserId(userId: number): Promise<Confirmation | undefined> {
+    return this.findOne({ where: { userId, type: ConfirmationType.password } });
   }
 }
