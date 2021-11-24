@@ -8,6 +8,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { UploadService } from '@modules/upload/upload.service';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
+import { UpdateMessageArgs } from './args/update-message.args';
 export declare class MessagesService {
     private readonly pubSub;
     private readonly messagesRepository;
@@ -18,6 +19,7 @@ export declare class MessagesService {
     constructor(pubSub: PubSub, messagesRepository: MessagesRepository, picturesRepository: PicturesRepository, punishmentsRepository: PunishmentsRepository, uploadService: UploadService);
     throwOnPunished(targetId: number): Promise<void>;
     createMessage(args: CreateMessageArgs, user: User): Promise<Message>;
+    updateMessage(args: UpdateMessageArgs, user: User): Promise<Message>;
     createSystemMessage(content: string): Promise<Message>;
     private uploadImagesFromMessage;
     getMessages(args: GetMessagesArgs, user?: User): Promise<Message[]>;

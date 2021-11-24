@@ -35,6 +35,7 @@ const delete_message_args_1 = require("./args/delete-message.args");
 const access_control_guard_1 = require("../../common/guards/access-control.guard");
 const throttler_1 = require("@nestjs/throttler");
 const throttler_guard_1 = require("../../common/guards/throttler.guard");
+const update_message_args_1 = require("./args/update-message.args");
 let MessagesResolver = class MessagesResolver {
     constructor(pubSub, messagesService) {
         this.pubSub = pubSub;
@@ -55,6 +56,11 @@ let MessagesResolver = class MessagesResolver {
         }
         return null;
     }
+    async updateMessage(args, user) {
+        const message = await this.messagesService.updateMessage(args, user);
+        await this.pubSub.publish('messageUpdated', { messageUpdated: message });
+        return message;
+    }
     async createMessage(args, user) {
         const message = await this.messagesService.createMessage(args, user);
         await this.pubSub.publish('messageCreated', { messageCreated: message });
@@ -73,6 +79,9 @@ let MessagesResolver = class MessagesResolver {
     }
     messageDeleted() {
         return this.pubSub.asyncIterator('messageDeleted');
+    }
+    messageUpdated() {
+        return this.pubSub.asyncIterator('messageUpdated');
     }
 };
 __decorate([
@@ -102,6 +111,14 @@ __decorate([
         dataloader_1.default]),
     __metadata("design:returntype", Promise)
 ], MessagesResolver.prototype, "deletedBy", null);
+__decorate([
+    common_1.UseGuards(auth_guard_1.GqlAuthGuard),
+    graphql_1.Mutation(() => messages_entity_1.Message),
+    __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_message_args_1.UpdateMessageArgs, users_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], MessagesResolver.prototype, "updateMessage", null);
 __decorate([
     throttler_1.Throttle(5, 20),
     common_1.UseGuards(throttler_guard_1.GqlThrottlerGuard),
@@ -144,6 +161,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Object)
 ], MessagesResolver.prototype, "messageDeleted", null);
+__decorate([
+    graphql_1.Subscription(() => messages_entity_1.Message, {
+        name: 'messageUpdated',
+    }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Object)
+], MessagesResolver.prototype, "messageUpdated", null);
 MessagesResolver = __decorate([
     common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
     graphql_1.Resolver(() => messages_entity_1.Message),

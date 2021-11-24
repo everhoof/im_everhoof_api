@@ -1606,6 +1606,11 @@
         "signature": "4d2bde2ac57aba06814c1c722a862436b8dac3cb2126dc961058057177b2d62f",
         "affectsGlobalScope": false
       },
+      "../database/migrations/1637662151912-add_update_at_and_send_count_to_confirmations_table.ts": {
+        "version": "94fc4d7621365df356e9b24040173acc63396f50b08f3c67ff5a5d94b7378594",
+        "signature": "160ce335c18107add03d29dd4163b1e43bf70f20d46c50e1fae3517ad05d9f9f",
+        "affectsGlobalScope": false
+      },
       "../database/seeds/1602986400000-create_basic_roles.ts": {
         "version": "8564c0d5f3637d020278670079f33e570a2e320d3d1aad39c55defa171b6549c",
         "signature": "f57c5162f010e0b8d13a8718c0725e3a83df0bb69b961966888378d0531ad7f9",
@@ -5931,7 +5936,7 @@
         "affectsGlobalScope": false
       },
       "../src/app.roles.ts": {
-        "version": "52a5ed7367979013e18021f891486b98ff25c91217587ffd004ed06b39862e2d",
+        "version": "783e26a1c38b4cfa8db93cc32be705316bbca76c024bf7f584546ecc99093dde",
         "signature": "0a3a3f8eee380d35c8a7656e5a63ac4e8db63f3ffa316b5b24d5ab3c0a01f91b",
         "affectsGlobalScope": false
       },
@@ -6641,8 +6646,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/entities/confirmations.entity.ts": {
-        "version": "ac9a975dd1067c312d35228a1fd1692ddf705d32b4596f4853da332a87169e74",
-        "signature": "708a54df4a45a8670103eb7123c7a62dbb985898ab8d887788f35ce6fa8d73ac",
+        "version": "1cfe02662a877eaf51e2234e7748190af90adbd31e23fea3e1b35db19c4edeab",
+        "signature": "6c1a2fc0b21f9d3a59ff1a59655a9260aaf053ccb94c2f54e39fe631bdb0d2ff",
         "affectsGlobalScope": false
       },
       "../src/modules/users/entities/users.entity.ts": {
@@ -6651,8 +6656,8 @@
         "affectsGlobalScope": false
       },
       "../src/common/exceptions/exceptions.ts": {
-        "version": "7faae26a4e46f38ff1355f97cfb1e84ddbb5cb046c230efc713d9616fe7fa062",
-        "signature": "0e17e083ab6efcd851192f107b511d1c064ddabb54b5895912e610bdc233b98f",
+        "version": "da9d6411758ade36699436deb4bd6cf98fcf62763a01e62c6d3e7c5c0d91f630",
+        "signature": "68ff8789d04f749da1d339abeaf439d61d9a4f57327174f4e056850639e063b7",
         "affectsGlobalScope": false
       },
       "../src/common/args/get-list.args.ts": {
@@ -6935,9 +6940,14 @@
         "signature": "955c367f3a705e157d9350b03bf498245c9f32e4645b138f2f5cce21bcf8fde2",
         "affectsGlobalScope": false
       },
+      "../src/modules/messages/args/update-message.args.ts": {
+        "version": "fa3adb03a852d63aa44b241809597615d9e83f50973eba485380b1553ad4aca3",
+        "signature": "9fedba1cf92df32f81f69ecee544aa5a66b546c8cb81d96a7cdda29f3156643e",
+        "affectsGlobalScope": false
+      },
       "../src/modules/messages/messages.service.ts": {
-        "version": "2da1eab8303b89e97ca722abd2572c65f8e33d622bddb205fbfdf59649b2eb5a",
-        "signature": "f43790b3bedcd12bd2528fc6fd95b1077c6021c5e1b20cd520edca0fa266fe31",
+        "version": "dd434ebe94f5d74a2c75998e7a462848414d15025edcbc22e840a6864a80c671",
+        "signature": "26184852fa59842ec18bd64acee577eeb52f8b2167945c210a663ebe749381fb",
         "affectsGlobalScope": false
       },
       "../src/modules/users/args/update-avatar.args.ts": {
@@ -7026,8 +7036,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/repositories/confirmations.repository.ts": {
-        "version": "839c0695726a815671fade68f3f7bc11a761a689d145d915d54b171a461e8abb",
-        "signature": "479637563e6fe1b3196b4d179a7cedc0b556caf0c24c5010c392b2bf9f6ea0b9",
+        "version": "da37efe230ffaad2e0cb0b8fb4c23dd7036b293a580b8c5cb57da2833c09359f",
+        "signature": "7c9b20c61c2ed156bbafc9ad244342d4b3a6f04b43f4383803a0556ad3fe79d4",
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/args/reset-password.args.ts": {
@@ -7190,9 +7200,24 @@
         "signature": "09080767678ddfc35b865357980ee97f5b410136b824ee38e18f2e984c8bd66a",
         "affectsGlobalScope": false
       },
+      "../src/modules/accounts/args/oauth-discord.args.ts": {
+        "version": "ea80340400a4496917396de8715ceb67cb2a9d853ef322ab09bd86314ed6e453",
+        "signature": "66c1f1e834f831da5fcbddceb60cd45e0e5cf3f9b2724fcb8650168b19667c69",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/types/oauth-discord-response.ts": {
+        "version": "3d35fb124ad5be9b40b22e6ab09e59a555264fff98df802114d72b10d0b6317a",
+        "signature": "8e9b27f34d978e558dae99d2d88e339d543b29b7c71228c91629a8bce0df0bbc",
+        "affectsGlobalScope": false
+      },
+      "../src/modules/accounts/types/email-disposable-response.ts": {
+        "version": "51ff6185399c78af188c190dc1d75c86b284fe67a8e939b16448d8c223d6f3aa",
+        "signature": "f14f9d74af50b05d7df79528e060691e4f9d3d281ae7827b616c9005a1d2eceb",
+        "affectsGlobalScope": false
+      },
       "../src/modules/accounts/accounts.service.ts": {
-        "version": "150598dbfad220f3b915740fb98ac6e66e2c9b71b73bbfb28b0c17136971b1b3",
-        "signature": "8208c62cf42ad528bb48a07b95f01b524de026bb59b089035ba238f4708e83fa",
+        "version": "598b875209d7e733eff4a2113b94b345e68bd48cdd152f2b2756ee096ae10693",
+        "signature": "7ff0d9223d49dda7c7b55131390e9cfd8a1bc6eefa0a41179e48bb0a6d8c3503",
         "affectsGlobalScope": false
       },
       "../src/common/guards/auth.guard.ts": {
@@ -7286,8 +7311,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.resolver.ts": {
-        "version": "94713d39ff47c53a2c0754e13d17b523080c2f249ca2518ec6677b1a66b1674f",
-        "signature": "d6031dcfa2076730b0e7c5fdf45283f8b4315c6bc9d09f5f4e17553ec38e8be1",
+        "version": "39aea6e33277c87f2ef6af1970a6d0ca6f6fc9ef593ac61aa91286d7951b9184",
+        "signature": "9977bd78331b849f43a40fcdafd1f492e6ff85f3ed5a6beb35e96e3714083af5",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/passport-http-bearer/index.d.ts": {
@@ -7301,8 +7326,8 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.resolver.ts": {
-        "version": "00ce7b112be680c8486e322332e61b5d1c0f53ec4aa95da71ce275eac503958a",
-        "signature": "f3dcab9c60cf9c2c20094c741918d49587164367c5d2f62dd3c9f09ba7c9ac6c",
+        "version": "04abc4675c7906dab9df073e1516d6bd178c24721c3988039e8b523bd6a665b6",
+        "signature": "c06b95d63eb31d8b786db1bcde7537829e470963735a89b85defb769339a703b",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/passport-anonymous/index.d.ts": {
@@ -7315,33 +7340,8 @@
         "signature": "43c05bc4e5dc49bd6e16e92ee24aa35e976e59767c271b0f8624ecce4a963c4d",
         "affectsGlobalScope": false
       },
-      "../node_modules/@types/oauth/index.d.ts": {
-        "version": "ee4b33bde3c17180fc5ef9f8d3f153659fd9827ae82eef9ca4e8956ca343fadd",
-        "signature": "ee4b33bde3c17180fc5ef9f8d3f153659fd9827ae82eef9ca4e8956ca343fadd",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/passport-oauth2/index.d.ts": {
-        "version": "023e21ea98df7e3f81bf31f6919b8957a8fb09b1e75398096e79eceb59f8e7e4",
-        "signature": "023e21ea98df7e3f81bf31f6919b8957a8fb09b1e75398096e79eceb59f8e7e4",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/passport-discord/index.d.ts": {
-        "version": "7565d0bd5fb89277bdd861a4e577f3fc9cbe91873d56af6376d04db96872e019",
-        "signature": "7565d0bd5fb89277bdd861a4e577f3fc9cbe91873d56af6376d04db96872e019",
-        "affectsGlobalScope": false
-      },
-      "../src/modules/accounts/strategies/discord.strategy.ts": {
-        "version": "f98b5625e2da5e6f6828ef0243d077458bcc9b50d9c0f2b9973024c4d943351f",
-        "signature": "a0cbe291bdfccd4520566b62ceaf5bed6691fe10aa064c16104ffc73279c1335",
-        "affectsGlobalScope": false
-      },
-      "../src/modules/accounts/accounts.controller.ts": {
-        "version": "5ba7e3406705dd73a05d0cdaffdb998dc4849e9a48d97b389b5e3c2363355b25",
-        "signature": "2cf3955589d683bae308f427aeddfc7302bdd83c08781c254c78e5c6ab16ef95",
-        "affectsGlobalScope": false
-      },
       "../src/modules/accounts/accounts.module.ts": {
-        "version": "470a77e4e717e88c5e1438877b117ac0868ac5f80bae34b50183e7f431bec8de",
+        "version": "3ff125893ea96d6e232a9ee70e5202c8f27dd110b107776263b6e162e1a5f636",
         "signature": "ea58d875d88ad3fbdddd073ad89b3e13456607bc13ffb3df2db8dbaca87a35d5",
         "affectsGlobalScope": false
       },
@@ -7516,7 +7516,7 @@
         "affectsGlobalScope": true
       },
       "../src/main.ts": {
-        "version": "ad2962607b50d8ef5ef51024a3e139eb9014e9b9633d90d12dd3e7e63294c53f",
+        "version": "6c5bebdcc9b79ed0bfdc600a7b87fdf408568a85e121259e46cf459483020310",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
         "affectsGlobalScope": false
       },
@@ -8019,6 +8019,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1620245717733-add_discord_support.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1637662151912-add_update_at_and_send_count_to_confirmations_table.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -10874,18 +10877,7 @@
         "../node_modules/@types/node/stream.d.ts",
         "../node_modules/@types/nodemailer/lib/shared.d.ts"
       ],
-      "../node_modules/@types/oauth/index.d.ts": [
-        "../node_modules/@types/node/http.d.ts",
-        "../node_modules/@types/node/index.d.ts",
-        "../node_modules/@types/node/url.d.ts"
-      ],
       "../node_modules/@types/passport-anonymous/index.d.ts": [
-        "../node_modules/@types/passport/index.d.ts"
-      ],
-      "../node_modules/@types/passport-discord/index.d.ts": [
-        "../node_modules/@types/express/index.d.ts",
-        "../node_modules/@types/node/http.d.ts",
-        "../node_modules/@types/passport-oauth2/index.d.ts",
         "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-http-bearer/index.d.ts": [
@@ -10896,12 +10888,6 @@
       "../node_modules/@types/passport-local/index.d.ts": [
         "../node_modules/@types/express/index.d.ts",
         "../node_modules/@types/passport-strategy/index.d.ts",
-        "../node_modules/@types/passport/index.d.ts"
-      ],
-      "../node_modules/@types/passport-oauth2/index.d.ts": [
-        "../node_modules/@types/express/index.d.ts",
-        "../node_modules/@types/node/http.d.ts",
-        "../node_modules/@types/oauth/index.d.ts",
         "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-strategy/index.d.ts": [
@@ -14279,19 +14265,14 @@
       "../src/main.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/platform-express/index.d.ts",
+        "../node_modules/@types/node/path.d.ts",
         "../src/app.module.ts"
-      ],
-      "../src/modules/accounts/accounts.controller.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@nestjs/passport/index.d.ts",
-        "../node_modules/@types/express/index.d.ts",
-        "../src/common/filters/http-exception.filter.ts"
       ],
       "../src/modules/accounts/accounts.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/passport/index.d.ts",
         "../node_modules/@nestjs/typeorm/index.d.ts",
-        "../src/modules/accounts/accounts.controller.ts",
         "../src/modules/accounts/accounts.resolver.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/repositories/confirmations.repository.ts",
@@ -14299,7 +14280,6 @@
         "../src/modules/accounts/repositories/tokens.repository.ts",
         "../src/modules/accounts/strategies/anonymous.strategy.ts",
         "../src/modules/accounts/strategies/bearer.strategy.ts",
-        "../src/modules/accounts/strategies/discord.strategy.ts",
         "../src/modules/roles/repositories/roles.repository.ts",
         "../src/modules/users/repositories/users.repository.ts",
         "../src/modules/users/users.module.ts"
@@ -14307,6 +14287,7 @@
       "../src/modules/accounts/accounts.resolver.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/@types/express/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../src/app.roles.ts",
         "../src/common/exceptions/exceptions.ts",
@@ -14317,6 +14298,7 @@
         "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
         "../src/modules/accounts/args/invalidate-token-by-id.args.ts",
         "../src/modules/accounts/args/is-username-free.args.ts",
+        "../src/modules/accounts/args/oauth-discord.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
@@ -14329,15 +14311,19 @@
         "../node_modules/@nestjs-modules/mailer/index.d.ts",
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/typeorm/index.d.ts",
+        "../node_modules/@types/luxon/index.d.ts",
         "../node_modules/@types/node/crypto.d.ts",
+        "../node_modules/got/dist/source/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
         "../src/app.roles.ts",
         "../src/common/exceptions/exceptions.ts",
+        "../src/common/utils/utils.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
         "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
         "../src/modules/accounts/args/invalidate-token-by-id.args.ts",
         "../src/modules/accounts/args/is-username-free.args.ts",
+        "../src/modules/accounts/args/oauth-discord.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
@@ -14347,6 +14333,8 @@
         "../src/modules/accounts/repositories/oauth.repository.ts",
         "../src/modules/accounts/repositories/tokens.repository.ts",
         "../src/modules/accounts/types/confirmation-type.enum.ts",
+        "../src/modules/accounts/types/email-disposable-response.ts",
+        "../src/modules/accounts/types/oauth-discord-response.ts",
         "../src/modules/accounts/types/oauth-type.enum.ts",
         "../src/modules/common/types/subscription-events.ts",
         "../src/modules/roles/repositories/roles.repository.ts",
@@ -14365,6 +14353,9 @@
       "../src/modules/accounts/args/is-username-free.args.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/class-validator/types/index.d.ts"
+      ],
+      "../src/modules/accounts/args/oauth-discord.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts"
       ],
       "../src/modules/accounts/args/reset-password.args.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts",
@@ -14427,13 +14418,6 @@
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/users/entities/users.entity.ts"
       ],
-      "../src/modules/accounts/strategies/discord.strategy.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@nestjs/passport/index.d.ts",
-        "../node_modules/@types/passport-discord/index.d.ts",
-        "../src/modules/accounts/accounts.service.ts",
-        "../src/modules/accounts/entities/tokens.entity.ts"
-      ],
       "../src/modules/common/common.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts"
@@ -14447,6 +14431,10 @@
         "../node_modules/class-validator/types/index.d.ts"
       ],
       "../src/modules/messages/args/get-messages.args.ts": [
+        "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/class-validator/types/index.d.ts"
+      ],
+      "../src/modules/messages/args/update-message.args.ts": [
         "../node_modules/@nestjs/graphql/index.d.ts",
         "../node_modules/class-validator/types/index.d.ts"
       ],
@@ -14481,6 +14469,7 @@
         "../src/modules/messages/args/create-message.args.ts",
         "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
+        "../src/modules/messages/args/update-message.args.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/messages/messages.service.ts",
         "../src/modules/pictures/entities/pictures.entity.ts",
@@ -14502,6 +14491,7 @@
         "../src/modules/messages/args/create-message.args.ts",
         "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
+        "../src/modules/messages/args/update-message.args.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/messages/repositories/messages.repository.ts",
         "../src/modules/pictures/repositories/pictures.repository.ts",
@@ -14823,6 +14813,9 @@
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/migrations/1620245717733-add_discord_support.ts": [
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../database/migrations/1637662151912-add_update_at_and_send_count_to_confirmations_table.ts": [
         "../node_modules/typeorm/index.d.ts"
       ],
       "../database/seeds/1602986400000-create_basic_roles.ts": [
@@ -17675,18 +17668,7 @@
         "../node_modules/@types/node/stream.d.ts",
         "../node_modules/@types/nodemailer/lib/shared.d.ts"
       ],
-      "../node_modules/@types/oauth/index.d.ts": [
-        "../node_modules/@types/node/http.d.ts",
-        "../node_modules/@types/node/index.d.ts",
-        "../node_modules/@types/node/url.d.ts"
-      ],
       "../node_modules/@types/passport-anonymous/index.d.ts": [
-        "../node_modules/@types/passport/index.d.ts"
-      ],
-      "../node_modules/@types/passport-discord/index.d.ts": [
-        "../node_modules/@types/express/index.d.ts",
-        "../node_modules/@types/node/http.d.ts",
-        "../node_modules/@types/passport-oauth2/index.d.ts",
         "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-http-bearer/index.d.ts": [
@@ -17697,12 +17679,6 @@
       "../node_modules/@types/passport-local/index.d.ts": [
         "../node_modules/@types/express/index.d.ts",
         "../node_modules/@types/passport-strategy/index.d.ts",
-        "../node_modules/@types/passport/index.d.ts"
-      ],
-      "../node_modules/@types/passport-oauth2/index.d.ts": [
-        "../node_modules/@types/express/index.d.ts",
-        "../node_modules/@types/node/http.d.ts",
-        "../node_modules/@types/oauth/index.d.ts",
         "../node_modules/@types/passport/index.d.ts"
       ],
       "../node_modules/@types/passport-strategy/index.d.ts": [
@@ -21033,16 +21009,15 @@
       "../src/global.d.ts": [
         "../node_modules/graphql/index.d.ts"
       ],
-      "../src/modules/accounts/accounts.controller.ts": [
-        "../node_modules/@types/express/index.d.ts"
-      ],
       "../src/modules/accounts/accounts.resolver.ts": [
+        "../node_modules/@types/express/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/accounts/args/confirm-email.args.ts",
         "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
         "../src/modules/accounts/args/invalidate-token-by-id.args.ts",
         "../src/modules/accounts/args/is-username-free.args.ts",
+        "../src/modules/accounts/args/oauth-discord.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
@@ -21058,6 +21033,7 @@
         "../src/modules/accounts/args/get-token-by-discord-id.args.ts",
         "../src/modules/accounts/args/invalidate-token-by-id.args.ts",
         "../src/modules/accounts/args/is-username-free.args.ts",
+        "../src/modules/accounts/args/oauth-discord.args.ts",
         "../src/modules/accounts/args/reset-password.args.ts",
         "../src/modules/accounts/args/sign-in.args.ts",
         "../src/modules/accounts/args/sign-up.args.ts",
@@ -21102,11 +21078,6 @@
         "../src/modules/accounts/accounts.service.ts",
         "../src/modules/users/entities/users.entity.ts"
       ],
-      "../src/modules/accounts/strategies/discord.strategy.ts": [
-        "../node_modules/@types/passport-discord/index.d.ts",
-        "../src/modules/accounts/accounts.service.ts",
-        "../src/modules/accounts/entities/tokens.entity.ts"
-      ],
       "../src/modules/messages/entities/messages.entity.ts": [
         "../src/modules/pictures/entities/pictures.entity.ts",
         "../src/modules/users/entities/users.entity.ts"
@@ -21117,6 +21088,7 @@
         "../src/modules/messages/args/create-message.args.ts",
         "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
+        "../src/modules/messages/args/update-message.args.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/messages/messages.service.ts",
         "../src/modules/pictures/entities/pictures.entity.ts",
@@ -21127,6 +21099,7 @@
         "../src/modules/messages/args/create-message.args.ts",
         "../src/modules/messages/args/delete-message.args.ts",
         "../src/modules/messages/args/get-messages.args.ts",
+        "../src/modules/messages/args/update-message.args.ts",
         "../src/modules/messages/entities/messages.entity.ts",
         "../src/modules/messages/repositories/messages.repository.ts",
         "../src/modules/pictures/repositories/pictures.repository.ts",

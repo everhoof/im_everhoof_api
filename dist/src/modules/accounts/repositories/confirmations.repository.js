@@ -14,7 +14,7 @@ const common_1 = require("@nestjs/common");
 const utils_1 = require("../../../common/utils/utils");
 const basic_repository_1 = require("../../../common/repositories/basic.repository");
 let ConfirmationsRepository = class ConfirmationsRepository extends basic_repository_1.BasicRepository {
-    async createNewConfirmation(userId, type) {
+    async createNewConfirmation(userId, type, sendCount = 0) {
         if (!userId)
             throw new common_1.InternalServerErrorException('UNKNOWN');
         let confirmationEntity = await this.findOne({ where: { userId, type } });
@@ -27,6 +27,7 @@ let ConfirmationsRepository = class ConfirmationsRepository extends basic_reposi
                 value: confirmationString,
                 userId,
                 type,
+                sendCount,
             });
         }
         return this.saveAndReturn(confirmationEntity);
@@ -40,6 +41,9 @@ let ConfirmationsRepository = class ConfirmationsRepository extends basic_reposi
         const newValue = utils_1.Utils.getRandomString();
         const value = await this.findOne({ where: { value: newValue } });
         return value ? this.createConfirmationString() : newValue;
+    }
+    findOnePasswordResetByUserId(userId) {
+        return this.findOne({ where: { userId, type: confirmation_type_enum_1.ConfirmationType.password } });
     }
 };
 ConfirmationsRepository = __decorate([

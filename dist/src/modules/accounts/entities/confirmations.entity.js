@@ -61,6 +61,22 @@ __decorate([
     __metadata("design:type", Date)
 ], Confirmation.prototype, "createdAt", void 0);
 __decorate([
+    graphql_1.Field(() => Date),
+    typeorm_1.UpdateDateColumn({
+        name: 'updated_at',
+    }),
+    __metadata("design:type", Date)
+], Confirmation.prototype, "updatedAt", void 0);
+__decorate([
+    graphql_1.Field(() => graphql_1.Int),
+    typeorm_1.Column({
+        type: 'smallint',
+        name: 'send_count',
+        default: '1',
+    }),
+    __metadata("design:type", Number)
+], Confirmation.prototype, "sendCount", void 0);
+__decorate([
     typeorm_1.ManyToOne(() => users_entity_1.User, (user) => user.confirmations, { onDelete: 'CASCADE' }),
     typeorm_1.JoinColumn({
         name: 'user_id',

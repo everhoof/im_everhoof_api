@@ -16,6 +16,7 @@ import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args'
 import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
 import { PubSub } from 'graphql-subscriptions';
 import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
+import { OAuthDiscordArgs } from '@modules/accounts/args/oauth-discord.args';
 export declare class AccountsService {
     private readonly connection;
     private readonly tokensRepository;
@@ -29,7 +30,9 @@ export declare class AccountsService {
     constructor(connection: Connection, tokensRepository: TokensRepository, usersRepository: UsersRepository, rolesRepository: RolesRepository, oauthRepository: OAuthRepository, confirmationsRepository: ConfirmationsRepository, mailerService: MailerService, pubSub: PubSub);
     validateUserByEmailAndPassword(args: SignInArgs): Promise<Token>;
     validateUserByToken(value: string): Promise<Token>;
+    getTokenByDiscordCode(args: OAuthDiscordArgs): Promise<Token>;
     validateUserByDiscord(accessToken: string, refreshToken: string, profile: Record<string, unknown>): Promise<Token>;
+    checkEmailForDisposability(email: string): Promise<boolean>;
     createUser(input: SignUpArgs): Promise<User>;
     requestEmailConfirmation(user: User): Promise<User>;
     requestPasswordReset(args: RequestPasswordResetArgs): Promise<boolean>;

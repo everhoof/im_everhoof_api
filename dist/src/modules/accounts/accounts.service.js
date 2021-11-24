@@ -43,7 +43,13 @@ const graphql_subscriptions_1 = require("graphql-subscriptions");
 const subscription_events_1 = require("../common/types/subscription-events");
 const invalidate_token_by_id_args_1 = require("./args/invalidate-token-by-id.args");
 const app_roles_1 = require("../../app.roles");
+const oauth_discord_args_1 = require("./args/oauth-discord.args");
+const oauth_discord_response_1 = require("./types/oauth-discord-response");
+const utils_1 = require("../../common/utils/utils");
+const got_1 = __importDefault(require("got"));
 const the_big_username_blacklist_1 = __importDefault(require("the-big-username-blacklist"));
+const email_disposable_response_1 = require("./types/email-disposable-response");
+const luxon_1 = require("luxon");
 let AccountsService = AccountsService_1 = class AccountsService {
     constructor(connection, tokensRepository, usersRepository, rolesRepository, oauthRepository, confirmationsRepository, mailerService, pubSub) {
         this.connection = connection;
@@ -83,6 +89,34 @@ let AccountsService = AccountsService_1 = class AccountsService {
         });
         return token;
     }
+    async getTokenByDiscordCode(args) {
+        if (!process.env.DISCORD_OAUTH_CLIENT_ID || !process.env.DISCORD_OAUTH_CLIENT_SECRET || !process.env.PUBLIC_URL) {
+            throw new exceptions_1.InternalServerErrorException('UNKNOWN');
+        }
+        const form = {
+            client_id: process.env.DISCORD_OAUTH_CLIENT_ID,
+            client_secret: process.env.DISCORD_OAUTH_CLIENT_SECRET,
+            grant_type: 'authorization_code',
+            code: args.code,
+            redirect_uri: process.env.DISCORD_OAUTH_CALLBACK_URL,
+        };
+        try {
+            const { access_token, refresh_token } = await got_1.default
+                .post(`https://discord.com/api/v${process.env.DISCORD_API_VERSION}/oauth2/token`, {
+                form,
+            })
+                .json();
+            const profile = await got_1.default
+                .get(`https://discord.com/api/v${process.env.DISCORD_API_VERSION}/users/@me`, {
+                headers: { Authorization: `Bearer ${access_token}` },
+            })
+                .json();
+            return this.validateUserByDiscord(access_token, refresh_token, profile);
+        }
+        catch (e) {
+            throw new exceptions_1.InternalServerErrorException('UNKNOWN');
+        }
+    }
     async validateUserByDiscord(accessToken, refreshToken, profile) {
         let newUser = false;
         let oauth = await this.oauthRepository.findOne({
@@ -91,11 +125,21 @@ let AccountsService = AccountsService_1 = class AccountsService {
         if (!oauth) {
             let user;
             if (profile['email']) {
-                user = await this.usersRepository.findOne({ where: { email: profile['email'] } });
+                user = await this.usersRepository.findOne({
+                    where: { email: profile['email'] },
+                });
             }
             if (!user) {
+                let username = profile['username'];
+                user = await this.usersRepository.findOne({
+                    where: { username: profile['username'] },
+                });
+                if (user) {
+                    username = utils_1.Utils.getRandomString(8);
+                }
                 user = this.usersRepository.create({
                     email: profile['email'],
+                    username,
                     emailConfirmed: true,
                 });
                 user = await this.usersRepository.save(user);
@@ -120,6 +164,19 @@ let AccountsService = AccountsService_1 = class AccountsService {
             });
         return token;
     }
+    async checkEmailForDisposability(email) {
+        const emailDomain = email.split('@')[1];
+        try {
+            const isInValidEmail = (await got_1.default
+                .get(`https://open.kickbox.com/v1/disposable/${emailDomain}`, { timeout: 5000 })
+                .json()).disposable;
+            return isInValidEmail;
+        }
+        catch {
+            this.logger.warn('Unable to connect to kickbox.com');
+        }
+        return true;
+    }
     async createUser(input) {
         let user = await this.usersRepository.getUserByEmailAndUsername(input.email, input.username);
         if (user) {
@@ -129,6 +186,10 @@ let AccountsService = AccountsService_1 = class AccountsService {
             else {
                 throw new exceptions_1.BadRequestException('EMAIL_OCCUPIED');
             }
+        }
+        const isDisposableEmail = await this.checkEmailForDisposability(input.email);
+        if (isDisposableEmail) {
+            throw new exceptions_1.BadRequestException('EMAIL_BLACKLISTED');
         }
         if (!the_big_username_blacklist_1.default.validate(input.username)) {
             throw new exceptions_1.BadRequestException('USERNAME_BLACKLISTED');
@@ -158,12 +219,21 @@ let AccountsService = AccountsService_1 = class AccountsService {
         const user = await this.usersRepository.getUserByEmailOrUsername(args.email);
         if (!user)
             return true;
-        const confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, confirmation_type_enum_1.ConfirmationType.password);
+        let confirmation = await this.confirmationsRepository.findOnePasswordResetByUserId(user.id);
+        if (!confirmation) {
+            confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, confirmation_type_enum_1.ConfirmationType.password);
+        }
+        const rateLimitEndAt = luxon_1.DateTime.fromJSDate(confirmation.updatedAt).plus({ days: 1 }).toMillis();
+        if (((confirmation.sendCount % 3 == 0 && rateLimitEndAt > Date.now()) && confirmation.sendCount !== 0)) {
+            throw new exceptions_1.BadRequestException('RESET_PASSWORD_RATE_LIMIT_HIT');
+        }
         this.sendPasswordResetEmail({
             email: user.email,
             name: user.username || 'user',
             token: confirmation.value,
         }).catch((e) => this.logger.error(e));
+        confirmation.sendCount += 1;
+        await this.confirmationsRepository.save(confirmation);
         return true;
     }
     async sendConfirmationEmail(args) {

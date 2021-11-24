@@ -10,12 +10,15 @@ import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args'
 import { PubSub } from 'graphql-subscriptions';
 import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
 import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
+import { OAuthDiscordArgs } from '@modules/accounts/args/oauth-discord.args';
+import { Request } from 'express';
 export declare class AccountsResolver {
     private readonly pubSub;
     private readonly accountsService;
     constructor(pubSub: PubSub, accountsService: AccountsService);
     signIn(args: SignInArgs): Promise<Token>;
     signUp(args: SignUpArgs): Promise<User>;
+    OAuthDiscord(req: Request, args: OAuthDiscordArgs): Promise<Token>;
     confirmEmail(args: ConfirmEmailArgs): Promise<Token>;
     requestEmailConfirmation(user: User): Promise<User>;
     requestPasswordReset(args: RequestPasswordResetArgs): Promise<boolean>;

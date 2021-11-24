@@ -18,7 +18,10 @@ var RoleResources;
     RoleResources["USER_SETTINGS"] = "user-settings";
 })(RoleResources = exports.RoleResources || (exports.RoleResources = {}));
 exports.roles = new nest_access_control_1.RolesBuilder();
-exports.roles.grant(AppRoles.UNVERIFIED_USER).read(RoleResources.MESSAGE).deleteOwn(RoleResources.MESSAGE);
+exports.roles.grant(AppRoles.UNVERIFIED_USER)
+    .read(RoleResources.MESSAGE)
+    .deleteOwn(RoleResources.MESSAGE)
+    .updateOwn(RoleResources.MESSAGE);
 exports.roles.grant(AppRoles.USER).extend(AppRoles.UNVERIFIED_USER);
 exports.roles
     .grant(AppRoles.MODERATOR)

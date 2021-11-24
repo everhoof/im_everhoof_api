@@ -6,5 +6,7 @@ export declare class Confirmation {
     userId: number;
     type: ConfirmationType;
     createdAt: Date;
+    updatedAt: Date;
+    sendCount: number;
     user: User;
 }

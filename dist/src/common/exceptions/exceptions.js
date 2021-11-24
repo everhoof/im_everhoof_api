@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ServiceUnavailableException = exports.UnsupportedMediaTypeException = exports.InternalServerErrorException = exports.BadRequestException = exports.UnauthorizedException = exports.CustomHttpException = void 0;
+exports.ForbiddenException = exports.ServiceUnavailableException = exports.UnsupportedMediaTypeException = exports.InternalServerErrorException = exports.BadRequestException = exports.UnauthorizedException = exports.CustomHttpException = void 0;
 const common_1 = require("@nestjs/common");
 const exceptions = {
     UNKNOWN: {
@@ -18,6 +18,14 @@ const exceptions = {
     USER_DOES_NOT_EXIST_WITH_ID: {
         en: 'User with id %id% does not exist',
         ru: 'Пользователь с id %id% не существует',
+    },
+    MESSAGE_NOT_FOUND: {
+        en: 'Unable to find message',
+        ru: 'Не удалось найти сообщение',
+    },
+    WRONG_MESSAGE_OWNER: {
+        en: "That is not you'r message",
+        ru: "Это не ваше сообщение",
     },
     USER_ALREADY_PUNISHED: {
         en: 'User already punished',
@@ -38,6 +46,14 @@ const exceptions = {
     USERNAME_BLACKLISTED: {
         en: 'This username has blocked',
         ru: 'Нельзя использовать это имя',
+    },
+    EMAIL_BLACKLISTED: {
+        en: 'This email has blocked',
+        ru: 'Этот электронный адрес нельзя использовать',
+    },
+    RESET_PASSWORD_RATE_LIMIT_HIT: {
+        en: 'Password recovery request limit exceeded',
+        ru: 'Превышен лимит запросов на восстановление пароля',
     },
     WRONG_CREDENTIALS: {
         en: 'Wrong credentials',
@@ -145,4 +161,10 @@ class ServiceUnavailableException extends CustomHttpException {
     }
 }
 exports.ServiceUnavailableException = ServiceUnavailableException;
+class ForbiddenException extends CustomHttpException {
+    constructor(exception, ...args) {
+        super(common_1.HttpStatus.FORBIDDEN, exception, args);
+    }
+}
+exports.ForbiddenException = ForbiddenException;
 //# sourceMappingURL=exceptions.js.map

@@ -32,6 +32,7 @@ const app_roles_1 = require("../../app.roles");
 const get_token_by_discord_id_args_1 = require("./args/get-token-by-discord-id.args");
 const exceptions_1 = require("../../common/exceptions/exceptions");
 const invalidate_token_by_id_args_1 = require("./args/invalidate-token-by-id.args");
+const oauth_discord_args_1 = require("./args/oauth-discord.args");
 let AccountsResolver = class AccountsResolver {
     constructor(pubSub, accountsService) {
         this.pubSub = pubSub;
@@ -42,6 +43,9 @@ let AccountsResolver = class AccountsResolver {
     }
     async signUp(args) {
         return this.accountsService.createUser(args);
+    }
+    async OAuthDiscord(req, args) {
+        return this.accountsService.getTokenByDiscordCode(args);
     }
     async confirmEmail(args) {
         return this.accountsService.confirmEmail(args);
@@ -97,6 +101,13 @@ __decorate([
     __metadata("design:paramtypes", [sign_up_args_1.SignUpArgs]),
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "signUp", null);
+__decorate([
+    graphql_1.Mutation(() => tokens_entity_1.Token),
+    __param(0, common_1.Req()), __param(1, graphql_1.Args()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, oauth_discord_args_1.OAuthDiscordArgs]),
+    __metadata("design:returntype", Promise)
+], AccountsResolver.prototype, "OAuthDiscord", null);
 __decorate([
     graphql_1.Mutation(() => tokens_entity_1.Token),
     __param(0, graphql_1.Args()),

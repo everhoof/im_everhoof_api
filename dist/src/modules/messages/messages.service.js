@@ -71,6 +71,21 @@ let MessagesService = MessagesService_1 = class MessagesService {
         catch (e) { }
         return this.messagesRepository.save(message);
     }
+    async updateMessage(args, user) {
+        const message = await this.messagesRepository.findOne({ where: { id: args.messageId } });
+        if (!args.content) {
+            throw new exceptions_1.BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
+        }
+        if (!message) {
+            throw new exceptions_1.BadRequestException('MESSAGE_NOT_FOUND');
+        }
+        if (message.ownerId != user.id) {
+            throw new exceptions_1.ForbiddenException('WRONG_MESSAGE_OWNER');
+        }
+        message.content = args.content;
+        await this.messagesRepository.save(message);
+        return message;
+    }
     async createSystemMessage(content) {
         if (!content.trim())
             throw new exceptions_1.InternalServerErrorException('CANNOT_CREATE_EMPTY_MESSAGE');
