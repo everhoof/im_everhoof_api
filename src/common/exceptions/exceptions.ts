@@ -7,6 +7,8 @@ export type ExceptionKey =
   | 'FORBIDDEN'
   | 'USER_DOES_NOT_EXIST'
   | 'USER_DOES_NOT_EXIST_WITH_ID'
+  | 'MESSAGE_NOT_FOUND'
+  | 'WRONG_MESSAGE_OWNER'
   | 'USER_ALREADY_PUNISHED'
   | 'USER_IS_NOT_PUNISHED'
   | 'USERNAME_OCCUPIED'
@@ -48,6 +50,14 @@ const exceptions: Exception = {
   USER_DOES_NOT_EXIST_WITH_ID: {
     en: 'User with id %id% does not exist',
     ru: 'Пользователь с id %id% не существует',
+  },
+  MESSAGE_NOT_FOUND: {
+    en: 'Unable to find message',
+    ru: 'Не удалось найти сообщение',
+  },
+  WRONG_MESSAGE_OWNER: {
+    en: "That is not you'r message",
+    ru: "Это не ваше сообщение",
   },
   USER_ALREADY_PUNISHED: {
     en: 'User already punished',
@@ -189,5 +199,11 @@ export class UnsupportedMediaTypeException extends CustomHttpException {
 export class ServiceUnavailableException extends CustomHttpException {
   constructor(exception: ExceptionKey, ...args: string[]) {
     super(HttpStatus.SERVICE_UNAVAILABLE, exception, args);
+  }
+}
+
+export class ForbiddenException extends CustomHttpException {
+  constructor(exception: ExceptionKey, ...args: string[]) {
+    super(HttpStatus.FORBIDDEN, exception, args);
   }
 }

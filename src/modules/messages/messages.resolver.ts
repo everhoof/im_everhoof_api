@@ -17,6 +17,7 @@ import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
 import { ACGuard } from '@common/guards/access-control.guard';
 import { Throttle } from '@nestjs/throttler';
 import { GqlThrottlerGuard } from '@common/guards/throttler.guard';
+import { UpdateMessageArgs } from './args/update-message.args';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver(() => Message)
@@ -56,6 +57,14 @@ export class MessagesResolver {
     return null;
   }
 
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => Message)
+  async updateMessage(@Args() args: UpdateMessageArgs, @CurrentUser() user: User): Promise<Message> {
+    const message = await this.messagesService.updateMessage(args, user);
+    await this.pubSub.publish('messageUpdated', { messageUpdated: message });
+    return message;
+  }
+
   @Throttle(5, 20)
   @UseGuards(GqlThrottlerGuard)
   @UseGuards(GqlAuthGuard)
@@ -92,5 +101,12 @@ export class MessagesResolver {
   })
   messageDeleted(): AsyncIterator<Message> {
     return this.pubSub.asyncIterator('messageDeleted');
+  }
+
+  @Subscription(() => Message, {
+    name: 'messageUpdated',
+  })
+  messageUpdated(): AsyncIterator<Message> {
+    return this.pubSub.asyncIterator('messageUpdated')
   }
 }

@@ -17,7 +17,10 @@ export enum RoleResources {
 
 export const roles: RolesBuilder = new RolesBuilder();
 
-roles.grant(AppRoles.UNVERIFIED_USER).read(RoleResources.MESSAGE).deleteOwn(RoleResources.MESSAGE);
+roles.grant(AppRoles.UNVERIFIED_USER)
+  .read(RoleResources.MESSAGE)
+  .deleteOwn(RoleResources.MESSAGE)
+  .updateOwn(RoleResources.MESSAGE);
 roles.grant(AppRoles.USER).extend(AppRoles.UNVERIFIED_USER);
 roles
   .grant(AppRoles.MODERATOR)

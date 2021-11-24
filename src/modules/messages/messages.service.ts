@@ -6,7 +6,7 @@ import { Message } from '@modules/messages/entities/messages.entity';
 import { User } from '@modules/users/entities/users.entity';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
-import { BadRequestException, InternalServerErrorException } from '@common/exceptions/exceptions';
+import { BadRequestException, ForbiddenException, InternalServerErrorException } from '@common/exceptions/exceptions';
 import got from 'got';
 import { Utils } from '@common/utils/utils';
 import { PubSub } from 'graphql-subscriptions';
@@ -18,6 +18,7 @@ import { FindManyOptions, IsNull, LessThan, MoreThan } from 'typeorm';
 import { RoleResources, roles } from '../../app.roles';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 import { PunishmentTypes } from '@modules/users/args/punishment.args';
+import { UpdateMessageArgs } from './args/update-message.args';
 
 @Injectable()
 export class MessagesService {
@@ -58,6 +59,27 @@ export class MessagesService {
       message = await this.uploadImagesFromMessage(message, user);
     } catch (e) {}
     return this.messagesRepository.save(message);
+  }
+
+  async updateMessage(args: UpdateMessageArgs, user: User): Promise<Message> {
+    const message = await this.messagesRepository.findOne({where: {id: args.messageId}})
+    
+    if (!args.content) {
+      throw new BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
+    }
+
+    if (!message) {
+      throw new BadRequestException('MESSAGE_NOT_FOUND');
+    }
+    
+    if (message.ownerId != user.id) {
+      throw new ForbiddenException('WRONG_MESSAGE_OWNER');
+    }
+
+    message.content = args.content;
+    await this.messagesRepository.save(message);
+    
+    return message;
   }
 
   async createSystemMessage(content: string): Promise<Message> {
