@@ -57,6 +57,7 @@ export class MessagesResolver {
     return null;
   }
 
+  @Throttle(5, 20)
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async updateMessage(@Args() args: UpdateMessageArgs, @CurrentUser() user: User): Promise<Message> {
@@ -81,6 +82,7 @@ export class MessagesResolver {
     return this.messagesService.getMessages(args, user);
   }
 
+  @Throttle(5, 20)
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async deleteMessage(@Args() args: DeleteMessageArgs, @CurrentUser() user: User): Promise<Message> {
@@ -107,6 +109,6 @@ export class MessagesResolver {
     name: 'messageUpdated',
   })
   messageUpdated(): AsyncIterator<Message> {
-    return this.pubSub.asyncIterator('messageUpdated')
+    return this.pubSub.asyncIterator('messageUpdated');
   }
 }

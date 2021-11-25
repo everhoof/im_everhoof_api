@@ -19,17 +19,20 @@ import { BadRequestException } from '@common/exceptions/exceptions';
 import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
 import { OAuthDiscordArgs } from '@modules/accounts/args/oauth-discord.args';
 import { Request } from 'express';
+import { Throttle } from '@nestjs/throttler';
 
 @UseFilters(GraphqlExceptionFilter)
 @Resolver('Accounts')
 export class AccountsResolver {
   constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub, private readonly accountsService: AccountsService) {}
 
+  @Throttle(10, 20)
   @Mutation(() => Token)
   async signIn(@Args() args: SignInArgs): Promise<Token> {
     return this.accountsService.validateUserByEmailAndPassword(args);
   }
 
+  @Throttle(10, 86400)
   @Mutation(() => User)
   async signUp(@Args() args: SignUpArgs): Promise<User> {
     return this.accountsService.createUser(args);
@@ -45,12 +48,14 @@ export class AccountsResolver {
     return this.accountsService.confirmEmail(args);
   }
 
+  @Throttle(3, 86400)
   @Mutation(() => User)
   @UseGuards(GqlAuthGuard)
   async requestEmailConfirmation(@CurrentUser() user: User): Promise<User> {
     return this.accountsService.requestEmailConfirmation(user);
   }
 
+  @Throttle(3, 86400)
   @Mutation(() => Boolean)
   async requestPasswordReset(@Args() args: RequestPasswordResetArgs): Promise<boolean> {
     return this.accountsService.requestPasswordReset(args);
@@ -61,6 +66,7 @@ export class AccountsResolver {
     return this.accountsService.resetPassword(args);
   }
 
+  @Throttle(1, 60)
   @Mutation(() => User)
   @UseGuards(GqlAuthGuard)
   async updateUsername(@Args() args: UpdateUsernameArgs, @CurrentUser() user: User): Promise<User> {

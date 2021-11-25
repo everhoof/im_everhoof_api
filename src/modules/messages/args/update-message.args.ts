@@ -1,5 +1,5 @@
-import { ArgsType, Field, Int } from "@nestjs/graphql";
-import { IsInt, IsOptional, IsString, MaxLength } from "class-validator";
+import { ArgsType, Field, Int } from '@nestjs/graphql';
+import { IsInt, IsOptional, IsString, MaxLength } from 'class-validator';
 
 @ArgsType()
 export class UpdateMessageArgs {
@@ -7,7 +7,7 @@ export class UpdateMessageArgs {
   @IsInt()
   messageId: number;
 
-  @Field(() => String, {nullable: true})
+  @Field(() => String, { nullable: true })
   @IsString()
   @MaxLength(2000)
   @IsOptional()

@@ -62,8 +62,8 @@ export class MessagesService {
   }
 
   async updateMessage(args: UpdateMessageArgs, user: User): Promise<Message> {
-    const message = await this.messagesRepository.findOne({where: {id: args.messageId}})
-    
+    const message = await this.messagesRepository.findOne({ where: { id: args.messageId } });
+
     if (!args.content) {
       throw new BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
     }
@@ -71,14 +71,14 @@ export class MessagesService {
     if (!message) {
       throw new BadRequestException('MESSAGE_NOT_FOUND');
     }
-    
+
     if (message.ownerId != user.id) {
       throw new ForbiddenException('WRONG_MESSAGE_OWNER');
     }
 
     message.content = args.content;
     await this.messagesRepository.save(message);
-    
+
     return message;
   }
 

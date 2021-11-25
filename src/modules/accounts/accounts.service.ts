@@ -248,7 +248,7 @@ export class AccountsService {
     }
 
     const rateLimitEndAt = DateTime.fromJSDate(confirmation.updatedAt).plus({ days: 1 }).toMillis();
-    if (((confirmation.sendCount % 3 == 0 && rateLimitEndAt > Date.now()) && confirmation.sendCount !== 0)) {
+    if (confirmation.sendCount % 3 == 0 && rateLimitEndAt > Date.now() && confirmation.sendCount !== 0) {
       throw new BadRequestException('RESET_PASSWORD_RATE_LIMIT_HIT');
     }
 

@@ -57,7 +57,7 @@ const exceptions: Exception = {
   },
   WRONG_MESSAGE_OWNER: {
     en: "That is not you'r message",
-    ru: "Это не ваше сообщение",
+    ru: 'Это не ваше сообщение',
   },
   USER_ALREADY_PUNISHED: {
     en: 'User already punished',
