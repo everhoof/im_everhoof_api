@@ -144,10 +144,14 @@ export class AccountsService {
         if (user) {
           username = Utils.getRandomString(8);
         }
+
+        const role = await this.rolesRepository.getDefaultRole();
+
         user = this.usersRepository.create({
           email: profile['email'] as string,
           username,
           emailConfirmed: true,
+          roles: [role],
         });
         user = await this.usersRepository.save(user);
         newUser = true;
