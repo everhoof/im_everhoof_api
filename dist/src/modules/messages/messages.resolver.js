@@ -112,6 +112,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], MessagesResolver.prototype, "deletedBy", null);
 __decorate([
+    throttler_1.Throttle(5, 20),
     common_1.UseGuards(auth_guard_1.GqlAuthGuard),
     graphql_1.Mutation(() => messages_entity_1.Message),
     __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
@@ -138,6 +139,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], MessagesResolver.prototype, "getMessages", null);
 __decorate([
+    throttler_1.Throttle(5, 20),
     common_1.UseGuards(auth_guard_1.GqlAuthGuard),
     graphql_1.Mutation(() => messages_entity_1.Message),
     __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),

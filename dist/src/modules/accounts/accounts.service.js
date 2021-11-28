@@ -137,10 +137,12 @@ let AccountsService = AccountsService_1 = class AccountsService {
                 if (user) {
                     username = utils_1.Utils.getRandomString(8);
                 }
+                const role = await this.rolesRepository.getDefaultRole();
                 user = this.usersRepository.create({
                     email: profile['email'],
                     username,
                     emailConfirmed: true,
+                    roles: [role],
                 });
                 user = await this.usersRepository.save(user);
                 newUser = true;
@@ -224,7 +226,7 @@ let AccountsService = AccountsService_1 = class AccountsService {
             confirmation = await this.confirmationsRepository.createNewConfirmation(user.id, confirmation_type_enum_1.ConfirmationType.password);
         }
         const rateLimitEndAt = luxon_1.DateTime.fromJSDate(confirmation.updatedAt).plus({ days: 1 }).toMillis();
-        if (((confirmation.sendCount % 3 == 0 && rateLimitEndAt > Date.now()) && confirmation.sendCount !== 0)) {
+        if (confirmation.sendCount % 3 == 0 && rateLimitEndAt > Date.now() && confirmation.sendCount !== 0) {
             throw new exceptions_1.BadRequestException('RESET_PASSWORD_RATE_LIMIT_HIT');
         }
         this.sendPasswordResetEmail({

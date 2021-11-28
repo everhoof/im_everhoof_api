@@ -5936,7 +5936,7 @@
         "affectsGlobalScope": false
       },
       "../src/app.roles.ts": {
-        "version": "783e26a1c38b4cfa8db93cc32be705316bbca76c024bf7f584546ecc99093dde",
+        "version": "9d0681f2aba66b9a1566ea2d1498d5ae66a58da04be6f48b35459583ae263bb7",
         "signature": "0a3a3f8eee380d35c8a7656e5a63ac4e8db63f3ffa316b5b24d5ab3c0a01f91b",
         "affectsGlobalScope": false
       },
@@ -6656,7 +6656,7 @@
         "affectsGlobalScope": false
       },
       "../src/common/exceptions/exceptions.ts": {
-        "version": "da9d6411758ade36699436deb4bd6cf98fcf62763a01e62c6d3e7c5c0d91f630",
+        "version": "0b4687bd8149085ddf6aedd451f2c66edeba7c55d73a41ffc5df5d593570ef83",
         "signature": "68ff8789d04f749da1d339abeaf439d61d9a4f57327174f4e056850639e063b7",
         "affectsGlobalScope": false
       },
@@ -6941,12 +6941,12 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/args/update-message.args.ts": {
-        "version": "fa3adb03a852d63aa44b241809597615d9e83f50973eba485380b1553ad4aca3",
+        "version": "1e337e8885e1c20903f427e7e80da2ac6ae1bfa4d796bffd74c99363465e5230",
         "signature": "9fedba1cf92df32f81f69ecee544aa5a66b546c8cb81d96a7cdda29f3156643e",
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.service.ts": {
-        "version": "dd434ebe94f5d74a2c75998e7a462848414d15025edcbc22e840a6864a80c671",
+        "version": "ceb8c4de51b5453b9625b598683e4fe86574e8f5d2753a0aab31f51a95939fb8",
         "signature": "26184852fa59842ec18bd64acee577eeb52f8b2167945c210a663ebe749381fb",
         "affectsGlobalScope": false
       },
@@ -7211,12 +7211,12 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/types/email-disposable-response.ts": {
-        "version": "51ff6185399c78af188c190dc1d75c86b284fe67a8e939b16448d8c223d6f3aa",
+        "version": "bf931c15504710a096e0e252c77c5907718d005f070ff00fadc2dc464bb5cc7d",
         "signature": "f14f9d74af50b05d7df79528e060691e4f9d3d281ae7827b616c9005a1d2eceb",
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.service.ts": {
-        "version": "598b875209d7e733eff4a2113b94b345e68bd48cdd152f2b2756ee096ae10693",
+        "version": "4f34a1955026af13dadc00d56cfdeb0363cc1f06f4d56c0d3d8e8ba57b9ea67f",
         "signature": "7ff0d9223d49dda7c7b55131390e9cfd8a1bc6eefa0a41179e48bb0a6d8c3503",
         "affectsGlobalScope": false
       },
@@ -7311,7 +7311,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.resolver.ts": {
-        "version": "39aea6e33277c87f2ef6af1970a6d0ca6f6fc9ef593ac61aa91286d7951b9184",
+        "version": "d56605164fb5c73dcf8323f98f83179d273e55c8c9013a9772f9d3d0a3e0e346",
         "signature": "9977bd78331b849f43a40fcdafd1f492e6ff85f3ed5a6beb35e96e3714083af5",
         "affectsGlobalScope": false
       },
@@ -7326,7 +7326,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.resolver.ts": {
-        "version": "04abc4675c7906dab9df073e1516d6bd178c24721c3988039e8b523bd6a665b6",
+        "version": "adb83046ef796334060bdc587ec720c835951dc58d26a8d31ad3b71a724a045f",
         "signature": "c06b95d63eb31d8b786db1bcde7537829e470963735a89b85defb769339a703b",
         "affectsGlobalScope": false
       },
@@ -14287,6 +14287,7 @@
       "../src/modules/accounts/accounts.resolver.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/graphql/index.d.ts",
+        "../node_modules/@nestjs/throttler/dist/index.d.ts",
         "../node_modules/@types/express/index.d.ts",
         "../node_modules/graphql-subscriptions/dist/index.d.ts",
         "../src/app.roles.ts",
