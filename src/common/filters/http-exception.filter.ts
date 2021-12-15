@@ -2,6 +2,7 @@ import { Catch, ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import { GqlArgumentsHost, GqlExceptionFilter } from '@nestjs/graphql';
 import { CustomHttpException, ExceptionMessage } from '@common/exceptions/exceptions';
 import { Request, Response } from 'express';
+import {ThrottlerException} from "@nestjs/throttler";
 
 @Catch(CustomHttpException)
 export class GraphqlExceptionFilter implements GqlExceptionFilter {
@@ -15,6 +16,21 @@ export class GraphqlExceptionFilter implements GqlExceptionFilter {
     }
 
     return new CustomHttpException(exception.getStatus(), exception.exception, exception.args, lang);
+  }
+}
+
+@Catch(ThrottlerException)
+export class ThrottlerExceptionFilter implements GqlExceptionFilter {
+  catch(exception: ThrottlerException, host: ArgumentsHost): CustomHttpException {
+    const gqlHost = GqlArgumentsHost.create(host);
+    let lang: ExceptionMessage = 'en';
+    if (gqlHost.getContext().req) {
+      lang = gqlHost.getContext().req.query.lang || lang;
+    } else {
+      lang = host.switchToHttp().getRequest().query.lang || lang;
+    }
+
+    return new CustomHttpException(429, 'RATE_LIMIT_REACHED', [], lang);
   }
 }
 
@@ -37,3 +53,5 @@ export class HttpExceptionFilter implements ExceptionFilter {
     response.status(status).json(translatedException.getResponse());
   }
 }
+
+

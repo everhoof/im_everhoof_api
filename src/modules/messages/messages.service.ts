@@ -62,6 +62,7 @@ export class MessagesService {
   }
 
   async updateMessage(args: UpdateMessageArgs, user: User): Promise<Message> {
+    await this.throwOnPunished(user.id);
     const message = await this.messagesRepository.findOne({ where: { id: args.messageId } });
 
     if (!args.content) {

@@ -1,6 +1,6 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, UseFilters, UseGuards } from '@nestjs/common';
-import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
+import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { Message } from '@modules/messages/entities/messages.entity';
 import { Loader } from '@intelrug/nestjs-graphql-dataloader';
@@ -19,7 +19,7 @@ import { Throttle } from '@nestjs/throttler';
 import { GqlThrottlerGuard } from '@common/guards/throttler.guard';
 import { UpdateMessageArgs } from './args/update-message.args';
 
-@UseFilters(GraphqlExceptionFilter)
+@UseFilters(GraphqlExceptionFilter, ThrottlerExceptionFilter)
 @Resolver(() => Message)
 export class MessagesResolver {
   constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub, private readonly messagesService: MessagesService) {}

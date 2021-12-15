@@ -28,7 +28,8 @@ export type ExceptionKey =
   | 'CONFIRMATION_IS_INVALID'
   | 'EMAIL_IS_NOT_CONFIRMED'
   | 'EMAIL_ALREADY_CONFIRMED'
-  | 'EMAIL_NOT_REGISTERED';
+  | 'EMAIL_NOT_REGISTERED'
+  | 'RATE_LIMIT_REACHED';
 
 type Exception = {
   [key in ExceptionKey]: { [key in ExceptionMessage]: string };
@@ -139,6 +140,10 @@ const exceptions: Exception = {
     en: 'The user with this email address is not registered',
     ru: 'Пользователь с таким E-mail не зарегистрирован',
   },
+  RATE_LIMIT_REACHED: {
+    en: 'Not so fast! Try after few seconds.',
+    ru: 'Хватит флудить!',
+  }
 };
 
 function createExceptionMessage(exception: ExceptionKey, lang: ExceptionMessage = 'en', args: string[] = []): string {

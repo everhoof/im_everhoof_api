@@ -1,6 +1,6 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, UseFilters, UseGuards } from '@nestjs/common';
-import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
+import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
 import { User } from '@modules/users/entities/users.entity';
 import { CurrentUser, GqlAuthGuard, OptionalGqlAuthGuard } from '@common/guards/auth.guard';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
@@ -19,7 +19,7 @@ import { RoleResources, roles } from '../../app.roles';
 import { PunishmentsLoader } from '@modules/users/loaders/punishments.loader';
 import { SubscriptionEvents } from '@modules/common/types/subscription-events';
 
-@UseFilters(GraphqlExceptionFilter)
+@UseFilters(GraphqlExceptionFilter, ThrottlerExceptionFilter)
 @Resolver(() => User)
 export class UsersResolver {
   constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub, private readonly usersService: UsersService) {}

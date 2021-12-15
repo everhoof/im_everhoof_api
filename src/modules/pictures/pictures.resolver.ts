@@ -1,6 +1,6 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { UseFilters } from '@nestjs/common';
-import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
+import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { PicturesService } from '@modules/pictures/pictures.service';
 import { PictureRepresentation } from '@modules/pictures/entities/picture-representations.entity';
@@ -11,7 +11,7 @@ import { GetPictureByIdArgs } from '@modules/pictures/args/get-picture-by-id.arg
 import { UsersLoader } from '@modules/users/loaders/users.loader';
 import { User } from '@modules/users/entities/users.entity';
 
-@UseFilters(GraphqlExceptionFilter)
+@UseFilters(GraphqlExceptionFilter, ThrottlerExceptionFilter)
 @Resolver(() => Picture)
 export class PicturesResolver {
   constructor(private readonly picturesService: PicturesService) {}

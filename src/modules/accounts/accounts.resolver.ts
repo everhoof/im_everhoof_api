@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, Req, UseFilters, UseGuards } from '@nestjs/common';
-import { GraphqlExceptionFilter } from '@common/filters/http-exception.filter';
+import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
 import { AccountsService } from '@modules/accounts/accounts.service';
 import { Token } from '@modules/accounts/entities/tokens.entity';
 import { SignInArgs } from '@modules/accounts/args/sign-in.args';
@@ -21,7 +21,7 @@ import { OAuthDiscordArgs } from '@modules/accounts/args/oauth-discord.args';
 import { Request } from 'express';
 import { Throttle } from '@nestjs/throttler';
 
-@UseFilters(GraphqlExceptionFilter)
+@UseFilters(GraphqlExceptionFilter, ThrottlerExceptionFilter)
 @Resolver('Accounts')
 export class AccountsResolver {
   constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub, private readonly accountsService: AccountsService) {}
