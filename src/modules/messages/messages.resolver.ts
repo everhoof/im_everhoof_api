@@ -1,6 +1,6 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, UseFilters, UseGuards } from '@nestjs/common';
-import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
+import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@common/filters/http-exception.filter';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { Message } from '@modules/messages/entities/messages.entity';
 import { Loader } from '@intelrug/nestjs-graphql-dataloader';
@@ -57,7 +57,7 @@ export class MessagesResolver {
     return null;
   }
 
-  @Throttle(5, 20)
+  // @Throttle(5, 20)
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async updateMessage(@Args() args: UpdateMessageArgs, @CurrentUser() user: User): Promise<Message> {
@@ -66,7 +66,7 @@ export class MessagesResolver {
     return message;
   }
 
-  @Throttle(5, 20)
+  // @Throttle(5, 20)
   @UseGuards(GqlThrottlerGuard)
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
@@ -82,7 +82,7 @@ export class MessagesResolver {
     return this.messagesService.getMessages(args, user);
   }
 
-  @Throttle(5, 20)
+  // @Throttle(5, 20)
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async deleteMessage(@Args() args: DeleteMessageArgs, @CurrentUser() user: User): Promise<Message> {

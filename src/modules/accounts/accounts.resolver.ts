@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, Req, UseFilters, UseGuards } from '@nestjs/common';
-import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
+import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@common/filters/http-exception.filter';
 import { AccountsService } from '@modules/accounts/accounts.service';
 import { Token } from '@modules/accounts/entities/tokens.entity';
 import { SignInArgs } from '@modules/accounts/args/sign-in.args';
@@ -26,13 +26,13 @@ import { Throttle } from '@nestjs/throttler';
 export class AccountsResolver {
   constructor(@Inject('PUB_SUB') private readonly pubSub: PubSub, private readonly accountsService: AccountsService) {}
 
-  @Throttle(10, 20)
+  // @Throttle(10, 20)
   @Mutation(() => Token)
   async signIn(@Args() args: SignInArgs): Promise<Token> {
     return this.accountsService.validateUserByEmailAndPassword(args);
   }
 
-  @Throttle(10, 86400)
+  // @Throttle(10, 86400)
   @Mutation(() => User)
   async signUp(@Args() args: SignUpArgs): Promise<User> {
     return this.accountsService.createUser(args);
@@ -48,14 +48,14 @@ export class AccountsResolver {
     return this.accountsService.confirmEmail(args);
   }
 
-  @Throttle(3, 86400)
+  // @Throttle(3, 86400)
   @Mutation(() => User)
   @UseGuards(GqlAuthGuard)
   async requestEmailConfirmation(@CurrentUser() user: User): Promise<User> {
     return this.accountsService.requestEmailConfirmation(user);
   }
 
-  @Throttle(3, 86400)
+  // @Throttle(3, 86400)
   @Mutation(() => Boolean)
   async requestPasswordReset(@Args() args: RequestPasswordResetArgs): Promise<boolean> {
     return this.accountsService.requestPasswordReset(args);
@@ -66,7 +66,7 @@ export class AccountsResolver {
     return this.accountsService.resetPassword(args);
   }
 
-  @Throttle(1, 60)
+  // @Throttle(1, 60)
   @Mutation(() => User)
   @UseGuards(GqlAuthGuard)
   async updateUsername(@Args() args: UpdateUsernameArgs, @CurrentUser() user: User): Promise<User> {
