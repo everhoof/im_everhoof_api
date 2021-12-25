@@ -7311,7 +7311,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/messages/messages.resolver.ts": {
-        "version": "dedce0f2d04918df3e9072bb3455f0e39dfd22b8c9c7562ac580f1df053d8416",
+        "version": "01c172aeaed79661579a75f7c9744a235c63076b47e6e9b702de940a56507088",
         "signature": "9977bd78331b849f43a40fcdafd1f492e6ff85f3ed5a6beb35e96e3714083af5",
         "affectsGlobalScope": false
       },
@@ -7326,7 +7326,7 @@
         "affectsGlobalScope": false
       },
       "../src/modules/accounts/accounts.resolver.ts": {
-        "version": "0bfd34f24799c447a45663496faa4b371bb98a34fd67d3c8a0923e2097bfa2f4",
+        "version": "ca0ef6e876a77e5fc4d7e4597eddf0cbf18ee974a565ed56a0a52fdecf28be61",
         "signature": "c06b95d63eb31d8b786db1bcde7537829e470963735a89b85defb769339a703b",
         "affectsGlobalScope": false
       },

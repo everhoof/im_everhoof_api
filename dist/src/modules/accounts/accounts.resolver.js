@@ -33,7 +33,6 @@ const get_token_by_discord_id_args_1 = require("./args/get-token-by-discord-id.a
 const exceptions_1 = require("../../common/exceptions/exceptions");
 const invalidate_token_by_id_args_1 = require("./args/invalidate-token-by-id.args");
 const oauth_discord_args_1 = require("./args/oauth-discord.args");
-const throttler_1 = require("@nestjs/throttler");
 let AccountsResolver = class AccountsResolver {
     constructor(pubSub, accountsService) {
         this.pubSub = pubSub;
@@ -89,7 +88,6 @@ let AccountsResolver = class AccountsResolver {
     }
 };
 __decorate([
-    throttler_1.Throttle(10, 20),
     graphql_1.Mutation(() => tokens_entity_1.Token),
     __param(0, graphql_1.Args()),
     __metadata("design:type", Function),
@@ -97,7 +95,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "signIn", null);
 __decorate([
-    throttler_1.Throttle(10, 86400),
     graphql_1.Mutation(() => users_entity_1.User),
     __param(0, graphql_1.Args()),
     __metadata("design:type", Function),
@@ -119,7 +116,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "confirmEmail", null);
 __decorate([
-    throttler_1.Throttle(3, 86400),
     graphql_1.Mutation(() => users_entity_1.User),
     common_1.UseGuards(auth_guard_1.GqlAuthGuard),
     __param(0, auth_guard_1.CurrentUser()),
@@ -128,7 +124,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "requestEmailConfirmation", null);
 __decorate([
-    throttler_1.Throttle(3, 86400),
     graphql_1.Mutation(() => Boolean),
     __param(0, graphql_1.Args()),
     __metadata("design:type", Function),
@@ -143,7 +138,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AccountsResolver.prototype, "resetPassword", null);
 __decorate([
-    throttler_1.Throttle(1, 60),
     graphql_1.Mutation(() => users_entity_1.User),
     common_1.UseGuards(auth_guard_1.GqlAuthGuard),
     __param(0, graphql_1.Args()), __param(1, auth_guard_1.CurrentUser()),
