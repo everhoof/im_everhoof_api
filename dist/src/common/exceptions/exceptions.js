@@ -107,6 +107,10 @@ const exceptions = {
         en: 'The user with this email address is not registered',
         ru: 'Пользователь с таким E-mail не зарегистрирован',
     },
+    RATE_LIMIT_REACHED: {
+        en: 'Not so fast! Try after few seconds.',
+        ru: 'Хватит флудить!',
+    }
 };
 function createExceptionMessage(exception, lang = 'en', args = []) {
     if (exceptions[exception] && exceptions[exception][lang]) {

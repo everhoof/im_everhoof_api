@@ -72,6 +72,7 @@ let MessagesService = MessagesService_1 = class MessagesService {
         return this.messagesRepository.save(message);
     }
     async updateMessage(args, user) {
+        await this.throwOnPunished(user.id);
         const message = await this.messagesRepository.findOne({ where: { id: args.messageId } });
         if (!args.content) {
             throw new exceptions_1.BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');

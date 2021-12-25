@@ -26,7 +26,7 @@ __decorate([
     __metadata("design:returntype", String)
 ], RolesResolver.prototype, "getGrants", null);
 RolesResolver = __decorate([
-    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
+    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter, http_exception_filter_1.ThrottlerExceptionFilter),
     graphql_1.Resolver('Roles')
 ], RolesResolver);
 exports.RolesResolver = RolesResolver;

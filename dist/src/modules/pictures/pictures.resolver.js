@@ -95,7 +95,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PicturesResolver.prototype, "getPictureById", null);
 PicturesResolver = __decorate([
-    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
+    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter, http_exception_filter_1.ThrottlerExceptionFilter),
     graphql_1.Resolver(() => pictures_entity_1.Picture),
     __metadata("design:paramtypes", [pictures_service_1.PicturesService])
 ], PicturesResolver);

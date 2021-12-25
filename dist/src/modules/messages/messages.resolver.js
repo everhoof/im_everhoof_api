@@ -172,7 +172,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], MessagesResolver.prototype, "messageUpdated", null);
 MessagesResolver = __decorate([
-    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
+    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter, http_exception_filter_1.ThrottlerExceptionFilter),
     graphql_1.Resolver(() => messages_entity_1.Message),
     __param(0, common_1.Inject('PUB_SUB')),
     __metadata("design:paramtypes", [graphql_subscriptions_1.PubSub, messages_service_1.MessagesService])

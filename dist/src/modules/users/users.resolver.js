@@ -209,7 +209,7 @@ __decorate([
     __metadata("design:returntype", Object)
 ], UsersResolver.prototype, "userUpdated", null);
 UsersResolver = __decorate([
-    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter),
+    common_1.UseFilters(http_exception_filter_1.GraphqlExceptionFilter, http_exception_filter_1.ThrottlerExceptionFilter),
     graphql_1.Resolver(() => users_entity_1.User),
     __param(0, common_1.Inject('PUB_SUB')),
     __metadata("design:paramtypes", [graphql_subscriptions_1.PubSub, users_service_1.UsersService])
