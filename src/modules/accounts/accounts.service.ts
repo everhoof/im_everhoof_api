@@ -9,7 +9,7 @@ import {
   BadRequestException,
   InternalServerErrorException,
   UnauthorizedException,
-} from '@common/exceptions/exceptions';
+} from '@modules/common/exceptions/exceptions';
 import { User } from '@modules/users/entities/users.entity';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 import { RolesRepository } from '@modules/roles/repositories/roles.repository';
@@ -30,7 +30,7 @@ import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token
 import { AppRoles } from '../../app.roles';
 import { OAuthDiscordArgs } from '@modules/accounts/args/oauth-discord.args';
 import { OAuthDiscordTokenResponse } from '@modules/accounts/types/oauth-discord-response';
-import { Utils } from '@common/utils/utils';
+import { Utils } from '@modules/common/utils/utils';
 import got from 'got';
 import blacklist from 'the-big-username-blacklist';
 import { EmailDisposableResponse } from '@modules/accounts/types/email-disposable-response';

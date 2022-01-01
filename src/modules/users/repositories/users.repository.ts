@@ -1,6 +1,6 @@
 import { EntityRepository, ILike } from 'typeorm';
 import { User } from '@modules/users/entities/users.entity';
-import { BasicRepository } from '@common/repositories/basic.repository';
+import { BasicRepository } from '@modules/common/repositories/basic.repository';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 
 @EntityRepository(User)

@@ -1,6 +1,6 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, UseFilters, UseGuards } from '@nestjs/common';
-import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@common/filters/http-exception.filter';
+import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@modules/common/filters/http-exception.filter';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { Message } from '@modules/messages/entities/messages.entity';
 import { Loader } from '@intelrug/nestjs-graphql-dataloader';
@@ -8,15 +8,13 @@ import DataLoader from 'dataloader';
 import { PicturesLoader } from '@modules/pictures/loaders/pictures.loader';
 import { MessagesService } from '@modules/messages/messages.service';
 import { CreateMessageArgs } from '@modules/messages/args/create-message.args';
-import { CurrentUser, GqlAuthGuard, OptionalGqlAuthGuard } from '@common/guards/auth.guard';
+import { CurrentUser, GqlAuthGuard, OptionalGqlAuthGuard } from '@modules/common/guards/auth.guard';
 import { User } from '@modules/users/entities/users.entity';
 import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
 import { UsersLoader } from '@modules/users/loaders/users.loader';
 import { PubSub } from 'graphql-subscriptions';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
-import { ACGuard } from '@common/guards/access-control.guard';
-import { Throttle } from '@nestjs/throttler';
-import { GqlThrottlerGuard } from '@common/guards/throttler.guard';
+import { ACGuard } from '@modules/common/guards/access-control.guard';
 import { UpdateMessageArgs } from './args/update-message.args';
 
 @UseFilters(GraphqlExceptionFilter, ThrottlerExceptionFilter)
@@ -67,7 +65,7 @@ export class MessagesResolver {
   }
 
   // @Throttle(5, 20)
-  @UseGuards(GqlThrottlerGuard)
+  // @UseGuards(GqlThrottlerGuard)
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   async createMessage(@Args() args: CreateMessageArgs, @CurrentUser() user: User): Promise<Message> {

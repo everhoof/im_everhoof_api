@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src",
+    "test",
+    "scripts",
+    "**/*.spec.ts",
+    "**/*.spec.js",
+    "ecosystem.config.js",
+    ".eslintrc.js",
+    "environment.js",
+    "jest.config.js",
+    "jest.setup.js",
+    "ormconfig.js"
+  ]
+}

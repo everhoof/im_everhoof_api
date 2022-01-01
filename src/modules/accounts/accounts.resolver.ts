@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, Req, UseFilters, UseGuards } from '@nestjs/common';
-import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@common/filters/http-exception.filter';
+import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@modules/common/filters/http-exception.filter';
 import { AccountsService } from '@modules/accounts/accounts.service';
 import { Token } from '@modules/accounts/entities/tokens.entity';
 import { SignInArgs } from '@modules/accounts/args/sign-in.args';
@@ -8,18 +8,17 @@ import { User } from '@modules/users/entities/users.entity';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 import { ConfirmEmailArgs } from '@modules/accounts/args/confirm-email.args';
 import { RequestPasswordResetArgs, ResetPasswordArgs } from '@modules/accounts/args/reset-password.args';
-import { CurrentUser, GqlAuthGuard } from '@common/guards/auth.guard';
+import { CurrentUser, GqlAuthGuard } from '@modules/common/guards/auth.guard';
 import { IsUsernameFreeArgs } from '@modules/accounts/args/is-username-free.args';
 import { UpdateUsernameArgs } from '@modules/accounts/args/update-username.args';
 import { SubscriptionEvents } from '@modules/common/types/subscription-events';
 import { PubSub } from 'graphql-subscriptions';
 import { AppRoles } from '../../app.roles';
 import { GetTokenByDiscordIdArgs } from '@modules/accounts/args/get-token-by-discord-id.args';
-import { BadRequestException } from '@common/exceptions/exceptions';
+import { BadRequestException } from '@modules/common/exceptions/exceptions';
 import { InvalidateTokenByIdArgs } from '@modules/accounts/args/invalidate-token-by-id.args';
 import { OAuthDiscordArgs } from '@modules/accounts/args/oauth-discord.args';
 import { Request } from 'express';
-import { Throttle } from '@nestjs/throttler';
 
 @UseFilters(GraphqlExceptionFilter, ThrottlerExceptionFilter)
 @Resolver('Accounts')

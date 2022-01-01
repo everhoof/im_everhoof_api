@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { extname } from 'path';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { HttpExceptionFilter } from '@common/filters/http-exception.filter';
+import { HttpExceptionFilter } from '@modules/common/filters/http-exception.filter';
 import { UploadService } from '@modules/upload/upload.service';
 import { User } from '@modules/users/entities/users.entity';
 import { AuthGuard } from '@nestjs/passport';

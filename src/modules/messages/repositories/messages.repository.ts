@@ -1,5 +1,5 @@
 import { EntityRepository } from 'typeorm';
-import { BasicRepository } from '@common/repositories/basic.repository';
+import { BasicRepository } from '@modules/common/repositories/basic.repository';
 import { Message } from '@modules/messages/entities/messages.entity';
 
 @EntityRepository(Message)

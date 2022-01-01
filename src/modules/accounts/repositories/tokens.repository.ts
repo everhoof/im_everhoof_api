@@ -1,7 +1,7 @@
 import { EntityRepository } from 'typeorm';
 import { randomBytes } from 'crypto';
 import { Token } from '@modules/accounts/entities/tokens.entity';
-import { BasicRepository } from '@common/repositories/basic.repository';
+import { BasicRepository } from '@modules/common/repositories/basic.repository';
 
 @EntityRepository(Token)
 export class TokensRepository extends BasicRepository<Token> {

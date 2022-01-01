@@ -2,8 +2,8 @@ import { EntityRepository } from 'typeorm';
 import { Confirmation } from '@modules/accounts/entities/confirmations.entity';
 import { ConfirmationType } from '@modules/accounts/types/confirmation-type.enum';
 import { InternalServerErrorException } from '@nestjs/common';
-import { Utils } from '@common/utils/utils';
-import { BasicRepository } from '@common/repositories/basic.repository';
+import { Utils } from '@modules/common/utils/utils';
+import { BasicRepository } from '@modules/common/repositories/basic.repository';
 
 @EntityRepository(Confirmation)
 export class ConfirmationsRepository extends BasicRepository<Confirmation> {

@@ -1,0 +1,89 @@
+name: cd
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  production-deploy:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+
+    steps:
+      - name: Set NODE_ENV
+        run: NODE_ENV=$APP_NODE_ENV
+        env:
+          APP_NODE_ENV: ${{ secrets.PRODUCTION_NODE_ENV }}
+
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: ${{ matrix.node }}
+          check-latest: true
+
+      - name: Get yarn cache directory path 🛠
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache node_modules 📦
+        uses: actions/cache@v2.1.4
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies 👨🏻‍💻
+        run: yarn --frozen-lockfile
+
+      - name: Run linter
+        run: yarn lint
+
+      - name: Build project
+        run: yarn build
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/production.key
+          chmod 600 ~/.ssh/production.key
+          cat >>~/.ssh/config <<END
+          Host production
+            HostName $SSH_HOST
+            Port $SSH_PORT
+            User $SSH_USER
+            IdentityFile ~/.ssh/production.key
+            StrictHostKeyChecking no
+            SendEnv APP_DIR
+            SendEnv APP_NODE_ENV
+          END
+        env:
+          SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
+          SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
+          SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
+          SSH_PORT: ${{ secrets.PRODUCTION_SSH_PORT }}
+
+      - name: Copy dist files
+        run: |
+          ssh production 'mkdir -p $APP_DIR/artifacts'
+          scp -r dist production:$APP_DIR/artifacts/dist
+          scp -r .env deploy.sh ecosystem.config.js environment.js ormconfig.js package.json tsconfig.build.json tsconfig.json yarn.lock production:$APP_DIR/artifacts
+        env:
+          APP_DIR: ${{ secrets.PRODUCTION_APP_DIR }}
+
+      - name: Run deploy script
+        run: ssh production 'cd $APP_DIR && export NODE_ENV=$APP_NODE_ENV && bash deploy.sh'
+        env:
+          APP_DIR: ${{ secrets.PRODUCTION_APP_DIR }}
+          APP_NODE_ENV: ${{ secrets.PRODUCTION_NODE_ENV }}

@@ -1,6 +1,6 @@
 import { Repository, FindManyOptions } from 'typeorm';
-import { BadRequestException, InternalServerErrorException } from '@common/exceptions/exceptions';
-import { GetListArgs } from '@common/args/get-list.args';
+import { BadRequestException, InternalServerErrorException } from '@modules/common/exceptions/exceptions';
+import { GetListArgs } from '@modules/common/args/get-list.args';
 
 export class BasicRepository<Entity> extends Repository<Entity> {
   async getList(args: GetListArgs, options?: FindManyOptions<Entity>): Promise<Entity[]> {

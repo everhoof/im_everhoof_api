@@ -14,11 +14,11 @@ import {
   InternalServerErrorException,
   ServiceUnavailableException,
   UnsupportedMediaTypeException,
-} from '@common/exceptions/exceptions';
+} from '@modules/common/exceptions/exceptions';
 import { CompressedPicture } from '@modules/upload/types/compressed-picture';
 import { DiscordMessage } from '@modules/upload/types/DiscordMessage';
 import { UploadedPicture, UploadedPictureRepresentation } from '@modules/upload/types/uploaded-picture';
-import { Utils } from '@common/utils/utils';
+import { Utils } from '@modules/common/utils/utils';
 import { fromBuffer } from 'file-type';
 import { imageSize } from 'image-size';
 

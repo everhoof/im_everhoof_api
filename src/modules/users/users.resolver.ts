@@ -1,8 +1,8 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { Inject, UseFilters, UseGuards } from '@nestjs/common';
-import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
+import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@modules/common/filters/http-exception.filter';
 import { User } from '@modules/users/entities/users.entity';
-import { CurrentUser, GqlAuthGuard, OptionalGqlAuthGuard } from '@common/guards/auth.guard';
+import { CurrentUser, GqlAuthGuard, OptionalGqlAuthGuard } from '@modules/common/guards/auth.guard';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { PicturesLoader } from '@modules/pictures/loaders/pictures.loader';
 import { Loader } from '@intelrug/nestjs-graphql-dataloader';

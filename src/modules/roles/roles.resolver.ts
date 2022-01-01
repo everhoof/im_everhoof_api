@@ -1,6 +1,6 @@
 import { Query, Resolver } from '@nestjs/graphql';
 import { UseFilters } from '@nestjs/common';
-import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
+import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@modules/common/filters/http-exception.filter';
 import { roles } from '../../app.roles';
 
 @UseFilters(GraphqlExceptionFilter, ThrottlerExceptionFilter)

@@ -3,13 +3,13 @@ import { AccountsService } from './accounts.service';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { DeepPartial, MoreThan } from 'typeorm';
 import { UsersRepository } from '@modules/users/repositories/users.repository';
-import { TypeOrmConfigService } from '@config/typeorm';
+import { TypeOrmConfigService } from '@modules/common/typeorm';
 import { TokensRepository } from '@modules/accounts/repositories/tokens.repository';
 import { User } from '@modules/users/entities/users.entity';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 import { SignInArgs } from '@modules/accounts/args/sign-in.args';
 import { Token } from '@modules/accounts/entities/tokens.entity';
-import { UnauthorizedException } from '@common/exceptions/exceptions';
+import { UnauthorizedException } from '@modules/common/exceptions/exceptions';
 
 describe('AccountsService', () => {
   let service: AccountsService;

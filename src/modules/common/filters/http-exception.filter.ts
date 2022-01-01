@@ -1,8 +1,8 @@
 import { Catch, ArgumentsHost, ExceptionFilter } from '@nestjs/common';
 import { GqlArgumentsHost, GqlExceptionFilter } from '@nestjs/graphql';
-import { CustomHttpException, ExceptionMessage } from '@common/exceptions/exceptions';
+import { CustomHttpException, ExceptionMessage } from '@modules/common/exceptions/exceptions';
 import { Request, Response } from 'express';
-import {ThrottlerException} from "@nestjs/throttler";
+import { ThrottlerException } from '@nestjs/throttler';
 
 @Catch(CustomHttpException)
 export class GraphqlExceptionFilter implements GqlExceptionFilter {
@@ -53,5 +53,3 @@ export class HttpExceptionFilter implements ExceptionFilter {
     response.status(status).json(translatedException.getResponse());
   }
 }
-
-

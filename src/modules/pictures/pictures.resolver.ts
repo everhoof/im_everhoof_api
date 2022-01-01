@@ -1,6 +1,6 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { UseFilters } from '@nestjs/common';
-import {GraphqlExceptionFilter, ThrottlerExceptionFilter} from '@common/filters/http-exception.filter';
+import { GraphqlExceptionFilter, ThrottlerExceptionFilter } from '@modules/common/filters/http-exception.filter';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { PicturesService } from '@modules/pictures/pictures.service';
 import { PictureRepresentation } from '@modules/pictures/entities/picture-representations.entity';

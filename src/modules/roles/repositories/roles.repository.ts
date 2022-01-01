@@ -1,7 +1,7 @@
 import { EntityRepository } from 'typeorm';
-import { BasicRepository } from '@common/repositories/basic.repository';
+import { BasicRepository } from '@modules/common/repositories/basic.repository';
 import { Role } from '@modules/roles/entities/roles.entity';
-import { InternalServerErrorException } from '@common/exceptions/exceptions';
+import { InternalServerErrorException } from '@modules/common/exceptions/exceptions';
 
 @EntityRepository(Role)
 export class RolesRepository extends BasicRepository<Role> {

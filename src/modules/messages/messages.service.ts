@@ -6,9 +6,13 @@ import { Message } from '@modules/messages/entities/messages.entity';
 import { User } from '@modules/users/entities/users.entity';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
-import { BadRequestException, ForbiddenException, InternalServerErrorException } from '@common/exceptions/exceptions';
+import {
+  BadRequestException,
+  ForbiddenException,
+  InternalServerErrorException,
+} from '@modules/common/exceptions/exceptions';
 import got from 'got';
-import { Utils } from '@common/utils/utils';
+import { Utils } from '@modules/common/utils/utils';
 import { PubSub } from 'graphql-subscriptions';
 import { basename } from 'path';
 import { UploadService } from '@modules/upload/upload.service';

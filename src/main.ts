@@ -5,7 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 
 async function bootstrap() {
-  const PORT = parseInt(process.env.PORT || '7700', 10);
+  const PORT = parseInt(process.env.APP_PORT || '', 10);
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());

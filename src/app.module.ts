@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { TypeOrmConfigService } from '@config/typeorm';
 import { AccessControlModule } from 'nest-access-control';
 import { roles } from './app.roles';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -19,7 +18,7 @@ import { DataLoaderInterceptor } from '@intelrug/nestjs-graphql-dataloader';
 import { CommonModule } from '@modules/common/common.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { TypeOrmConfigService } from '@modules/common/typeorm';
 
 @Module({
   imports: [
@@ -60,7 +59,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
         },
       },
     }),
-    ThrottlerModule.forRoot(),
+    // ThrottlerModule.forRoot(),
     AccessControlModule.forRoles(roles),
     ScheduleModule.forRoot(),
     CommonModule,
