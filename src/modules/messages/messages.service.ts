@@ -16,7 +16,6 @@ import { Utils } from '@modules/common/utils/utils';
 import { PubSub } from 'graphql-subscriptions';
 import { basename } from 'path';
 import { UploadService } from '@modules/upload/upload.service';
-import { escapeHtml } from 'xss';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
 import { FindManyOptions, IsNull, LessThan, MoreThan } from 'typeorm';
 import { RoleResources, roles } from '../../app.roles';
@@ -90,7 +89,7 @@ export class MessagesService {
   async createSystemMessage(content: string): Promise<Message> {
     if (!content.trim()) throw new InternalServerErrorException('CANNOT_CREATE_EMPTY_MESSAGE');
     let message = this.messagesRepository.create({
-      content: escapeHtml(content.trim()),
+      content: Utils.escapeMessage(content.trim()),
       system: true,
     });
     message = await this.messagesRepository.saveAndReturn(message);
