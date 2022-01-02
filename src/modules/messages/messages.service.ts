@@ -81,7 +81,7 @@ export class MessagesService {
       throw new ForbiddenException('WRONG_MESSAGE_OWNER');
     }
 
-    message.content = args.content;
+    message.content = Utils.escapeMessage(args.content.trim());
     await this.messagesRepository.save(message);
 
     return message;
