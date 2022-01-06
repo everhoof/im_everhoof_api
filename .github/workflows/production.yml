@@ -78,6 +78,7 @@ jobs:
         run: |
           ssh production 'mkdir -p $APP_DIR/artifacts'
           scp -r dist production:$APP_DIR/artifacts/dist
+          scp -r mail production:$APP_DIR/artifacts/mail
           scp -r .env deploy.sh ecosystem.config.js environment.js ormconfig.js package.json tsconfig.build.json tsconfig.json yarn.lock production:$APP_DIR/artifacts
         env:
           APP_DIR: ${{ secrets.PRODUCTION_APP_DIR }}

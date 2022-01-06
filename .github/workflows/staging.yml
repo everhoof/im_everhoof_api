@@ -78,6 +78,7 @@ jobs:
         run: |
           ssh staging 'mkdir -p $APP_DIR/artifacts'
           scp -r dist staging:$APP_DIR/artifacts/dist
+          scp -r mail staging:$APP_DIR/artifacts/mail
           scp -r .env deploy.sh ecosystem.config.js environment.js ormconfig.js package.json tsconfig.build.json tsconfig.json yarn.lock staging:$APP_DIR/artifacts
         env:
           APP_DIR: ${{ secrets.STAGING_APP_DIR }}
