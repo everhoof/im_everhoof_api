@@ -138,8 +138,10 @@ export class AccountsService {
       }
       if (!user) {
         let username = profile['username'] as string;
+        username = username.replace(/[^a-zA-Zа-яА-Я0-9\-_ ]/g, '');
+
         user = await this.usersRepository.findOne({
-          where: { username: profile['username'] as string },
+          where: { username },
         });
         if (user) {
           username = Utils.getRandomString(8);
