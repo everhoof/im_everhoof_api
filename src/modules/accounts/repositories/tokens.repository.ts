@@ -5,16 +5,14 @@ import { BasicRepository } from '@modules/common/repositories/basic.repository';
 
 @EntityRepository(Token)
 export class TokensRepository extends BasicRepository<Token> {
-  async createNewToken(ownerId: number | undefined): Promise<Token | undefined> {
-    if (!ownerId) return Promise.resolve(undefined);
-
+  async createNewToken(ownerId: number): Promise<Token> {
     const tokenString = await this.createTokenString();
     let tokenEntity: Token | undefined = this.create({
       value: tokenString,
       ownerId: ownerId,
     });
     tokenEntity = await this.save(tokenEntity);
-    tokenEntity = await this.findOne(tokenEntity.id);
+    tokenEntity = await this.findOneOrFail(tokenEntity.id);
     return tokenEntity;
   }
 

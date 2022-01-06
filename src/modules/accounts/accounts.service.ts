@@ -125,7 +125,8 @@ export class AccountsService {
     refreshToken: string,
     profile: Record<string, unknown>,
   ): Promise<Token> {
-    let newUser = false;
+    let newUserCreated = false;
+
     let oauth = await this.oauthRepository.findOne({
       where: { externalId: profile['id'], type: OAuthType.discord },
     });
@@ -138,12 +139,15 @@ export class AccountsService {
       }
       if (!user) {
         let username = profile['username'] as string;
-        username = username.replace(/[^a-zA-Zа-яА-Я0-9\-_ ]/g, '');
+        username = username.replace(/[^a-zA-Zа-яА-Я0-9\-_ ]/g, '').trim();
 
-        user = await this.usersRepository.findOne({
-          where: { username },
-        });
-        if (user) {
+        if (username) {
+          user = await this.usersRepository.findOne({
+            where: { username },
+          });
+        }
+
+        if (!username || user) {
           username = Utils.getRandomString(8);
         }
 
@@ -156,7 +160,7 @@ export class AccountsService {
           roles: [role],
         });
         user = await this.usersRepository.save(user);
-        newUser = true;
+        newUserCreated = true;
       }
       oauth = this.oauthRepository.create({
         type: OAuthType.discord,
@@ -168,13 +172,15 @@ export class AccountsService {
       });
       oauth = await this.oauthRepository.save(oauth);
     }
-    const token = await this.tokensRepository.createNewToken(oauth.userId);
-    if (!token) throw new InternalServerErrorException('UNKNOWN');
 
-    if (newUser)
+    const token = await this.tokensRepository.createNewToken(oauth.userId);
+
+    if (newUserCreated) {
       await this.pubSub.publish(SubscriptionEvents.USER_REGISTERED_VIA_DISCORD, {
         [SubscriptionEvents.USER_REGISTERED_VIA_DISCORD]: oauth.externalId,
       });
+    }
+
     return token;
   }
 
