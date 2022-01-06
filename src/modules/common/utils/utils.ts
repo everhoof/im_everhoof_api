@@ -33,7 +33,7 @@ export class Utils {
   }
 
   static escapeMessage(message: string): string {
-    const whitelist = [/^<@!\d+(:[a-zA-Z0-9\-_]+)?>$/];
+    const whitelist = [/^<@!\d+(:[a-zA-Zа-яА-Я0-9\-_ ]+)?>$/];
     const escape = new FilterXSS({
       whiteList: {},
       onTag(tag, html) {

@@ -8,7 +8,7 @@ export class SignUpArgs {
   email: string;
 
   @Field({ nullable: true })
-  @Matches(/^[a-zA-Z0-9\-_]+$/)
+  @Matches(/^[a-zA-Zа-яА-Я0-9\-_ ]+$/)
   @MinLength(3)
   @MaxLength(32)
   @IsOptional()
