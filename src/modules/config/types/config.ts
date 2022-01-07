@@ -32,7 +32,7 @@ export interface Config {
   readonly UPLOAD_MIN_WIDTH: number;
   readonly UPLOAD_MAX_HEIGHT: number;
   readonly UPLOAD_MAX_WIDTH: number;
-  readonly UPLOAD_GM_MEMORY_LIMIT: number;
+  readonly UPLOAD_GM_MEMORY_LIMIT: string;
   readonly UPLOAD_GM_THREADS_LIMIT: number;
   readonly EMBED_UPLOAD_IMAGE_MAX_SIZE: number;
 

@@ -220,7 +220,7 @@ export class UploadService {
       .setFormat('jpeg')
       .resize(512, 512, '>')
       .quality(90)
-      .limit('memory', this.config.UPLOAD_GM_MEMORY_LIMIT.toString())
+      .limit('memory', this.config.UPLOAD_GM_MEMORY_LIMIT)
       .limit('threads', this.config.UPLOAD_GM_THREADS_LIMIT.toString());
     const mBuffer = await this.gmToBuffer(m);
 
