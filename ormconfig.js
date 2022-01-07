@@ -1,4 +1,4 @@
-const production = process.env.NODE_ENV === 'production';
+const production = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging';
 const { CustomNamingStrategy } = production
   ? require('./dist/modules/common/typeorm/naming-strategy.js')
   : require('./src/modules/common/typeorm/naming-strategy.ts');
