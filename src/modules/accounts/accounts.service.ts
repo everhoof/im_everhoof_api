@@ -35,12 +35,16 @@ import got from 'got';
 import blacklist from 'the-big-username-blacklist';
 import { EmailDisposableResponse } from '@modules/accounts/types/email-disposable-response';
 import { DateTime } from 'luxon';
+import { Config } from '@modules/config';
+import { Service } from '../../tokens';
 
 @Injectable()
 export class AccountsService {
   private readonly logger = new Logger(AccountsService.name, true);
 
   constructor(
+    @Inject(Service.CONFIG)
+    private readonly config: Config,
     @InjectConnection()
     private readonly connection: Connection,
     @InjectRepository(TokensRepository)
@@ -89,27 +93,23 @@ export class AccountsService {
   }
 
   async getTokenByDiscordCode(args: OAuthDiscordArgs): Promise<Token> {
-    if (!process.env.DISCORD_OAUTH_CLIENT_ID || !process.env.DISCORD_OAUTH_CLIENT_SECRET || !process.env.PUBLIC_URL) {
-      throw new InternalServerErrorException('UNKNOWN');
-    }
-
     const form = {
-      client_id: process.env.DISCORD_OAUTH_CLIENT_ID,
-      client_secret: process.env.DISCORD_OAUTH_CLIENT_SECRET,
+      client_id: this.config.DISCORD_OAUTH_CLIENT_ID,
+      client_secret: this.config.DISCORD_OAUTH_CLIENT_SECRET,
       grant_type: 'authorization_code',
       code: args.code,
-      redirect_uri: process.env.DISCORD_OAUTH_CALLBACK_URL,
+      redirect_uri: this.config.DISCORD_OAUTH_CALLBACK_URL,
     };
 
     try {
       const { access_token, refresh_token } = await got
-        .post(`https://discord.com/api/v${process.env.DISCORD_API_VERSION}/oauth2/token`, {
+        .post(`https://discord.com/api/v${this.config.DISCORD_API_VERSION}/oauth2/token`, {
           form,
         })
         .json<OAuthDiscordTokenResponse>();
 
       const profile = await got
-        .get(`https://discord.com/api/v${process.env.DISCORD_API_VERSION}/users/@me`, {
+        .get(`https://discord.com/api/v${this.config.DISCORD_API_VERSION}/users/@me`, {
           headers: { Authorization: `Bearer ${access_token}` },
         })
         .json<Record<string, string>>();
@@ -284,7 +284,7 @@ export class AccountsService {
       context: {
         email: args.email,
         name: args.name,
-        link: `${process.env.PUBLIC_URL}/confirm_email?code=${args.token}`,
+        link: `${this.config.PUBLIC_URL}/confirm_email?code=${args.token}`,
       },
     });
   }
@@ -297,7 +297,7 @@ export class AccountsService {
       context: {
         email: args.email,
         name: args.name,
-        link: `${process.env.PUBLIC_URL}/reset_password?code=${args.token}`,
+        link: `${this.config.PUBLIC_URL}/reset_password?code=${args.token}`,
       },
     });
   }

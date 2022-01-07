@@ -22,13 +22,13 @@ import { RoleResources, roles } from '../../app.roles';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 import { PunishmentTypes } from '@modules/users/args/punishment.args';
 import { UpdateMessageArgs } from './args/update-message.args';
+import { Service } from '../../tokens';
+import { Config } from '@modules/config';
 
 @Injectable()
 export class MessagesService {
-  private static EMBED_UPLOAD_IMAGE_MAX_SIZE =
-    parseInt(process.env.EMBED_UPLOAD_IMAGE_MAX_SIZE || '52428800') || 52428800;
-
   constructor(
+    @Inject(Service.CONFIG) private readonly config: Config,
     @Inject('PUB_SUB') private readonly pubSub: PubSub,
     @InjectRepository(MessagesRepository)
     private readonly messagesRepository: MessagesRepository,
@@ -108,8 +108,8 @@ export class MessagesService {
     const request = got(message.content);
     request.on('downloadProgress', (progress) => {
       if (
-        (progress.total && progress.total > MessagesService.EMBED_UPLOAD_IMAGE_MAX_SIZE) ||
-        progress.transferred > MessagesService.EMBED_UPLOAD_IMAGE_MAX_SIZE
+        (progress.total && progress.total > this.config.EMBED_UPLOAD_IMAGE_MAX_SIZE) ||
+        progress.transferred > this.config.EMBED_UPLOAD_IMAGE_MAX_SIZE
       ) {
         request.cancel();
       }

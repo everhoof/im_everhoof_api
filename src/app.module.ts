@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
@@ -19,10 +18,11 @@ import { CommonModule } from '@modules/common/common.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { TypeOrmConfigService } from '@modules/common/typeorm';
+import { ConfigModule } from '@modules/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env', '.env.local'] }),
+    ConfigModule,
     GraphQLModule.forRoot({
       debug: process.env.NODE_ENV !== 'production',
       autoSchemaFile: join(process.cwd(), './graphql/schema.graphql'),

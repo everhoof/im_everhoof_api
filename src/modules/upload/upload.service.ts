@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import gm, { Dimensions } from 'gm';
 import got, { Got } from 'got';
 import FormData from 'form-data';
@@ -21,36 +21,31 @@ import { UploadedPicture, UploadedPictureRepresentation } from '@modules/upload/
 import { Utils } from '@modules/common/utils/utils';
 import { fromBuffer } from 'file-type';
 import { imageSize } from 'image-size';
+import { Service } from '../../tokens';
+import { Config } from '@modules/config';
 
 @Injectable()
 export class UploadService {
-  private static QUEUE_LIMIT = parseInt(process.env.UPLOAD_QUEUE_LIMIT || '16', 10) || 16;
-  private static MIN_HEIGHT = parseInt(process.env.UPLOAD_MIN_HEIGHT || '10', 10) || 10;
-  private static MIN_WIDTH = parseInt(process.env.UPLOAD_MIN_WIDTH || '10', 10) || 10;
-  private static MAX_HEIGHT = parseInt(process.env.UPLOAD_MAX_HEIGHT || '9000', 10) || 9000;
-  private static MAX_WIDTH = parseInt(process.env.UPLOAD_MAX_WIDTH || '9000', 10) || 9000;
-  private static GM_MEMORY_LIMIT = process.env.GM_MEMORY_LIMIT || '900M';
-  private static GM_THREADS_LIMIT = process.env.GM_THREADS_LIMIT || '1';
-
   private readonly httpClient: Got;
   private static queue: string[] = [];
   private readonly logger = new Logger(UploadService.name, true);
 
   constructor(
+    @Inject(Service.CONFIG) private readonly config: Config,
     @InjectRepository(PicturesRepository) private readonly picturesRepository: PicturesRepository,
     @InjectRepository(PictureRepresentationsRepository)
     private readonly pictureRepresentationsRepository: PictureRepresentationsRepository,
   ) {
     this.httpClient = got.extend({
-      prefixUrl: `https://discord.com/api/v${process.env.DISCORD_API_VERSION}/`,
+      prefixUrl: `https://discord.com/api/v${this.config.DISCORD_API_VERSION}/`,
       headers: {
-        Authorization: `Bot ${process.env.DISCORD_API_TOKEN}`,
+        Authorization: `Bot ${this.config.DISCORD_API_TOKEN}`,
       },
     });
   }
 
   async uploadPicture(file: Express.Multer.File, user: User, source?: string): Promise<Picture> {
-    if (UploadService.queue.length > UploadService.QUEUE_LIMIT) {
+    if (UploadService.queue.length > this.config.UPLOAD_QUEUE_LIMIT) {
       throw new ServiceUnavailableException('SERVER_IS_OVERLOADED');
     }
 
@@ -64,10 +59,10 @@ export class UploadService {
 
     const gmInstance = gm(file.buffer);
     const dimensions = await this.gmToDimensions(gmInstance);
-    if (dimensions.height < UploadService.MIN_HEIGHT || dimensions.width < UploadService.MIN_WIDTH) {
+    if (dimensions.height < this.config.UPLOAD_MIN_HEIGHT || dimensions.width < this.config.UPLOAD_MIN_WIDTH) {
       throw new BadRequestException('IMAGE_CORRUPTED');
     }
-    if (dimensions.height > UploadService.MAX_HEIGHT || dimensions.width > UploadService.MAX_WIDTH) {
+    if (dimensions.height > this.config.UPLOAD_MAX_HEIGHT || dimensions.width > this.config.UPLOAD_MAX_WIDTH) {
       throw new BadRequestException('IMAGE_DIMENSIONS_TOO_LARGE');
     }
 
@@ -101,13 +96,13 @@ export class UploadService {
 
       await Promise.all([
         //
-        createFile(process.env.UPLOAD_DIR + sPath),
-        createFile(process.env.UPLOAD_DIR + mPath),
+        createFile(this.config.UPLOAD_DIR + sPath),
+        createFile(this.config.UPLOAD_DIR + mPath),
       ]);
       await Promise.all([
         //
-        writeFile(process.env.UPLOAD_DIR + sPath, s.buffer),
-        writeFile(process.env.UPLOAD_DIR + mPath, m.buffer),
+        writeFile(this.config.UPLOAD_DIR + sPath, s.buffer),
+        writeFile(this.config.UPLOAD_DIR + mPath, m.buffer),
       ]);
 
       let o: UploadedPictureRepresentation;
@@ -178,7 +173,7 @@ export class UploadService {
       const form = new FormData();
       form.append('file', file.buffer, file.originalname);
       const message = await this.httpClient
-        .post(`channels/${process.env.DISCORD_UPLOAD_CHANNEL_ID}/messages`, {
+        .post(`channels/${this.config.DISCORD_UPLOAD_CHANNEL_ID}/messages`, {
           body: form,
         })
         .json<DiscordMessage>();
@@ -225,8 +220,8 @@ export class UploadService {
       .setFormat('jpeg')
       .resize(512, 512, '>')
       .quality(90)
-      .limit('memory', UploadService.GM_MEMORY_LIMIT)
-      .limit('threads', UploadService.GM_THREADS_LIMIT);
+      .limit('memory', this.config.UPLOAD_GM_MEMORY_LIMIT.toString())
+      .limit('threads', this.config.UPLOAD_GM_THREADS_LIMIT.toString());
     const mBuffer = await this.gmToBuffer(m);
 
     const s = gm(mBuffer).noProfile().setFormat('jpeg').resize(128, 128, '>').quality(98);
