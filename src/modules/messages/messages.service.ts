@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MessagesRepository } from '@modules/messages/repositories/messages.repository';
 import { CreateMessageArgs } from '@modules/messages/args/create-message.args';
-import { Message, MessageSchema } from '@modules/messages/entities/messages.entity';
+import { Message, MessageSchema, MessageType } from '@modules/messages/entities/messages.entity';
 import { User } from '@modules/users/entities/users.entity';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 import { GetMessagesArgs } from '@modules/messages/args/get-messages.args';
@@ -57,6 +57,7 @@ export class MessagesService {
       username: user.username?.trim(),
       randomId: args.randomId?.trim(),
       schema: MessageSchema.GENERAL,
+      type: MessageType.GENERAL,
     });
     message.pictures = args.pictures.map((id) => this.picturesRepository.create({ id }));
     try {
@@ -93,6 +94,7 @@ export class MessagesService {
       content: Utils.escapeMessage(content.trim()),
       system: true,
       schema: MessageSchema.SYSTEM,
+      type: MessageType.SYSTEM,
     });
     message = await this.messagesRepository.saveAndReturn(message);
     await this.pubSub.publish('messageCreated', { messageCreated: message });

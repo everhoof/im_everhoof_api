@@ -20,6 +20,13 @@ export enum MessageSchema {
   GENERAL = '1',
 }
 
+export enum MessageType {
+  SYSTEM = 1,
+  GENERAL = 2,
+  LOGIN = 3,
+  LOGOUT = 4,
+}
+
 @ObjectType()
 @Entity('messages')
 export class Message {
@@ -90,6 +97,13 @@ export class Message {
     default: '1',
   })
   schema: string;
+
+  @Field(() => Int)
+  @Column({
+    type: 'int',
+    default: MessageType.GENERAL,
+  })
+  type: MessageType;
 
   @Field(() => Date)
   @CreateDateColumn({
