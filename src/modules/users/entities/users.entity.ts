@@ -11,13 +11,21 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Token } from '@modules/accounts/entities/tokens.entity';
 import { Role } from '@modules/roles/entities/roles.entity';
 import { Message } from '@modules/messages/entities/messages.entity';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 import { Punishment } from '@modules/users/entities/punishments.entity';
 import { Confirmation } from '@modules/accounts/entities/confirmations.entity';
+
+export enum UserState {
+  ONLINE = 'ONLINE',
+  IDLE = 'IDLE',
+  OFFLINE = 'OFFLINE',
+}
+
+registerEnumType(UserState, { name: 'UserState' });
 
 @ObjectType()
 @Entity('users')
@@ -77,6 +85,14 @@ export class User {
     type: 'boolean',
   })
   emailConfirmed: boolean;
+
+  @Field(() => UserState)
+  @Column({
+    type: 'enum',
+    enum: UserState,
+    default: UserState.OFFLINE,
+  })
+  state: UserState;
 
   @Field(() => Date, { nullable: true })
   @Column({

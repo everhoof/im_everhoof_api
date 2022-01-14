@@ -101,7 +101,6 @@ export class UsersResolver {
   @Mutation(() => Boolean)
   @UseGuards(GqlAuthGuard)
   async updateOnlineStatus(): Promise<boolean> {
-    await this.usersService.updateOnlineStatus();
     return true;
   }
 

@@ -19,10 +19,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { TypeOrmConfigService } from '@modules/common/typeorm';
 import { ConfigModule } from '@modules/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     ConfigModule,
+    EventEmitterModule.forRoot(),
     GraphQLModule.forRoot({
       debug: process.env.NODE_ENV !== 'production',
       autoSchemaFile: join(process.cwd(), './graphql/schema.graphql'),

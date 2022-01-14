@@ -114,6 +114,7 @@ type User {
   id: Int!
   username: String
   avatarId: String
+  state: UserState!
   wasOnlineAt: DateTime
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -122,4 +123,10 @@ type User {
   emailConfirmed: Boolean
   muted: Boolean
   email: String
+}
+
+enum UserState {
+  ONLINE
+  IDLE
+  OFFLINE
 }

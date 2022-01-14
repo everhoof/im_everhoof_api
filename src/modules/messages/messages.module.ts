@@ -7,10 +7,11 @@ import { PicturesRepository } from '@modules/pictures/repositories/pictures.repo
 import { AccountsModule } from '@modules/accounts/accounts.module';
 import { UploadModule } from '@modules/upload/upload.module';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
+import { UsersRepository } from '@modules/users/repositories/users.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([MessagesRepository, PicturesRepository, PunishmentsRepository]),
+    TypeOrmModule.forFeature([MessagesRepository, PicturesRepository, PunishmentsRepository, UsersRepository]),
     AccountsModule,
     UploadModule,
   ],

@@ -10,7 +10,7 @@ import {
   InternalServerErrorException,
   UnauthorizedException,
 } from '@modules/common/exceptions/exceptions';
-import { User } from '@modules/users/entities/users.entity';
+import { User, UserState } from '@modules/users/entities/users.entity';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
 import { RolesRepository } from '@modules/roles/repositories/roles.repository';
 import { Connection } from 'typeorm';
@@ -37,6 +37,9 @@ import { EmailDisposableResponse } from '@modules/accounts/types/email-disposabl
 import { DateTime } from 'luxon';
 import { Config } from '@modules/config';
 import { Service } from '../../tokens';
+import { EventTypes } from '@modules/common/events/event-types';
+import { UserLoggedInEvent } from '@modules/common/events/user/logged-in.event';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class AccountsService {
@@ -45,6 +48,7 @@ export class AccountsService {
   constructor(
     @Inject(Service.CONFIG)
     private readonly config: Config,
+    private readonly eventEmitter: EventEmitter2,
     @InjectConnection()
     private readonly connection: Connection,
     @InjectRepository(TokensRepository)
@@ -85,10 +89,21 @@ export class AccountsService {
         },
         {
           wasOnlineAt: new Date(),
+          state: UserState.ONLINE,
         },
       );
       await entityManager.save(Token, token);
     });
+
+    if (token.owner.state === UserState.OFFLINE) {
+      this.eventEmitter.emit(
+        EventTypes.USER_LOGGED_IN,
+        new UserLoggedInEvent({
+          userId: token.ownerId,
+        }),
+      );
+    }
+
     return token;
   }
 

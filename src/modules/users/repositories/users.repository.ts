@@ -1,10 +1,12 @@
-import { EntityRepository, ILike } from 'typeorm';
-import { User } from '@modules/users/entities/users.entity';
+import { EntityRepository, ILike, LessThanOrEqual, MoreThan, Not } from 'typeorm';
+import { User, UserState } from '@modules/users/entities/users.entity';
 import { BasicRepository } from '@modules/common/repositories/basic.repository';
 import { SignUpArgs } from '@modules/accounts/args/sign-up.args';
+import { DateTime } from 'luxon';
 
 @EntityRepository(User)
 export class UsersRepository extends BasicRepository<User> {
+  static readonly OFFLINE_TIME_IN_SECONDS = 120;
   getUserByEmailOrUsername(email: string | undefined): Promise<User | undefined> {
     if (!email) return Promise.resolve(undefined);
 
@@ -35,5 +37,31 @@ export class UsersRepository extends BasicRepository<User> {
       hash: input.hash,
     });
     return this.saveAndReturn(user);
+  }
+
+  /**
+   * Returns
+   * @param seconds
+   */
+  async findOnline(seconds = 120): Promise<Record<'online' | 'offline', User[]>> {
+    const timestamp = DateTime.utc().minus({ seconds }).toSQL();
+
+    return await this.manager.transaction(async (entityManager) => {
+      const online = await entityManager.find(User, { where: { wasOnlineAt: MoreThan(timestamp) } });
+      let offline = await entityManager.find(User, {
+        where: {
+          wasOnlineAt: LessThanOrEqual(timestamp),
+          state: Not(UserState.OFFLINE),
+        },
+      });
+
+      offline = offline.map((user) => {
+        user.state = UserState.OFFLINE;
+        return user;
+      });
+      await entityManager.save(offline);
+
+      return { online, offline };
+    });
   }
 }

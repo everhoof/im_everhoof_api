@@ -18,6 +18,8 @@ import { Picture } from '@modules/pictures/entities/pictures.entity';
 export enum MessageSchema {
   SYSTEM = '1',
   GENERAL = '1',
+  LOGIN = '1',
+  LOGOUT = '1',
 }
 
 export enum MessageType {

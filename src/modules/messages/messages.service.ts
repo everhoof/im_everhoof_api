@@ -24,6 +24,10 @@ import { PunishmentTypes } from '@modules/users/args/punishment.args';
 import { UpdateMessageArgs } from './args/update-message.args';
 import { Service } from '../../tokens';
 import { Config } from '@modules/config';
+import { UsersRepository } from '@modules/users/repositories/users.repository';
+import { OnEvent } from '@nestjs/event-emitter';
+import { EventTypes } from '@modules/common/events/event-types';
+import { UserLoggedOutEvent } from '@modules/common/events/user/logged-out.event';
 
 @Injectable()
 export class MessagesService {
@@ -36,6 +40,8 @@ export class MessagesService {
     private readonly picturesRepository: PicturesRepository,
     @InjectRepository(PunishmentsRepository)
     private readonly punishmentsRepository: PunishmentsRepository,
+    @InjectRepository(UsersRepository)
+    private readonly usersRepository: UsersRepository,
     private readonly uploadService: UploadService,
   ) {}
 
@@ -169,5 +175,31 @@ export class MessagesService {
     message.deletedAt = new Date();
 
     return this.messagesRepository.saveAndReturn(message);
+  }
+
+  @OnEvent(EventTypes.USER_LOGGED_OUT)
+  async createLogOutMessage(payload: UserLoggedOutEvent): Promise<Message> {
+    let message = this.messagesRepository.create({
+      ownerId: payload.userId,
+      content: `вышел из чата`,
+      schema: MessageSchema.LOGOUT,
+      type: MessageType.LOGOUT,
+    });
+    message = await this.messagesRepository.saveAndReturn(message);
+    await this.pubSub.publish('messageCreated', { messageCreated: message });
+    return message;
+  }
+
+  @OnEvent(EventTypes.USER_LOGGED_IN)
+  async createLogInMessage(payload: UserLoggedOutEvent): Promise<Message> {
+    let message = this.messagesRepository.create({
+      ownerId: payload.userId,
+      content: `зашел в чат`,
+      schema: MessageSchema.LOGIN,
+      type: MessageType.LOGIN,
+    });
+    message = await this.messagesRepository.saveAndReturn(message);
+    await this.pubSub.publish('messageCreated', { messageCreated: message });
+    return message;
   }
 }

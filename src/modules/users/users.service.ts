@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersRepository } from '@modules/users/repositories/users.repository';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { IsNull, LessThanOrEqual, MoreThan } from 'typeorm';
+import { IsNull, LessThanOrEqual } from 'typeorm';
 import { DateTime } from 'luxon';
 import { PubSub } from 'graphql-subscriptions';
 import { User } from '@modules/users/entities/users.entity';
@@ -17,12 +17,16 @@ import { MessagesService } from '@modules/messages/messages.service';
 import { UpdateAvatarArgs } from '@modules/users/args/update-avatar.args';
 import { PicturesRepository } from '@modules/pictures/repositories/pictures.repository';
 import { SubscriptionEvents } from '@modules/common/types/subscription-events';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { UserLoggedOutEvent } from '@modules/common/events/user/logged-out.event';
+import { EventTypes } from '@modules/common/events/event-types';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('PUB_SUB')
     private readonly pubSub: PubSub,
+    private readonly eventEmitter: EventEmitter2,
     @InjectRepository(UsersRepository)
     private readonly users: UsersRepository,
     @InjectRepository(TokensRepository)
@@ -42,20 +46,27 @@ export class UsersService {
     return user;
   }
 
-  @Cron(CronExpression.EVERY_30_SECONDS)
+  @Cron(CronExpression.EVERY_10_SECONDS)
+  @OnEvent(EventTypes.USER_LOGGED_IN)
   async updateOnline(): Promise<void> {
-    const users = await this.users.find({
-      where: {
-        wasOnlineAt: MoreThan(DateTime.utc().minus({ minutes: 2 }).toSQL()),
-      },
-    });
+    const { online, offline } = await this.users.findOnline();
 
-    const ids = users.map(({ id }) => id);
+    const ids = online.map(({ id }) => id);
     const diff = Utils.arrayDiff(this.onlineUsersIds, ids);
 
     if (diff.length > 0) {
       this.onlineUsersIds = ids;
-      await this.pubSub.publish(SubscriptionEvents.ONLINE_UPDATED, users);
+
+      offline.forEach((user) => {
+        this.eventEmitter.emit(
+          EventTypes.USER_LOGGED_OUT,
+          new UserLoggedOutEvent({
+            userId: user.id,
+          }),
+        );
+      });
+
+      await this.pubSub.publish(SubscriptionEvents.ONLINE_UPDATED, online);
     }
   }
 
@@ -76,10 +87,6 @@ export class UsersService {
 
   async getOnline(): Promise<User[]> {
     return this.users.findByIds(this.onlineUsersIds);
-  }
-
-  async updateOnlineStatus(): Promise<void> {
-    await this.updateOnline();
   }
 
   async updateAvatar(args: UpdateAvatarArgs, executor: User): Promise<User> {
