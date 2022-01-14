@@ -15,6 +15,7 @@ type Message {
   content: String!
   username: String
   deletedById: Float
+  schema: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime

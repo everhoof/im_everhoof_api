@@ -15,6 +15,11 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { User } from '@modules/users/entities/users.entity';
 import { Picture } from '@modules/pictures/entities/pictures.entity';
 
+export enum MessageSchema {
+  SYSTEM = '1',
+  GENERAL = '1',
+}
+
 @ObjectType()
 @Entity('messages')
 export class Message {
@@ -77,6 +82,14 @@ export class Message {
     nullable: true,
   })
   deletedById: Nullable<number>;
+
+  @Field(() => String)
+  @Column({
+    type: 'varchar',
+    length: 6,
+    default: '1',
+  })
+  schema: string;
 
   @Field(() => Date)
   @CreateDateColumn({
