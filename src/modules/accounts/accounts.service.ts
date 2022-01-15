@@ -45,6 +45,8 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 export class AccountsService {
   private readonly logger = new Logger(AccountsService.name, true);
 
+  static loginEventQueue: number[] = [];
+
   constructor(
     @Inject(Service.CONFIG)
     private readonly config: Config,
@@ -95,13 +97,22 @@ export class AccountsService {
       await entityManager.save(Token, token);
     });
 
-    if (token.owner.state === UserState.OFFLINE) {
+    if (token.owner.state === UserState.OFFLINE && !AccountsService.loginEventQueue.includes(token.ownerId)) {
+      AccountsService.loginEventQueue.push(token.ownerId);
+
       this.eventEmitter.emit(
         EventTypes.USER_LOGGED_IN,
         new UserLoggedInEvent({
           userId: token.ownerId,
         }),
       );
+
+      setTimeout(() => {
+        const index = AccountsService.loginEventQueue.indexOf(token.ownerId);
+        if (index !== -1) {
+          AccountsService.loginEventQueue.splice(index, 1);
+        }
+      }, 2500);
     }
 
     return token;
