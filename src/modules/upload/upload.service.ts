@@ -72,15 +72,16 @@ export class UploadService {
 
     try {
       let attachment;
+      const filename = basename(file.originalname, extname(file.originalname))
+        .replace(/[^a-z0-9_\-+]/, '_')
+        .substr(0, 90);
+
       if (!source) {
-        const message = await this.uploadFileToDiscord(file);
+        const message = await this.uploadFileToDiscord(file, filename + extname(file.originalname));
         attachment = message.attachments[0];
       }
       const { s, m } = await this.compressImage(gmInstance);
 
-      const filename = basename(file.originalname, extname(file.originalname))
-        .replace(/[^a-z0-9_\-+]/, '_')
-        .substr(0, 100);
       const [sPath, mPath] = [
         this.generateObjectPath({
           path: path + '/s',
@@ -168,10 +169,10 @@ export class UploadService {
     return this.picturesRepository.saveAndReturn(picture);
   }
 
-  async uploadFileToDiscord(file: Express.Multer.File): Promise<DiscordMessage> {
+  async uploadFileToDiscord(file: Express.Multer.File, filename?: string): Promise<DiscordMessage> {
     try {
       const form = new FormData();
-      form.append('file', file.buffer, file.originalname);
+      form.append('file', file.buffer, filename ?? file.originalname);
       const message = await this.httpClient
         .post(`channels/${this.config.DISCORD_UPLOAD_CHANNEL_ID}/messages`, {
           body: form,
