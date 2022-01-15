@@ -31,7 +31,8 @@ export class UploadController {
         fileSize: _.toNumber(process.env.UPLOAD_IMAGE_MAX_SIZE),
       },
       fileFilter(req, file, callback): void {
-        if (!file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
+        const mimetypeRegexp = new RegExp(`/(${process.env.UPLOAD_ALLOWED_FORMATS})$`);
+        if (!file.mimetype.match(mimetypeRegexp)) {
           callback(
             new HttpException(`Unsupported file type ${extname(file.originalname)}`, HttpStatus.BAD_REQUEST),
             false,

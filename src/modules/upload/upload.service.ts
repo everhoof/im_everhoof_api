@@ -53,7 +53,7 @@ export class UploadService {
     const path = Utils.getRandomString(24);
 
     const fileType = await fromBuffer(file.buffer);
-    if (!fileType?.ext.match(/(jpg|jpeg|png)/)) {
+    if (!fileType?.ext || !this.config.UPLOAD_ALLOWED_FORMATS.includes(fileType.ext)) {
       throw new UnsupportedMediaTypeException('UNSUPPORTED_MEDIA_TYPE');
     }
 
@@ -80,18 +80,22 @@ export class UploadService {
         const message = await this.uploadFileToDiscord(file, filename + extname(file.originalname));
         attachment = message.attachments[0];
       }
-      const { s, m } = await this.compressImage(gmInstance);
+
+      const ext = extname(file.originalname).slice(1);
+      const format = ['png', 'gif'].includes(ext) ? ext : 'jpeg';
+
+      const { s, m } = await this.compressImage(gmInstance, format);
 
       const [sPath, mPath] = [
         this.generateObjectPath({
           path: path + '/s',
           name: filename,
-          ext: 'jpeg',
+          ext: format,
         }),
         this.generateObjectPath({
           path: path + '/m',
           name: filename,
-          ext: 'jpeg',
+          ext: format,
         }),
       ];
 
@@ -215,17 +219,17 @@ export class UploadService {
     return { height, width };
   }
 
-  async compressImage(gmInstance: gm.State): Promise<CompressedPicture> {
+  async compressImage(gmInstance: gm.State, format = 'jpeg'): Promise<CompressedPicture> {
     const m = gmInstance
       .noProfile()
-      .setFormat('jpeg')
+      .setFormat(format)
       .resize(512, 512, '>')
       .quality(90)
       .limit('memory', this.config.UPLOAD_GM_MEMORY_LIMIT)
       .limit('threads', this.config.UPLOAD_GM_THREADS_LIMIT.toString());
     const mBuffer = await this.gmToBuffer(m);
 
-    const s = gm(mBuffer).noProfile().setFormat('jpeg').resize(128, 128, '>').quality(98);
+    const s = gm(mBuffer).noProfile().setFormat(format).resize(128, 128, '>').quality(98);
     const sBuffer = await this.gmToBuffer(s);
 
     const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
