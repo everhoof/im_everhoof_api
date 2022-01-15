@@ -28,6 +28,7 @@ import { UsersRepository } from '@modules/users/repositories/users.repository';
 import { OnEvent } from '@nestjs/event-emitter';
 import { EventTypes } from '@modules/common/events/event-types';
 import { UserLoggedOutEvent } from '@modules/common/events/user/logged-out.event';
+import { UserLoggedInEvent } from '@modules/common/events/user/logged-in.event';
 
 @Injectable()
 export class MessagesService {
@@ -190,6 +191,7 @@ export class MessagesService {
   async createLogOutMessage(payload: UserLoggedOutEvent): Promise<Message> {
     let message = this.messagesRepository.create({
       ownerId: payload.userId,
+      username: payload.username,
       content: `вышел из чата`,
       schema: MessageSchema.LOGOUT,
       type: MessageType.LOGOUT,
@@ -200,9 +202,10 @@ export class MessagesService {
   }
 
   @OnEvent(EventTypes.USER_LOGGED_IN)
-  async createLogInMessage(payload: UserLoggedOutEvent): Promise<Message> {
+  async createLogInMessage(payload: UserLoggedInEvent): Promise<Message> {
     let message = this.messagesRepository.create({
       ownerId: payload.userId,
+      username: payload.username,
       content: `зашел в чат`,
       schema: MessageSchema.LOGIN,
       type: MessageType.LOGIN,

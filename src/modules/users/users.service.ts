@@ -62,6 +62,7 @@ export class UsersService {
           EventTypes.USER_LOGGED_OUT,
           new UserLoggedOutEvent({
             userId: user.id,
+            username: user.username,
           }),
         );
       });

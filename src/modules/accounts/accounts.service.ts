@@ -104,6 +104,7 @@ export class AccountsService {
         EventTypes.USER_LOGGED_IN,
         new UserLoggedInEvent({
           userId: token.ownerId,
+          username: token.owner.username,
         }),
       );
 
