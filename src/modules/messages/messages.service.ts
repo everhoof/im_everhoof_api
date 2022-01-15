@@ -113,13 +113,18 @@ export class MessagesService {
 
   private async uploadImagesFromMessage(message: Message, user: User): Promise<Message> {
     if (!message.content) return message;
-    if (/^\\(https?:\/\/.*?\.(?:png|jpg))$/i.test(message.content)) {
-      message.content = message.content.slice(1);
+
+    const exts = this.config.UPLOAD_ALLOWED_FORMATS.join('|');
+    const linkRegexp = new RegExp(`^(https?:\/\/.*?\.(?:${exts}))[^ ]*$`, 'i');
+    const escapedLinkRegexp = new RegExp(`^\\\\(https?:\/\/.*?\.(?:${exts}))[^ ]*$`, 'i');
+
+    if (escapedLinkRegexp.test(message.content.trim())) {
+      message.content = message.content.trim().slice(1);
       return message;
     }
-    if (!/^(https?:\/\/.*?\.(?:png|jpg))$/i.test(message.content)) return message;
+    if (!linkRegexp.test(message.content.trim())) return message;
 
-    const request = got(message.content);
+    const request = got(message.content.trim());
     request.on('downloadProgress', (progress) => {
       if (
         (progress.total && progress.total > this.config.EMBED_UPLOAD_IMAGE_MAX_SIZE) ||
