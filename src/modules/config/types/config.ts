@@ -34,6 +34,7 @@ export interface Config {
   readonly UPLOAD_MAX_WIDTH: number;
   readonly UPLOAD_GM_MEMORY_LIMIT: string;
   readonly UPLOAD_GM_THREADS_LIMIT: number;
+  readonly UPLOAD_IMAGE_MAX_SIZE: number;
   readonly EMBED_UPLOAD_IMAGE_MAX_SIZE: number;
 
   // SFTP configuration

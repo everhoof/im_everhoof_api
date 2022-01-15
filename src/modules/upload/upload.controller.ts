@@ -15,6 +15,7 @@ import { HttpExceptionFilter } from '@modules/common/filters/http-exception.filt
 import { UploadService } from '@modules/upload/upload.service';
 import { User } from '@modules/users/entities/users.entity';
 import { AuthGuard } from '@nestjs/passport';
+import _ from 'lodash';
 
 @UseFilters(HttpExceptionFilter)
 @Controller('upload')
@@ -27,7 +28,7 @@ export class UploadController {
     FileInterceptor('file', {
       limits: {
         files: 1,
-        fileSize: 10 * 1024 * 1024,
+        fileSize: _.toNumber(process.env.UPLOAD_IMAGE_MAX_SIZE),
       },
       fileFilter(req, file, callback): void {
         if (!file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
