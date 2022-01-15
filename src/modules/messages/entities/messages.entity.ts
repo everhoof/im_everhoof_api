@@ -158,4 +158,8 @@ export class Message {
     },
   })
   pictures: Picture[];
+
+  get editable(): boolean {
+    return this.type === 2;
+  }
 }

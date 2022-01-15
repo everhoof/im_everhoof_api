@@ -9,6 +9,7 @@ export type ExceptionKey =
   | 'USER_DOES_NOT_EXIST_WITH_ID'
   | 'MESSAGE_NOT_FOUND'
   | 'WRONG_MESSAGE_OWNER'
+  | 'MESSAGE_NOT_EDITABLE'
   | 'USER_ALREADY_PUNISHED'
   | 'USER_IS_NOT_PUNISHED'
   | 'USERNAME_OCCUPIED'
@@ -59,6 +60,10 @@ const exceptions: Exception = {
   WRONG_MESSAGE_OWNER: {
     en: "That is not you'r message",
     ru: 'Это не ваше сообщение',
+  },
+  MESSAGE_NOT_EDITABLE: {
+    en: 'This message is not editable',
+    ru: 'Это не сообщение нельзя редактировать',
   },
   USER_ALREADY_PUNISHED: {
     en: 'User already punished',
@@ -143,7 +148,7 @@ const exceptions: Exception = {
   RATE_LIMIT_REACHED: {
     en: 'Not so fast! Try after few seconds.',
     ru: 'Хватит флудить!',
-  }
+  },
 };
 
 function createExceptionMessage(exception: ExceptionKey, lang: ExceptionMessage = 'en', args: string[] = []): string {
