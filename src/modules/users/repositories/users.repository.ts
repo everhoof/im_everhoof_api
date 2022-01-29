@@ -39,15 +39,14 @@ export class UsersRepository extends BasicRepository<User> {
     return this.saveAndReturn(user);
   }
 
-  /**
-   * Returns
-   * @param seconds
-   */
   async findOnline(seconds = 120): Promise<Record<'online' | 'offline', User[]>> {
     const timestamp = DateTime.utc().minus({ seconds }).toSQL();
 
     return await this.manager.transaction(async (entityManager) => {
-      const online = await entityManager.find(User, { where: { wasOnlineAt: MoreThan(timestamp) } });
+      const online = await entityManager.find(User, {
+        where: { wasOnlineAt: MoreThan(timestamp) },
+        order: { username: 'ASC' },
+      });
       let offline = await entityManager.find(User, {
         where: {
           wasOnlineAt: LessThanOrEqual(timestamp),

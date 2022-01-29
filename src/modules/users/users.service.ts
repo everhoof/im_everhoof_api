@@ -51,7 +51,14 @@ export class UsersService {
   async updateOnline(): Promise<void> {
     const { online, offline } = await this.users.findOnline();
 
-    const ids = online.map(({ id }) => id);
+    const sortedOnline = online.sort((a, b) => {
+      const aId = a.highestRole?.id || 0;
+      const bId = b.highestRole?.id || 0;
+      if (aId === bId) return 0;
+      return aId < bId ? 1 : -1;
+    });
+
+    const ids = sortedOnline.map(({ id }) => id);
     const diff = Utils.arrayDiff(this.onlineUsersIds, ids);
 
     if (diff.length > 0) {
@@ -67,7 +74,7 @@ export class UsersService {
         );
       });
 
-      await this.pubSub.publish(SubscriptionEvents.ONLINE_UPDATED, online);
+      await this.pubSub.publish(SubscriptionEvents.ONLINE_UPDATED, sortedOnline);
     }
   }
 

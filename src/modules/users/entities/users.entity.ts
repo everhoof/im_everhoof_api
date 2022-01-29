@@ -160,4 +160,14 @@ export class User {
     if (!this.roles) return [];
     return this.roles.map(({ name }) => name);
   }
+
+  get highestRole(): Role | undefined {
+    let role: Role | undefined;
+    this.roles.forEach((r) => {
+      if (role && r.id > role.id) {
+        role = r;
+      }
+    });
+    return role;
+  }
 }
