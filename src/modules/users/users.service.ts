@@ -67,7 +67,14 @@ export class UsersService {
         );
       });
 
-      await this.pubSub.publish(SubscriptionEvents.ONLINE_UPDATED, online);
+      const sortedOnline = online.sort((a, b) => {
+        const aId = a.highestRole?.id || 0;
+        const bId = b.highestRole?.id || 0;
+        if (aId === bId) return 0;
+        return aId > bId ? 1 : -1;
+      });
+
+      await this.pubSub.publish(SubscriptionEvents.ONLINE_UPDATED, sortedOnline);
     }
   }
 
