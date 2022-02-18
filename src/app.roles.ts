@@ -1,6 +1,7 @@
 import { RolesBuilder } from 'nest-access-control';
 
 export enum AppRoles {
+  BROADCASTER = 'BROADCASTER',
   ADMIN = 'ADMIN',
   MODERATOR = 'MODERATOR',
   USER = 'USER',
@@ -32,3 +33,4 @@ roles
   .update(RoleResources.MUTE)
   .readAny(RoleResources.USER_SETTINGS);
 roles.grant(AppRoles.ADMIN).extend(AppRoles.MODERATOR).update(RoleResources.BAN);
+roles.grant(AppRoles.BROADCASTER).extend(AppRoles.UNVERIFIED_USER);
