@@ -29,6 +29,7 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { EventTypes } from '@modules/common/events/event-types';
 import { UserLoggedOutEvent } from '@modules/common/events/user/logged-out.event';
 import { UserLoggedInEvent } from '@modules/common/events/user/logged-in.event';
+import { DonationEvent } from '@modules/common/events/donation/donation.event';
 
 @Injectable()
 export class MessagesService {
@@ -209,6 +210,20 @@ export class MessagesService {
       content: `зашел в чат`,
       schema: MessageSchema.LOGIN,
       type: MessageType.LOGIN,
+    });
+    message = await this.messagesRepository.saveAndReturn(message);
+    await this.pubSub.publish('messageCreated', { messageCreated: message });
+    return message;
+  }
+
+  @OnEvent(EventTypes.DONATION)
+  async createDonationMessage(payload: DonationEvent): Promise<Message> {
+    let message = this.messagesRepository.create({
+      username: payload.username,
+      content: payload.message,
+      schema: MessageSchema.DONATION,
+      type: MessageType.DONATION,
+      json: payload.toString(),
     });
     message = await this.messagesRepository.saveAndReturn(message);
     await this.pubSub.publish('messageCreated', { messageCreated: message });

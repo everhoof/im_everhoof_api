@@ -56,6 +56,8 @@ export const configProvider = {
       RATE_LIMIT_DURATION: Joi.number().required(),
       RATE_LIMIT_QUEUE_ENABLED: Joi.boolean().required(),
       RATE_LIMIT_QUEUE_SIZE: Joi.number().required(),
+
+      DONATION_ALERTS_TOKEN: Joi.string().required(),
     });
 
     const result = validationSchema.validate(env);
@@ -108,6 +110,8 @@ export const configProvider = {
       RATE_LIMIT_DURATION: _.toNumber(env.RATE_LIMIT_DURATION),
       RATE_LIMIT_QUEUE_ENABLED: toBoolean(env.RATE_LIMIT_QUEUE_ENABLED),
       RATE_LIMIT_QUEUE_SIZE: _.toNumber(env.RATE_LIMIT_QUEUE_SIZE),
+
+      DONATION_ALERTS_TOKEN: `${env.DONATION_ALERTS_TOKEN}`,
     };
   },
 };

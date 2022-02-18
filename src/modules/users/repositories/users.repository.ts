@@ -39,10 +39,6 @@ export class UsersRepository extends BasicRepository<User> {
     return this.saveAndReturn(user);
   }
 
-  /**
-   * Returns
-   * @param seconds
-   */
   async findOnline(seconds = 120): Promise<Record<'online' | 'offline', User[]>> {
     const timestamp = DateTime.utc().minus({ seconds }).toSQL();
 

@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import 'global-agent/bootstrap';
 
 async function bootstrap() {
   const PORT = parseInt(process.env.APP_PORT || '', 10);
