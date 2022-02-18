@@ -20,6 +20,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { TypeOrmConfigService } from '@modules/common/typeorm';
 import { ConfigModule } from '@modules/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { DonationAlertsModule } from '@modules/donation-alerts/donation-alerts.module';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     PicturesModule,
     MessagesModule,
     UploadModule,
+    DonationAlertsModule,
   ],
   providers: [
     AppResolver,

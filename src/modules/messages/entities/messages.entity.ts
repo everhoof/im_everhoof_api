@@ -20,6 +20,7 @@ export enum MessageSchema {
   GENERAL = '1',
   LOGIN = '1',
   LOGOUT = '1',
+  DONATION = '2',
 }
 
 export enum MessageType {
@@ -27,6 +28,7 @@ export enum MessageType {
   GENERAL = 2,
   LOGIN = 3,
   LOGOUT = 4,
+  DONATION = 5,
 }
 
 @ObjectType()
@@ -99,6 +101,12 @@ export class Message {
     default: '1',
   })
   schema: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({
+    type: 'text',
+  })
+  json: Nullable<string>;
 
   @Field(() => Int)
   @Column({

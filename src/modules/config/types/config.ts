@@ -48,4 +48,7 @@ export interface Config {
   readonly RATE_LIMIT_DURATION: number;
   readonly RATE_LIMIT_QUEUE_ENABLED: boolean;
   readonly RATE_LIMIT_QUEUE_SIZE: number;
+
+  // DonationAlerts
+  readonly DONATION_ALERTS_TOKEN: string;
 }
