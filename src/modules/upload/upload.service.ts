@@ -84,7 +84,11 @@ export class UploadService {
       const ext = extname(file.originalname).slice(1);
       const format = ['png', 'gif'].includes(ext) ? ext : 'jpeg';
 
-      const { s, m } = await this.compressImage(gmInstance, format);
+      const {
+        s,
+        m,
+        o: { buffer: oBuffer },
+      } = await this.compressImage(gmInstance, format);
 
       const [sPath, mPath] = [
         this.generateObjectPath({
@@ -114,8 +118,8 @@ export class UploadService {
       if (source) {
         o = {
           key: source,
-          dimensions: imageSize(file.buffer) as Dimensions,
-          size: this.bufferToFileSize(file.buffer),
+          dimensions: imageSize(oBuffer) as Dimensions,
+          size: this.bufferToFileSize(oBuffer),
         };
       } else {
         o = {
@@ -220,21 +224,28 @@ export class UploadService {
   }
 
   async compressImage(gmInstance: gm.State, format = 'jpeg'): Promise<CompressedPicture> {
-    const m = gmInstance
+    let o = gmInstance
       .noProfile()
-      .setFormat(format)
-      .resize(512, 512, '>')
-      .quality(90)
+      .autoOrient()
       .limit('memory', this.config.UPLOAD_GM_MEMORY_LIMIT)
       .limit('threads', this.config.UPLOAD_GM_THREADS_LIMIT.toString());
+
+    if (format === 'gif') {
+      o = o.coalesce();
+    }
+
+    const oBuffer = await this.gmToBuffer(o);
+
+    const m = gm(oBuffer).setFormat(format).resize(512, 512, '>').quality(90);
     const mBuffer = await this.gmToBuffer(m);
 
-    const s = gm(mBuffer).noProfile().setFormat(format).resize(128, 128, '>').quality(98);
+    const s = gm(mBuffer).setFormat(format).resize(128, 128, '>').quality(98);
     const sBuffer = await this.gmToBuffer(s);
 
     const [sSize, mSize] = [this.bufferToFileSize(sBuffer), this.bufferToFileSize(mBuffer)];
 
     return {
+      o: { buffer: oBuffer },
       s: { buffer: sBuffer, size: sSize },
       m: { buffer: mBuffer, size: mSize },
     };
