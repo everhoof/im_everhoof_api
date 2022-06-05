@@ -91,7 +91,7 @@ export class MessagesResolver {
 
     setTimeout(() => {
       iterator.return?.();
-    }, 5 * 1000);
+    }, 60 * 1000);
 
     const result = await iterator.next();
     if (result.value?.messageCreated) {
