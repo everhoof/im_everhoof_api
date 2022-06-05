@@ -25,4 +25,8 @@ export class GetMessagesArgs {
   @Field(() => Boolean, { defaultValue: false })
   @IsBoolean()
   reverse: boolean;
+
+  @Field(() => Boolean, { defaultValue: false })
+  @IsBoolean()
+  poll: boolean;
 }

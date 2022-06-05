@@ -76,8 +76,29 @@ export class MessagesResolver {
 
   @UseGuards(OptionalGqlAuthGuard, ACGuard)
   @Query(() => [Message])
-  getMessages(@Args() args: GetMessagesArgs, @CurrentUser() user?: User): Promise<Message[]> {
-    return this.messagesService.getMessages(args, user);
+  async getMessages(@Args() args: GetMessagesArgs, @CurrentUser() user?: User): Promise<Message[]> {
+    const messages = await this.messagesService.getMessages(args, user);
+
+    if (args.poll && !args.reverse && messages.length === 0) {
+      return this.getMessagesPoll();
+    }
+
+    return messages;
+  }
+
+  private async getMessagesPoll(): Promise<Message[]> {
+    const iterator = this.pubSub.asyncIterator('messageCreated');
+
+    setTimeout(() => {
+      iterator.return?.();
+    }, 5 * 1000);
+
+    const result = await iterator.next();
+    if (result.value?.messageCreated) {
+      return [result.value.messageCreated];
+    } else {
+      return [];
+    }
   }
 
   // @Throttle(5, 20)
