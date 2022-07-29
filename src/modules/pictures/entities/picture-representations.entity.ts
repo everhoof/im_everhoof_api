@@ -40,7 +40,7 @@ export class PictureRepresentation {
   @Field()
   @Column({
     type: 'varchar',
-    length: 191,
+    length: 1024,
   })
   path: string;
 
