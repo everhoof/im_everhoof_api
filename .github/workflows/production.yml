@@ -74,12 +74,26 @@ jobs:
           SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
           SSH_PORT: ${{ secrets.PRODUCTION_SSH_PORT }}
 
+      - name: Tar files
+        run: >
+          tar --ignore-failed-read --exclude=./artifacts.tgz -czvf artifacts.tgz
+          dist
+          mail
+          .env
+          deploy.sh
+          ecosystem.config.js
+          environment.js
+          ormconfig.js
+          package.json
+          tsconfig.build.json
+          tsconfig.json
+          yarn.lock
+          || [[ $? -eq 1 ]]
+
       - name: Copy dist files
         run: |
-          ssh production 'mkdir -p $APP_DIR/artifacts'
-          scp -r dist production:$APP_DIR/artifacts/dist
-          scp -r mail production:$APP_DIR/artifacts/mail
-          scp -r .env deploy.sh ecosystem.config.js environment.js ormconfig.js package.json tsconfig.build.json tsconfig.json yarn.lock production:$APP_DIR/artifacts
+          ssh production 'mkdir -p $APP_DIR'
+          scp -r artifacts.tgz deploy.sh production:$APP_DIR
         env:
           APP_DIR: ${{ secrets.PRODUCTION_APP_DIR }}
 
