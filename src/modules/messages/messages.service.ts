@@ -103,6 +103,7 @@ export class MessagesService {
   async createSystemMessage(content: string): Promise<Message> {
     if (!content.trim()) throw new InternalServerErrorException('CANNOT_CREATE_EMPTY_MESSAGE');
     let message = this.messagesRepository.create({
+      randomId: Utils.getRandomString(32),
       content: Utils.escapeMessage(content.trim()),
       system: true,
       schema: MessageSchema.SYSTEM,
@@ -191,6 +192,7 @@ export class MessagesService {
   @OnEvent(EventTypes.USER_LOGGED_OUT)
   async createLogOutMessage(payload: UserLoggedOutEvent): Promise<Message> {
     let message = this.messagesRepository.create({
+      randomId: Utils.getRandomString(32),
       ownerId: payload.userId,
       username: payload.username,
       content: `вышел из чата`,
@@ -205,6 +207,7 @@ export class MessagesService {
   @OnEvent(EventTypes.USER_LOGGED_IN)
   async createLogInMessage(payload: UserLoggedInEvent): Promise<Message> {
     let message = this.messagesRepository.create({
+      randomId: Utils.getRandomString(32),
       ownerId: payload.userId,
       username: payload.username,
       content: `зашел в чат`,
@@ -219,6 +222,7 @@ export class MessagesService {
   @OnEvent(EventTypes.DONATION)
   async createDonationMessage(payload: DonationEvent): Promise<Message> {
     let message = this.messagesRepository.create({
+      randomId: Utils.getRandomString(32),
       username: payload.username,
       content: payload.message,
       schema: MessageSchema.DONATION,
