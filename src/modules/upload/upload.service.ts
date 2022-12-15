@@ -23,6 +23,8 @@ import { fromBuffer } from 'file-type';
 import { imageSize } from 'image-size';
 import { Service } from '../../tokens';
 import { Config } from '@modules/config';
+import { PunishmentTypes } from '@modules/users/args/punishment.args';
+import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 
 @Injectable()
 export class UploadService {
@@ -35,6 +37,8 @@ export class UploadService {
     @InjectRepository(PicturesRepository) private readonly picturesRepository: PicturesRepository,
     @InjectRepository(PictureRepresentationsRepository)
     private readonly pictureRepresentationsRepository: PictureRepresentationsRepository,
+    @InjectRepository(PunishmentsRepository)
+    private readonly punishmentsRepository: PunishmentsRepository,
   ) {
     this.httpClient = got.extend({
       prefixUrl: `https://discord.com/api/v${this.config.DISCORD_API_VERSION}/`,
@@ -44,7 +48,17 @@ export class UploadService {
     });
   }
 
+  private async throwOnPunished(targetId: number): Promise<void> {
+    const punishment = await this.punishmentsRepository.getLastPunishment(targetId);
+    if (!punishment) return;
+
+    if (punishment.type === PunishmentTypes.mute) throw new BadRequestException('YOU_ARE_MUTED');
+    if (punishment.type === PunishmentTypes.ban) throw new BadRequestException('YOU_ARE_BANNED');
+  }
+
   async uploadPicture(file: Express.Multer.File, user: User, source?: string): Promise<Picture> {
+    await this.throwOnPunished(user.id);
+
     if (UploadService.queue.length > this.config.UPLOAD_QUEUE_LIMIT) {
       throw new ServiceUnavailableException('SERVER_IS_OVERLOADED');
     }
