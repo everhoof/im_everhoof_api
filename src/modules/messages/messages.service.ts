@@ -56,8 +56,12 @@ export class MessagesService {
   }
 
   async createMessage(args: CreateMessageArgs, user: User): Promise<Message> {
+    if (!user.emailConfirmed)
+      throw new ForbiddenException('EMAIL_NOT_CONFIRMED');
+
     if (!args.content?.trim() && args.pictures.length === 0)
       throw new BadRequestException('CANNOT_CREATE_EMPTY_MESSAGE');
+
     await this.throwOnPunished(user.id);
     let message = this.messagesRepository.create({
       content: Utils.escapeMessage(args.content?.trim() || ''),
@@ -75,6 +79,9 @@ export class MessagesService {
   }
 
   async updateMessage(args: UpdateMessageArgs, user: User): Promise<Message> {
+    if (!user.emailConfirmed)
+      throw new ForbiddenException('EMAIL_NOT_CONFIRMED');
+
     await this.throwOnPunished(user.id);
     const message = await this.messagesRepository.findOne({ where: { id: args.messageId } });
 
@@ -174,6 +181,9 @@ export class MessagesService {
   }
 
   async deleteMessage(args: DeleteMessageArgs, user: User): Promise<Message> {
+    if (!user.emailConfirmed)
+      throw new ForbiddenException('EMAIL_NOT_CONFIRMED');
+
     const canDeleteAny: boolean = roles.can(user.roleNames).deleteAny('message').granted;
     const canDeleteOwn: boolean = roles.can(user.roleNames).deleteOwn('message').granted;
     if (!args.messageId || (!canDeleteOwn && !canDeleteAny)) throw new BadRequestException('FORBIDDEN');

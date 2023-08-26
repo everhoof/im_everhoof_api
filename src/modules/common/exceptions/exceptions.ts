@@ -30,7 +30,8 @@ export type ExceptionKey =
   | 'EMAIL_IS_NOT_CONFIRMED'
   | 'EMAIL_ALREADY_CONFIRMED'
   | 'EMAIL_NOT_REGISTERED'
-  | 'RATE_LIMIT_REACHED';
+  | 'RATE_LIMIT_REACHED'
+  | 'EMAIL_NOT_CONFIRMED';
 
 type Exception = {
   [key in ExceptionKey]: { [key in ExceptionMessage]: string };
@@ -148,6 +149,10 @@ const exceptions: Exception = {
   RATE_LIMIT_REACHED: {
     en: 'Not so fast! Try after few seconds.',
     ru: 'Хватит флудить!',
+  },
+  EMAIL_NOT_CONFIRMED: {
+    en: 'E-mail should be confirmed to proceed',
+    ru: 'E-mail должен быть подтвержден, чтобы продолжить',
   },
 };
 

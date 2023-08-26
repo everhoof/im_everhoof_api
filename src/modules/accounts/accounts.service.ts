@@ -6,7 +6,7 @@ import { UsersRepository } from '@modules/users/repositories/users.repository';
 import { SignInArgs } from '@modules/accounts/args/sign-in.args';
 import { Token } from '@modules/accounts/entities/tokens.entity';
 import {
-  BadRequestException,
+  BadRequestException, ForbiddenException,
   InternalServerErrorException,
   UnauthorizedException,
 } from '@modules/common/exceptions/exceptions';
@@ -211,23 +211,6 @@ export class AccountsService {
     return token;
   }
 
-  async checkEmailForDisposability(email: string): Promise<boolean> {
-    const emailDomain = email.split('@')[1];
-
-    try {
-      const isInValidEmail = (
-        await got
-          .get(`https://open.kickbox.com/v1/disposable/${emailDomain}`, { timeout: 5000 })
-          .json<EmailDisposableResponse>()
-      ).disposable;
-      return isInValidEmail;
-    } catch {
-      this.logger.warn('Unable to connect to kickbox.com');
-    }
-
-    return true;
-  }
-
   async createUser(input: SignUpArgs): Promise<User> {
     let user = await this.usersRepository.getUserByEmailAndUsername(input.email, input.username);
     if (user) {
@@ -238,11 +221,29 @@ export class AccountsService {
       }
     }
 
-    const isDisposableEmail = await this.checkEmailForDisposability(input.email);
+    const emailDomainWhitelist = [
+      'mail.ru',
+      'yandex.ru',
+      'gmail.com',
+      'rambler.ru',
+      'bk.ru',
+      'list.ru',
+      'inbox.ru',
+      'yahoo.com',
+      'outlook.com',
+      'mail.ua',
+      'ukr.net',
+      'tut.by',
+      'mail.kz',
+      'mail.az',
+      'mail.am',
+      'mail.tj',
+    ];
 
-    if (isDisposableEmail) {
+    const emailDomain = input.email.split('@')[1];
+
+    if (!emailDomainWhitelist.includes(emailDomain))
       throw new BadRequestException('EMAIL_BLACKLISTED');
-    }
 
     if (!blacklist.validate(input.username)) {
       throw new BadRequestException('USERNAME_BLACKLISTED');
