@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Service } from '../../tokens';
 import { Config } from '@modules/config';
 import Centrifuge from 'centrifuge';
@@ -15,6 +15,7 @@ global.XMLHttpRequest = XMLHttpRequest;
 
 @Injectable()
 export class DonationAlertsService {
+  private readonly logger = new Logger(DonationAlertsService.name, true);
   private centrifuge: Centrifuge;
   private httpClient: Got;
   private user: UserOAuth;
@@ -26,7 +27,7 @@ export class DonationAlertsService {
       .then(() => this.initializeCentrifuge())
       .then(() => this.connectCentrifuge())
       .then(() => this.subscribeDonations())
-      .catch(console.error);
+      .catch(this.logger.error);
   }
 
   async initializeHttpClient(): Promise<void> {
@@ -59,6 +60,11 @@ export class DonationAlertsService {
     return new Promise((resolve) => {
       this.centrifuge.on('connect', (context) => {
         resolve(context.client);
+      });
+
+      this.centrifuge.on('disconnect', (context) => {
+        this.logger.error('Centrifuge disconnected.');
+        this.logger.error(context);
       });
 
       this.centrifuge.connect();
