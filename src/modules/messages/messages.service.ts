@@ -224,7 +224,7 @@ export class MessagesService {
     let message = this.messagesRepository.create({
       randomId: Utils.getRandomString(32),
       username: payload.username,
-      content: payload.message,
+      content: payload.message ?? '',
       schema: MessageSchema.DONATION,
       type: MessageType.DONATION,
       json: payload.toString(),
