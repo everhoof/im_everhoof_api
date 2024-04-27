@@ -125,16 +125,19 @@ export class MessagesService {
     if (!message.content) return message;
 
     const exts = this.config.UPLOAD_ALLOWED_FORMATS.join('|');
-    const linkRegexp = new RegExp(`^(https?:\/\/.*?\.(?:${exts}))[^ ]*$`, 'i');
-    const escapedLinkRegexp = new RegExp(`^\\\\(https?:\/\/.*?\.(?:${exts}))[^ ]*$`, 'i');
+    const linkRegexp = new RegExp(`^<p>(https?:\/\/.*?\.(?:${exts}))[^ ]*</p>$`, 'i');
+    const escapedLinkRegexp = new RegExp(`^<p>\\\\(https?:\/\/.*?\.(?:${exts}))[^ ]*</p>$`, 'i');
 
-    if (escapedLinkRegexp.test(message.content.trim())) {
-      message.content = message.content.trim().slice(1);
+    let link = message.content.match(escapedLinkRegexp);
+    if (link) {
+      message.content = `<p>${link[1]}</p>`;
       return message;
     }
-    if (!linkRegexp.test(message.content.trim())) return message;
 
-    const request = got(message.content.trim());
+    link = message.content.match(linkRegexp);
+    if (!link) return message;
+
+    const request = got(link[1]);
     request.on('downloadProgress', (progress) => {
       if (
         (progress.total && progress.total > this.config.EMBED_UPLOAD_IMAGE_MAX_SIZE) ||
@@ -148,10 +151,10 @@ export class MessagesService {
     const filename = Utils.getRandomString(32);
     const file: Express.Multer.File = {
       buffer,
-      originalname: basename(message.content),
+      originalname: basename(link[1]),
       filename,
     } as Express.Multer.File;
-    const picture = await this.uploadService.uploadPicture(file, user, message.content);
+    const picture = await this.uploadService.uploadPicture(file, user, link[1]);
     message.pictures = [picture];
     message.content = '';
     return message;
