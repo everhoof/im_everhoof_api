@@ -33,15 +33,15 @@ export class Utils {
   }
 
   static escapeMessage(message: string): string {
-    const whitelist = [/^<@!\d+(:[a-zA-Zа-яА-Я0-9\-_ ]+)?>$/];
     const escape = new FilterXSS({
-      whiteList: {},
-      onTag(tag, html) {
-        for (let i = 0; i < whitelist.length; ++i) {
-          if (whitelist[i].test(html)) {
-            return html;
-          }
-        }
+      whiteList: {
+        mention: ['data-id', 'data-name'],
+        p: [],
+        br: [],
+        strong: [],
+        em: [],
+        u: [],
+        s: [],
       },
     });
     return escape.process(message);
