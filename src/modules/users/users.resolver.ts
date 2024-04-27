@@ -18,6 +18,7 @@ import { UpdateAvatarArgs } from '@modules/users/args/update-avatar.args';
 import { RoleResources, roles } from '../../app.roles';
 import { PunishmentsLoader } from '@modules/users/loaders/punishments.loader';
 import { SubscriptionEvents } from '@modules/common/types/subscription-events';
+import { SearchUsersArgs } from '@modules/users/args/search-users.args';
 
 @UseFilters(GraphqlExceptionFilter, ThrottlerExceptionFilter)
 @Resolver(() => User)
@@ -96,6 +97,12 @@ export class UsersResolver {
   @UseGuards(OptionalGqlAuthGuard)
   async getOnline(): Promise<User[]> {
     return this.usersService.getOnline();
+  }
+
+  @Query(() => [User])
+  @UseGuards(GqlAuthGuard)
+  async searchUsers(@Args() args: SearchUsersArgs): Promise<User[]> {
+    return this.usersService.search(args.query);
   }
 
   @Mutation(() => Boolean)

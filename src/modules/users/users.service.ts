@@ -90,6 +90,10 @@ export class UsersService {
     return this.users.findByIds(this.onlineUsersIds);
   }
 
+  async search(query: string): Promise<User[]> {
+    return this.users.search(query);
+  }
+
   async updateAvatar(args: UpdateAvatarArgs, executor: User): Promise<User> {
     const picture = await this.pictures.isExist(args.pictureId);
     if (picture.ownerId && picture.ownerId !== executor.id) throw new BadRequestException('FORBIDDEN');

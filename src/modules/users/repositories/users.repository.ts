@@ -63,4 +63,17 @@ export class UsersRepository extends BasicRepository<User> {
       return { online, offline };
     });
   }
+
+  async search(query: string): Promise<User[]> {
+    if (query.length > 0) {
+      return this.find({
+        where: { username: ILike(`%${query}%`) },
+        take: 10,
+      })
+    }
+
+    return this.find({
+      take: 10,
+    });
+  }
 }

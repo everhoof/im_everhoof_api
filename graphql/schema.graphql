@@ -79,6 +79,7 @@ type Query {
   getCurrentUser: User!
   getUserById(id: Int!): User!
   getOnline: [User!]!
+  searchUsers(query: String!): [User!]!
   getMessages(count: Int = 100, page: Int = 1, lastId: Int, reverse: Boolean = false, poll: Boolean = false): [Message!]!
   isUsernameFree(username: String!): Boolean!
   getTokenByDiscordId(id: String!): Token
