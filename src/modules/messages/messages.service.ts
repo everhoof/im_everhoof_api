@@ -162,25 +162,37 @@ export class MessagesService {
 
   async getMessages(args: GetMessagesArgs, user?: User): Promise<Message[]> {
     let where: FindManyOptions<Message>['where'] = {};
-    const order: FindManyOptions<Message>['order'] = { id: 'DESC' };
+    let order: FindManyOptions<Message>['order'] = { id: 'DESC' };
 
     if (args.lastId && args.reverse) {
       where = { id: LessThan(args.lastId) };
     } else if (args.lastId) {
       where = { id: MoreThan(args.lastId) };
+      order = { id: 'ASC' };
     }
+
     const canReadAny: boolean =
       (user && roles.can(user?.roleNames).readAny(RoleResources.DELETED_MESSAGE).granted) || false;
+
+    let messages: Message[];
+
     if (canReadAny) {
-      return this.messagesRepository.getList(args, {
+      messages = await this.messagesRepository.getList(args, {
         where: where,
         order: order,
       });
+    } else {
+      messages = await this.messagesRepository.getList(args, {
+        where: { ...where, deletedAt: IsNull() },
+        order: order,
+      });
     }
-    return this.messagesRepository.getList(args, {
-      where: { ...where, deletedAt: IsNull() },
-      order: order,
-    });
+
+    if (order.id === 'ASC') {
+      messages.reverse();
+    }
+
+    return messages;
   }
 
   async deleteMessage(args: DeleteMessageArgs, user: User): Promise<Message> {
