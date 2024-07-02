@@ -17,7 +17,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { basename } from 'path';
 import { UploadService } from '@modules/upload/upload.service';
 import { DeleteMessageArgs } from '@modules/messages/args/delete-message.args';
-import { FindManyOptions, IsNull, LessThan, MoreThan } from 'typeorm';
+import { FindManyOptions, IsNull, LessThan, LessThanOrEqual, MoreThan, MoreThanOrEqual } from 'typeorm';
 import { RoleResources, roles } from '../../app.roles';
 import { PunishmentsRepository } from '@modules/users/repositories/punishments.repository';
 import { PunishmentTypes } from '@modules/users/args/punishment.args';
@@ -164,11 +164,20 @@ export class MessagesService {
     let where: FindManyOptions<Message>['where'] = {};
     let order: FindManyOptions<Message>['order'] = { id: 'DESC' };
 
-    if (args.lastId && args.reverse) {
-      where = { id: LessThan(args.lastId) };
+    if (args.fromDateTime) {
+      if (args.reverse) {
+        where = { createdAt: LessThanOrEqual(args.fromDateTime) };
+      } else {
+        where = { createdAt: MoreThanOrEqual(args.fromDateTime) };
+        order = { id: 'ASC' };
+      }
     } else if (args.lastId) {
-      where = { id: MoreThan(args.lastId) };
-      order = { id: 'ASC' };
+      if (args.reverse) {
+        where = { id: LessThan(args.lastId) };
+      } else {
+        where = { id: MoreThan(args.lastId) };
+        order = { id: 'ASC' };
+      }
     }
 
     const canReadAny: boolean =

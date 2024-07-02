@@ -1,5 +1,5 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql';
-import { IsBoolean, IsInt, IsOptional, Max, Min } from 'class-validator';
+import { IsBoolean, IsInt, IsISO8601, IsOptional, Max, Min } from 'class-validator';
 
 @ArgsType()
 export class GetMessagesArgs {
@@ -20,7 +20,12 @@ export class GetMessagesArgs {
   @IsInt()
   @Min(1)
   @IsOptional()
-  lastId: number;
+  lastId: number | null;
+
+  @Field(() => String, { nullable: true })
+  @IsISO8601()
+  @IsOptional()
+  fromDateTime: string | null;
 
   @Field(() => Boolean, { defaultValue: false })
   @IsBoolean()
