@@ -44,7 +44,7 @@ export const configProvider = {
       UPLOAD_MAX_WIDTH: Joi.number().required(),
       UPLOAD_GM_MEMORY_LIMIT: Joi.string().required(),
       UPLOAD_GM_THREADS_LIMIT: Joi.number().required(),
-      UPLOAD_ALLOWED_FORMATS: Joi.string().required(),
+      UPLOAD_ALLOWED_MIMES: Joi.string().required(),
       UPLOAD_IMAGE_MAX_SIZE: Joi.number().required(),
       EMBED_UPLOAD_IMAGE_MAX_SIZE: Joi.number().required(),
 
@@ -98,7 +98,7 @@ export const configProvider = {
       UPLOAD_MAX_WIDTH: _.toNumber(env.UPLOAD_MAX_WIDTH),
       UPLOAD_GM_MEMORY_LIMIT: `${env.UPLOAD_GM_MEMORY_LIMIT}`,
       UPLOAD_GM_THREADS_LIMIT: _.toNumber(env.UPLOAD_GM_THREADS_LIMIT),
-      UPLOAD_ALLOWED_FORMATS: `${env.UPLOAD_ALLOWED_FORMATS}`.split('|'),
+      UPLOAD_ALLOWED_MIMES: `${env.UPLOAD_ALLOWED_MIMES}`.split(','),
       UPLOAD_IMAGE_MAX_SIZE: _.toNumber(env.UPLOAD_IMAGE_MAX_SIZE),
       EMBED_UPLOAD_IMAGE_MAX_SIZE: _.toNumber(env.EMBED_UPLOAD_IMAGE_MAX_SIZE),
 

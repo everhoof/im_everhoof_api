@@ -67,7 +67,7 @@ export class UploadService {
     const path = Utils.getRandomString(24);
 
     const fileType = await fromBuffer(file.buffer);
-    if (!fileType?.ext || !this.config.UPLOAD_ALLOWED_FORMATS.includes(fileType.ext)) {
+    if (!fileType?.mime || !this.config.UPLOAD_ALLOWED_MIMES.includes(fileType.mime)) {
       throw new UnsupportedMediaTypeException('UNSUPPORTED_MEDIA_TYPE');
     }
 

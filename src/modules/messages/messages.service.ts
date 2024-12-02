@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MessagesRepository } from '@modules/messages/repositories/messages.repository';
 import { CreateMessageArgs } from '@modules/messages/args/create-message.args';
@@ -33,6 +33,8 @@ import { DonationEvent } from '@modules/common/events/donation/donation.event';
 
 @Injectable()
 export class MessagesService {
+  private readonly logger = new Logger(MessagesService.name, true);
+
   constructor(
     @Inject(Service.CONFIG) private readonly config: Config,
     @Inject('PUB_SUB') private readonly pubSub: PubSub,
@@ -74,7 +76,9 @@ export class MessagesService {
     message.pictures = args.pictures.map((id) => this.picturesRepository.create({ id }));
     try {
       message = await this.uploadImagesFromMessage(message, user);
-    } catch (e) {}
+    } catch (e) {
+      this.logger.error(e);
+    }
     return this.messagesRepository.save(message);
   }
 
@@ -124,39 +128,78 @@ export class MessagesService {
   private async uploadImagesFromMessage(message: Message, user: User): Promise<Message> {
     if (!message.content) return message;
 
-    const exts = this.config.UPLOAD_ALLOWED_FORMATS.join('|');
-    const linkRegexp = new RegExp(`^<p>(https?:\/\/.*?\.(?:${exts}))[^ ]*</p>$`, 'i');
-    const escapedLinkRegexp = new RegExp(`^<p>\\\\(https?:\/\/.*?\.(?:${exts}))[^ ]*</p>$`, 'i');
+    const linkOnlyRegexp = [
+      new RegExp(
+        `^<p>(https?:\\/\\/(www\\.)?[-a-zA-Zа-яА-Я0-9@:%._+~#=]{1,256}\\.[a-zA-Zа-яА-Я0-9()]{1,6}(\\b|[\\u0400-\\u04FF])([-a-zA-Zа-яА-Я0-9()@:%_+.~#?&/=]*))<\\/p>$`,
+        'im',
+      ),
+      new RegExp(
+        `^(https?:\\/\\/(www\\.)?[-a-zA-Zа-яА-Я0-9@:%._+~#=]{1,256}\\.[a-zA-Zа-яА-Я0-9()]{1,6}(\\b|[\\u0400-\\u04FF])([-a-zA-Zа-яА-Я0-9()@:%_+.~#?&/=]*))$`,
+        'im',
+      ),
+    ];
+    const linkOnlyEscapedRegexp = [
+      new RegExp(
+        `^<p>\\\\(https?:\\/\\/(www\\.)?[-a-zA-Zа-яА-Я0-9@:%._+~#=]{1,256}\\.[a-zA-Zа-яА-Я0-9()]{1,6}(\\b|[\\u0400-\\u04FF])([-a-zA-Zа-яА-Я0-9()@:%_+.~#?&/=]*))<\\/p>$`,
+        'im',
+      ),
+      new RegExp(
+        `^\\\\(https?:\\/\\/(www\\.)?[-a-zA-Zа-яА-Я0-9@:%._+~#=]{1,256}\\.[a-zA-Zа-яА-Я0-9()]{1,6}(\\b|[\\u0400-\\u04FF])([-a-zA-Zа-яА-Я0-9()@:%_+.~#?&/=]*))$`,
+        'im',
+      ),
+    ];
 
-    let link = message.content.match(escapedLinkRegexp);
+    let link = linkOnlyEscapedRegexp.reduce((accumulator, regexp) => {
+      if (accumulator) {
+        return accumulator;
+      }
+
+      return message.content.match(regexp);
+    }, null);
+
     if (link) {
       message.content = `<p>${link[1]}</p>`;
       return message;
     }
 
-    link = message.content.match(linkRegexp);
+    link = linkOnlyRegexp.reduce((accumulator, regexp) => {
+      if (accumulator) {
+        return accumulator;
+      }
+
+      return message.content.match(regexp);
+    }, null);
+
     if (!link) return message;
 
-    const request = got(link[1]);
-    request.on('downloadProgress', (progress) => {
-      if (
-        (progress.total && progress.total > this.config.EMBED_UPLOAD_IMAGE_MAX_SIZE) ||
-        progress.transferred > this.config.EMBED_UPLOAD_IMAGE_MAX_SIZE
-      ) {
-        request.cancel();
-      }
-    });
+    const headRequest = await got.head(link[1]);
+    const mime = headRequest.headers['content-type'];
 
-    const buffer = await request.buffer();
-    const filename = Utils.getRandomString(32);
-    const file: Express.Multer.File = {
-      buffer,
-      originalname: basename(link[1]),
-      filename,
-    } as Express.Multer.File;
-    const picture = await this.uploadService.uploadPicture(file, user, link[1]);
-    message.pictures = [picture];
-    message.content = '';
+    if (mime && this.config.UPLOAD_ALLOWED_MIMES.includes(mime)) {
+      const getRequest = got.get(link[1]);
+
+      getRequest.on('downloadProgress', (progress) => {
+        if (
+          (progress.total && progress.total > this.config.EMBED_UPLOAD_IMAGE_MAX_SIZE) ||
+          progress.transferred > this.config.EMBED_UPLOAD_IMAGE_MAX_SIZE
+        ) {
+          getRequest.cancel();
+        }
+      });
+
+      const buffer = await getRequest.buffer();
+      const filename = Utils.getRandomString(32);
+      const file: Express.Multer.File = {
+        buffer,
+        originalname: basename(link[1]),
+        filename,
+      } as Express.Multer.File;
+      const picture = await this.uploadService.uploadPicture(file, user, link[1]);
+      console.log(picture);
+      message.pictures = [picture];
+      message.content = '';
+    }
+
     return message;
   }
 
