@@ -74,6 +74,10 @@ jobs:
           SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
           SSH_PORT: ${{ secrets.PRODUCTION_SSH_PORT }}
 
+      - name: Create version file
+        run: |
+          echo "{\"version\": \"$(git rev-parse HEAD)\"}" > version.json
+
       - name: Tar files
         run: >
           tar --ignore-failed-read --exclude=./artifacts.tgz -czvf artifacts.tgz
@@ -88,6 +92,7 @@ jobs:
           tsconfig.build.json
           tsconfig.json
           yarn.lock
+          version.json
           || [[ $? -eq 1 ]]
 
       - name: Copy dist files

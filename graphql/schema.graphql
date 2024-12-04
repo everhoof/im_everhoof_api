@@ -86,6 +86,7 @@ type Query {
   getTokens: [Token!]!
   getGrants: String!
   getHello: String!
+  version: String!
   getPictureById(pictureId: Int!): Picture!
 }
 
