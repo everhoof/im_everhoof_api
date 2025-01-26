@@ -6,7 +6,7 @@ import { UsersRepository } from '@modules/users/repositories/users.repository';
 import { SignInArgs } from '@modules/accounts/args/sign-in.args';
 import { Token } from '@modules/accounts/entities/tokens.entity';
 import {
-  BadRequestException, ForbiddenException,
+  BadRequestException,
   InternalServerErrorException,
   UnauthorizedException,
 } from '@modules/common/exceptions/exceptions';
@@ -33,7 +33,6 @@ import { OAuthDiscordTokenResponse } from '@modules/accounts/types/oauth-discord
 import { Utils } from '@modules/common/utils/utils';
 import got from 'got';
 import blacklist from 'the-big-username-blacklist';
-import { EmailDisposableResponse } from '@modules/accounts/types/email-disposable-response';
 import { DateTime } from 'luxon';
 import { Config } from '@modules/config';
 import { Service } from '../../tokens';
@@ -220,30 +219,6 @@ export class AccountsService {
         throw new BadRequestException('EMAIL_OCCUPIED');
       }
     }
-
-    const emailDomainWhitelist = [
-      'mail.ru',
-      'yandex.ru',
-      'gmail.com',
-      'rambler.ru',
-      'bk.ru',
-      'list.ru',
-      'inbox.ru',
-      'yahoo.com',
-      'outlook.com',
-      'mail.ua',
-      'ukr.net',
-      'tut.by',
-      'mail.kz',
-      'mail.az',
-      'mail.am',
-      'mail.tj',
-    ];
-
-    const emailDomain = input.email.split('@')[1];
-
-    if (!emailDomainWhitelist.includes(emailDomain))
-      throw new BadRequestException('EMAIL_BLACKLISTED');
 
     if (!blacklist.validate(input.username)) {
       throw new BadRequestException('USERNAME_BLACKLISTED');
